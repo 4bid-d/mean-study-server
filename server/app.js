@@ -6,7 +6,6 @@ var logger = require('morgan');
 var cors = require('cors')
 var corsOptions = {
   origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200 ,
   methods : "GET,HEAD,PUT,PATCH,POST,DELETE"
 }
 var indexRouter = require('./routes/index');

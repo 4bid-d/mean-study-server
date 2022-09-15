@@ -32,14 +32,14 @@ async function postData (method,apiEndpoint,body) {
               body: JSON.stringify(body ? body : throwErr("Body is required for POST method") )
             }
         )
-        let data = await request.json()
-        return data
+        if(request) return {status:true}
+        else return {status:false}
   } catch (error) {
     throw error
   }
 }
 
-function useFetch(method,apiEndpoint,body) { 
+export const UseFetch = (method,apiEndpoint,body) =>{ 
   
   try {      
       if(!method ||
@@ -68,5 +68,3 @@ function useFetch(method,apiEndpoint,body) {
       }   
       
 }
-
-export default useFetch

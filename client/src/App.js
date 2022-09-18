@@ -5,9 +5,10 @@ import {
 import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
+import UseLocalstorage from "./Hooks/useLocalstrage"
 
 function App() {
-  
+  UseLocalstorage("get","")
   return (
   <>
     <Routes>

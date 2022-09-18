@@ -1,18 +1,38 @@
 import React from 'react'
 import Loading from "../Loading/Loading"
 import { useState , useRef} from "react"
+import {useNavigate} from "react-router-dom"
 import {UseFetch} from "../../Hooks/useFetch"
+const EMAIL_VALIDATION_REGEX = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/  
+const PASSWORD_VALIDATION_REGEX  =  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/
+const VALIDATION_MESSAGES={
+  BASIC:[
+    "Username is required.",
+    "Email is required."  ,
+    "Password is required.",
+    "Something went wrong."
+  ],
+  EMAIL_VALIDATION:[        
+    `Mail id should contain @ symbol.`,
+    `Please enter valid email.`,
+    `You have just missed a ".com" there.`
+  ],
+  PASSWORD_VALIDATION:[
+    `Password should contain atleast 8 letters`,
+    `Password should only contain less than 12 letters`
+  ]
+  
+}
 
 function Signup() {
   const [loading , setLoading] = useState(false)
   const password = useRef()
   const username = useRef()
   const email = useRef()
+  const navigate  = useNavigate()
   if(loading) return <Loading/>
-
+  
   const validateSignupForm = () =>{
-    const EMAIL_VALIDATION_REGEX = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/  
-    const PASSWORD_VALIDATION_REGEX  =  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/
     const currentPass = password.current.value 
     const currentUsername = username.current.value 
     const currentEmail = email.current.value 
@@ -21,47 +41,33 @@ function Signup() {
       lowerCaseLetter:0,
       number:0
     }
-    const VALIDATION_MESSAGES={
-      BASIC:[
-        "Password is required.",
-        "Username is required.",
-        "Email is required."  
-      ],
-      EMAIL_VALIDATION:[        
-        `Mail id should contain @ symbol.`,
-        `Please enter valid email.`,
-        `You have just missed a ".com" there.`
-      ],
-      PASSWORD_VALIDATION:[
-        `Password should contain atleast 8 letters`,
-        `Password should only contain less than 12 letters`
-      ]
-      
-    }
     if(currentPass === "" ||
     currentUsername === "" ||
     currentEmail === ""
     ){
-      if (!currentPass) throw VALIDATION_MESSAGES.BASIC[0]
-      if (!currentUsername) throw VALIDATION_MESSAGES.BASIC[1]
-      if (!currentEmail) throw   VALIDATION_MESSAGES.BASIC[2]
+      if (!currentUsername) throw VALIDATION_MESSAGES.BASIC[0]
+      if (!currentEmail) throw   VALIDATION_MESSAGES.BASIC[1]
+      if (!currentPass) throw VALIDATION_MESSAGES.BASIC[2]
     }else{
         if(!EMAIL_VALIDATION_REGEX.test(currentEmail)) {
           if(!currentEmail.includes("@")) throw VALIDATION_MESSAGES.EMAIL_VALIDATION[0]
           if(!currentEmail.includes("mail"))  throw VALIDATION_MESSAGES.EMAIL_VALIDATION[1]
           if(!currentEmail.includes(".com")) throw VALIDATION_MESSAGES.EMAIL_VALIDATION[2]
+          else throw  VALIDATION_MESSAGES.EMAIL_VALIDATION[1]
         }
         if(!PASSWORD_VALIDATION_REGEX.test(currentPass)) {
           if(currentPass.length < 8) throw VALIDATION_MESSAGES.PASSWORD_VALIDATION[0]
           if(currentPass.length > 12) throw VALIDATION_MESSAGES.PASSWORD_VALIDATION[1]
-
-      return true
+          return true
+    }else{
+        throw VALIDATION_MESSAGES.BASIC[3]
     }
     
   }
 }
 
 const sendSignupData = (e)=>{
+ 
   e.preventDefault()
   if(validateSignupForm()) {
       setLoading(true)
@@ -70,10 +76,14 @@ const sendSignupData = (e)=>{
         email : email.current.value,
         password : password.current.value,
         
-      }).then((res)=>{
-        console.log(res.message)
+      }).then((result)=>{
+       alert(result.message)
+       console.log(result.token)
       })
       setLoading(false)
+      // navigate("/login")
+    }else{
+      throw VALIDATION_MESSAGES.BASIC[3]
     }
   }
   return (

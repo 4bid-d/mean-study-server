@@ -8,12 +8,13 @@ var corsOptions = {
   origin: 'http://localhost:3000',
   methods : "GET,HEAD,PUT,PATCH,POST,DELETE"
 }
+const mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-// view engine setup
+mongoose.connect('mongodb://localhost:27017/myapp');// view engine setup
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', cors(corsOptions), indexRouter);
+app.use('/user', cors(corsOptions), usersRouter);
 
 
 // catch 404 and forward to error handler

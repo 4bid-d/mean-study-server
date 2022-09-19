@@ -36,11 +36,6 @@ function Signup() {
     const currentPass = password.current.value 
     const currentUsername = username.current.value 
     const currentEmail = email.current.value 
-    const containsRequiredCharactors  = {
-      upperCaseLetter:0,
-      lowerCaseLetter:0,
-      number:0
-    }
     if(currentPass === "" ||
     currentUsername === "" ||
     currentEmail === ""
@@ -78,7 +73,7 @@ const sendSignupData = (e)=>{
         
       }).then((result)=>{
        alert(result.message)
-       console.log(result.token)
+       localStorage.setItem('Token', result.token)
       })
       setLoading(false)
       // navigate("/login")
@@ -104,7 +99,11 @@ const sendSignupData = (e)=>{
         }
       }>Submit</button>
     </form>
+    <button onClick={()=> navigate("/login")}>
+      Login
+    </button>
     </>
+
 
 )
 }

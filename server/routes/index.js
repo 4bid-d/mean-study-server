@@ -1,41 +1,36 @@
 var express = require('express');
 var router = express.Router();
-const log = require("../Middlewares/Jwt/createToken") 
+const createJsonToken = require("../Middlewares/Jwt/createToken") 
 const FORM_MESSAGES  = require("../config/message")
+const saveUser =  require("../Middlewares/Mongodb/saveUser")
+const findUser  = require("../Middlewares/Mongodb/findUser") 
 
-
-router.get('/', function(req, res, next) {
-
-  res.json({message : "welcme"});
-});
-
-router.get('/home', function(req, res, next) {
-  res.json({message : "Welcome to home"});
-});
-
-router.post('/login', function(req, res, next) {
-console.log("arrived")
-});
-
-router.post('/signup',log, function(req, res) {
+router.post('/signup',createJsonToken,findUser, async function(req, res) {
   const DETAILS = req.body 
   try {    
     if(!DETAILS.password) throw FORM_MESSAGES[0]
     if(!DETAILS.email) throw FORM_MESSAGES[1]
     if(!DETAILS.username) throw FORM_MESSAGES[2]
-    res.json(
-      {
-        message :FORM_MESSAGES[3],
-        token:res.Token
-      }
-    )
+    console.log(res.existingUser)
+    if(!res.existingUser) {
+      await saveUser(req,res)
+    }else throw FORM_MESSAGES[4]
   } catch (message) {
     res.json(
       {
         message:message
       }
     )
+    return
   }
-});
+  console.log("fuck")
+  res.json(
+    {
+      message :FORM_MESSAGES[3],
+      token:res.Token
+    }
+    )
+  });
+  
 
-module.exports = router;
+  module.exports = router;

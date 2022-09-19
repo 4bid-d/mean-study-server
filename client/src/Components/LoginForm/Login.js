@@ -9,9 +9,11 @@ function Login() {
 
   const sendLoginData = (e)=>{
     e.preventDefault()
-
-    console.log(password.current.focus()
-    , username.current.focus()
+    const currentUsername =  username.current.value
+    const currentPassword =  username.current.value
+    console.log(
+      currentPassword,
+      currentUsername
     )
   }
   if(loading) return <Loading/>

@@ -1,48 +1,26 @@
 var express = require('express');
 var router = express.Router();
-const createJsonToken = require("../Middlewares/Jwt/createToken") 
-const FORM_MESSAGES  = require("../config/formValidationMessages")
-const saveUser =  require("../Middlewares/Mongodb/saveUser")
-const findUser  = require("../Middlewares/Mongodb/findUser") 
 const allUsers = require("../Middlewares/Mongodb/allUsers")
-
-router.post('/signup',createJsonToken,findUser,allUsers, async function(req, res) {
-  const DETAILS = req.body 
-  try {    
-    if(!DETAILS.password) throw FORM_MESSAGES.PASSWORD_IS_REQUIRED
-    if(!DETAILS.email) throw FORM_MESSAGES.EMAIL_IS_REQUIRED
-    if(!DETAILS.username) throw FORM_MESSAGES.USERNAME_IS_REQUIRED
-    if(res.username) {
-      for(let i =  0 ; i < res.username.length ; i++){
-            if( res.username[i] == DETAILS.username){
-              throw FORM_MESSAGES.USERNAME_NOT_AVAILABLE
-            } 
-            else{
-            continue      
+const API_MESSAGES  = require("../config/dataApiErrorMessage")
+const FORM_MESSAGES  = require("../config/formValidationMessages")
+/* GET users listing. */
+router.post('/usernameCheck',allUsers,async function(req, res) {
+    let username =  req.body.data
+    console.log(username)
+    if(res.users) {
+        for(let i =  0 ; i < res.users.length ; i++){
+              if(res.users[i].username == username){
+                res.json({status : true})
+                return
+              } 
+              else{
+               continue
+              }
             }
-          }
-    } else {
-      throw API_MESSAGES.USERNAME_API.UNABLE_TO_USERNAME
-    }
-    if(!res.existingUser) {
-      await saveUser(req,res)
-    }else throw FORM_MESSAGES.ALREADY_IN
-  } catch (message) {
-    res.json(
-      {
-        message:message
+        res.json({status : false})
+      } else {
+        console.log(API_MESSAGES.USERNAME_API.UNABLE_TO_USERNAME)
       }
-    )
-    return
-  }
-  
-  res.json(
-    {
-      message :FORM_MESSAGES.SIGNEDIN_SUCCESSFULLY,
-      token:res.Token
-    }
-  )
-  });
-  
+});
 
-  module.exports = router;
+module.exports = router;

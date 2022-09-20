@@ -9,6 +9,7 @@ var corsOptions = {
   methods : "GET,HEAD,PUT,PATCH,POST,DELETE"
 }
 const mongoose = require('mongoose')
+var signupRouter = require('./routes/signup');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', cors(corsOptions), indexRouter);
+app.use('/signup', cors(corsOptions), signupRouter);
 app.use('/user', cors(corsOptions), usersRouter);
 
 

@@ -8,12 +8,11 @@ async function allUsers(req,res,next) {
             if(result){
                 result.forEach(
                     (object)=>{
-                        usernameArray.push(object.username)
+                        usernameArray.push(object)
                     }
                )
-                console.log("1"+usernameArray)
                 // responseObject.status = true  
-                res.username = usernameArray
+                res.users = usernameArray
                 next()
             }else{
                 res.username = false           

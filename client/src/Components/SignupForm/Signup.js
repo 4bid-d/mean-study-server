@@ -9,7 +9,17 @@ import {
   EMAIL_VALIDATION_REGEX,
   USERNAME_VALIDATION_REGEX
 }  from "../../config/formValidation"
-
+// const realtimeUsernameChecking = (username)=>{
+  
+//     console.log("checking username.")
+//       UseFetch("post","usernameCheck",{
+//         data : username, 
+//       }).then((result)=>{
+//         console.log(result)
+//        alert(result)
+//       })
+    
+// }
 function Signup() {
   const [loading , setLoading] = useState(false)
   const password = useRef()
@@ -76,10 +86,11 @@ const sendSignupData = (e)=>{
 
   }
   return (
+    // ()=>realtimeUsernameChecking(username.current.value)
     <>
     <h4>Signup Form</h4>
     <form >
-      <input type="text" placeholder="User name" ref={username} required/>
+      <input type="text" placeholder="Username"  ref={username} required/>
       <input type="email"  placeholder="Example@g mail.com" ref={email} required/>
       <input type="password" placeholder="Password" ref={password} required />
       <button type="submit" 

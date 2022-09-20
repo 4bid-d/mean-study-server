@@ -1,12 +1,14 @@
 const USER = require("../../Schemas/user")
+const bcrypt = require('bcrypt')
 
-const saveUser = (req, res) =>{
+const saveUser = async (req, res) =>{
         try {
+            const bycryptedPassword = await bcrypt.hash(req.body.password,10)
             const newUser = new USER(
                 {
                     username: req.body.username,
                     email: req.body.email, 
-                    password: req.body.password,
+                    password: bycryptedPassword,
                 }
             )
             console.log(res.existingUser)

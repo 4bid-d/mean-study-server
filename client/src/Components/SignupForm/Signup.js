@@ -9,26 +9,27 @@ import {
   EMAIL_VALIDATION_REGEX,
   USERNAME_VALIDATION_REGEX
 }  from "../../config/formValidation"
-let usernameArray = []
-UseFetch("get","user/username")
-.then(
-  (res) => {
-    usernameArray =  res.usernames
+// let usernameArray = []
+// UseFetch("get","user/username")
+// .then(
+//   (res) => {
+//     usernameArray =  res.usernames
     
-  }
-)        
-function checkUserName (currentUsername) {
-  for(let i =  0 ; i < usernameArray.length ; i++){
-    if(usernameArray[i].includes(currentUsername)){
-      alert("username is not available.")
-      return true
-    } 
-    else{
-    continue      
-    }
-  }
-}
+//   }
+// )        
+// function checkUserName (currentUsername) {
+//   for(let i =  0 ; i < usernameArray.length ; i++){
+//     if(usernameArray[i].includes(currentUsername)){
+//       alert("username is not available.")
+//       return true
+//     } 
+//     else{
+//     continue      
+//     }
+//   }
+// }
 function Signup() {
+  console.log(VALIDATION_MESSAGES.EMAIL_VALIDATION.ENTER_VALID_ADDRESS)
   const [loading , setLoading] = useState(false)
   const password = useRef()
   const username = useRef()
@@ -50,20 +51,20 @@ function Signup() {
       if (!currentEmail) throw   VALIDATION_MESSAGES.BASIC.EMAIL_REQUIRED
       if (!currentPass) throw VALIDATION_MESSAGES.BASIC.PASSWORD_REQUIRED
     }else{
-        if(USERNAME_VALIDATION_REGEX.test(currentUsername)) {
-          if(checkUserName(currentUsername.toString())) {
-            return false 
-          }
-        }else {
-          throw  VALIDATION_MESSAGES.USERNAME_VALIDATION.USERNAME_REGEX_VALIDATION
-        }
-        if(!EMAIL_VALIDATION_REGEX.test(currentEmail)) {
-          if(!currentEmail.includes("@")) throw VALIDATION_MESSAGES.EMAIL_VALIDATION.REQUIRED_SYMBOL
+        // if(USERNAME_VALIDATION_REGEX.test(currentUsername)) {
+        //   if(checkUserName(currentUsername.toString())) {
+        //     return false 
+        //   }
+        // }else {
+        //   throw  VALIDATION_MESSAGES.USERNAME_VALIDATION.USERNAME_REGEX_VALIDATION
+        // }
+        if(EMAIL_VALIDATION_REGEX.test(currentEmail)) {
+          if(!currentEmail.includes("@")) throw "hi"
           if(!currentEmail.includes("mail"))  throw VALIDATION_MESSAGES.EMAIL_VALIDATION.ENTER_VALID_ADDRESS
           if(!currentEmail.includes(".com")) throw VALIDATION_MESSAGES.EMAIL_VALIDATION.COM_ERROR
           else throw  VALIDATION_MESSAGES.EMAIL_VALIDATION.ENTER_VALID_ADDRESS
         }
-        if(!PASSWORD_VALIDATION_REGEX.test(currentPass)) {
+        if(PASSWORD_VALIDATION_REGEX.test(currentPass)) {
           if(currentPass.length < 8) throw VALIDATION_MESSAGES.PASSWORD_VALIDATION.MIN_LETTER_VALIDATION
           if(currentPass.length > 12) throw VALIDATION_MESSAGES.PASSWORD_VALIDATION.MAX_LETTER_VALIDATION
           return true

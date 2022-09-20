@@ -1,7 +1,6 @@
 const USER = require("../../Schemas/user")
 
 const saveUser = (req, res) =>{
-
         try {
             const newUser = new USER(
                 {

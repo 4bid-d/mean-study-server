@@ -9,6 +9,10 @@ import {
   EMAIL_VALIDATION_REGEX,
   USERNAME_VALIDATION_REGEX
 }  from "../../config/formValidation"
+import {
+  setLocalstorage,
+  getLocalstorage,
+} from "../../Hooks/useLocalstorage"
 // const realtimeUsernameChecking = (username)=>{
   
 //     console.log("checking username.")
@@ -21,6 +25,11 @@ import {
     
 // }
 function Signup() {
+  UseFetch("get",`user/${getLocalstorage("Token")}`)
+  .then((result)=>{
+      console.log(result)
+    })
+
   const [loading , setLoading] = useState(false)
   const password = useRef()
   const username = useRef()
@@ -73,9 +82,10 @@ const sendSignupData = (e)=>{
         email : email.current.value,
         password : password.current.value,   
       }).then((result)=>{
-        console.log(result)
-       alert(result.message)
-       localStorage.setItem('Token', result.token)
+          console.log(result)
+         alert(result.message)
+         setLocalstorage("Token","")
+         setLocalstorage('Token', result.token)
       })
       setLoading(false)
       // navigate("/login")

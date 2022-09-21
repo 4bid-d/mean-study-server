@@ -6,6 +6,7 @@ const saveUser =  require("../Middlewares/Mongodb/saveUser")
 const findUser  = require("../Middlewares/Mongodb/findUser") 
 const allUsers = require("../Middlewares/Mongodb/allUsers")
 
+
 router.post('/',createJsonToken,findUser,allUsers, async function(req, res) {
   const DETAILS = req.body 
   try {    

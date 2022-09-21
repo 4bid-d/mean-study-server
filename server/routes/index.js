@@ -6,7 +6,6 @@ const FORM_MESSAGES  = require("../config/formValidationMessages")
 /* GET users listing. */
 router.post('/usernameCheck',allUsers,async function(req, res) {
     let username =  req.body.data
-    console.log(username)
     if(res.users) {
         for(let i =  0 ; i < res.users.length ; i++){
               if(res.users[i].username == username){

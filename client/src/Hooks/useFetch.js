@@ -1,10 +1,7 @@
-const API_BODY = "http://localhost:3001/"
-const METHODS = {
-  GET: "GET",
-  POST: "POST",
-  PUT: "PUT",
-  DELETE: "DELETE",
-}
+import {
+  API_BODY,
+  METHODS
+} from "../config/api"
 const throwErr = (message) =>{
     throw new Error(message)
 }

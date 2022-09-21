@@ -1,6 +1,6 @@
 const USER = require("../../Schemas/user"); 
 
-async function findUser(req, res, next) {
+function findUser(req, res, next) {
     res.existingUser = false 
     try {
         USER.findOne(

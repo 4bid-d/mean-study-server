@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 
 const saveUser = async (req, res) =>{
         try {
+            console.log(req.body)
             const bycryptedPassword = await bcrypt.hash(req.body.password,10)
             const newUser = new USER(
                 {
@@ -11,7 +12,6 @@ const saveUser = async (req, res) =>{
                     password: bycryptedPassword,
                 }
             )
-            console.log(res.existingUser)
             if(!res.existingUser) {
                 newUser.save()
                 return true

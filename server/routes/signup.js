@@ -9,14 +9,15 @@ const allUsers = require("../Middlewares/Mongodb/allUsers")
 
 router.post('/',createJsonToken,findUser,allUsers, async function(req, res) {
   const DETAILS = req.body 
+  console.log(DETAILS.password)
   try {    
-    if(!DETAILS.password) throw FORM_MESSAGES.PASSWORD_IS_REQUIRED
-    if(!DETAILS.email) throw FORM_MESSAGES.EMAIL_IS_REQUIRED
-    if(!DETAILS.username) throw FORM_MESSAGES.USERNAME_IS_REQUIRED
+    if(!DETAILS.password) throw FORM_MESSAGES.SIGNUP.PASSWORD_IS_REQUIRED
+    if(!DETAILS.email) throw FORM_MESSAGES.SIGNUP.EMAIL_IS_REQUIRED
+    if(!DETAILS.username) throw FORM_MESSAGES.SIGNUP.USERNAME_IS_REQUIRED
     if(res.users) {
       for(let i =  0 ; i < res.users.length ; i++){
             if( res.users[i].username == DETAILS.username){
-              throw FORM_MESSAGES.USERNAME_NOT_AVAILABLE
+              throw FORM_MESSAGES.SIGNUP.USERNAME_NOT_AVAILABLE
             } 
             else{
             continue      
@@ -27,19 +28,21 @@ router.post('/',createJsonToken,findUser,allUsers, async function(req, res) {
     }
     if(!res.existingUser) {
       await saveUser(req,res)
-    }else throw FORM_MESSAGES.ALREADY_IN
+    }else throw FORM_MESSAGES.SIGNUP.ALREADY_IN
   } catch (message) {
     res.json(
       {
-        message:message
+        message:message,
+        status:false
       }
     )
     return
   }
   res.json(
     {
-      message :FORM_MESSAGES.SIGNEDIN_SUCCESSFULLY,
-      token:res.Token
+      message :FORM_MESSAGES.SIGNUP.SIGNEDIN_SUCCESSFULLY,
+      token:res.Token,
+      status : true
     }
   )
   });

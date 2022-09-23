@@ -1,5 +1,6 @@
 import React,{ useState , useEffect ,useContext } from 'react'
 import { useRef } from 'react'
+import { UseFetch } from '../../Hooks/useFetch'
 import { userDataContext } from "../../Hooks/userContext"
 
 function CreateServerForm() {
@@ -7,8 +8,14 @@ function CreateServerForm() {
   const user = useContext( userDataContext )
   const createServer = (e)=>{
     e.preventDefault()
+    if(!name.current.value) throw "Name is required."
     if (!user.token ) throw "Please reload somthing went wrong." 
-    console.log(user)
+    UseFetch( "post" , `server/${user.token}/newServer` , {
+      name : name.current.value
+    }).then((response)=>{
+      console.log(response)
+      if(response.message) alert(response.message)
+    })
 
   } 
   return (

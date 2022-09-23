@@ -6,7 +6,7 @@ router.get('/:jsonToken',verifyJsonToken,async function(req, res, next) {
   try {
     res.userDetail ? res.json(res.userDetail) : null
   } catch (error) {
-    console.log(error)
+    res.json({JsonWebTokenError: `Invalid token`})
   }
 });
 

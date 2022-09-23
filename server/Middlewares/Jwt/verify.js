@@ -2,6 +2,10 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 const verifyJsonToken = async(req,res,next)=>{
+    if(!req.params.jsonToken) {
+        res.userDetail = false 
+        next()
+    }
     const DETAILS = req.params.jsonToken.toString() 
     try {        
         const decodedUser = jwt.verify(DETAILS, process.env.SECRET_KEY);

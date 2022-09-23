@@ -1,19 +1,13 @@
 const mongoose = require('mongoose');
 
 const serverSchema = new mongoose.Schema({
-  username :{
-    type :String, 
-    required:true
-  },
-  email:{
-    type :String, 
-    required:true
-  },
   name:{
     type :String, 
     required:true
+  },
+  admin:{
+    username:String
   }
-  
 });
 
 module.exports = mongoose.model("servers",serverSchema)

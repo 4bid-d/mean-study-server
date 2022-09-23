@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userAndServerSchema = new mongoose.Schema({
+const serverReferenceSchema = new mongoose.Schema({
   username :{
     type :String, 
     required:true
@@ -16,4 +16,4 @@ const userAndServerSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("userAndServer",userAndServerSchema)
+module.exports = mongoose.model("server_reference",serverReferenceSchema)

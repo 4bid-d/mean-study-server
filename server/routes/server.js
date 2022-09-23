@@ -1,11 +1,22 @@
 var express = require('express');
 var router = express.Router();
+const verifyJsonToken =  require("../Middlewares/Jwt/verify"); 
+const addServerToUser = require('../Middlewares/Mongodb/server/addServerReference');
+const createServer = require('../Middlewares/Mongodb/server/createServer');
+const findServerReference = require('../Middlewares/Mongodb/server/findServerReference');
 
-router.get('/:jsonToken/:serverId',async function(req, res, next) {
+router.post('/:jsonToken/newServer',
+verifyJsonToken,
+createServer,
+findServerReference,
+addServerToUser,
+function(req, res) {
   try {
-    
+    if(!res.userDetail) throw "Something went wrong Please login again"
+    if(!res.createdServer || !res.registration) throw "Something went wrong in server."
+
   } catch (error) {
-    console.log(error)
+    res.json({message: error })
   }
 });
 

@@ -4,12 +4,8 @@ import {
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/LoginPage";
+import ServerPage from "./Pages/ServerPage";
 import SignupPage from "./Pages/SignupPage";
-
-// import {
-//   getLocalstorage
-// } from "./Hooks/useLocalstorage"
-// import { useState } from "react";
 
 function App() {
   
@@ -19,6 +15,7 @@ function App() {
       <Route exact path="/" element={<HomePage />}/>
       <Route exact path="/signup" element={<SignupPage/>} />
       <Route exact path="/login" element={<LoginPage/>} />
+      <Route exact path="/server/:serverId" element={<ServerPage/>} />
     </Routes>
   </>
   )

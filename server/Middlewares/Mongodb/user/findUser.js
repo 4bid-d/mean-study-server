@@ -1,4 +1,4 @@
-const USER = require("../../Schemas/user"); 
+const USER = require("../../../Schemas/user/user"); 
 
 function findUser(req, res, next) {
     res.existingUser = false 

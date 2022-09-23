@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const allUsers = require("../Middlewares/Mongodb/allUsers")
+const allUsers = require("../Middlewares/Mongodb/user/allUsers")
 const API_MESSAGES  = require("../config/dataApiErrorMessage")
 const FORM_MESSAGES  = require("../config/formValidationMessages")
 /* GET users listing. */

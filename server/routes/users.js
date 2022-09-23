@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const allUsers = require("../Middlewares/Mongodb/allUsers")
-const API_MESSAGES  = require("../config/dataApiErrorMessage")
 const verifyJsonToken =  require("../Middlewares/Jwt/verify")
 
 router.get('/:jsonToken',verifyJsonToken,async function(req, res, next) {

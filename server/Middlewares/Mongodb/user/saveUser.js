@@ -1,4 +1,4 @@
-const USER = require("../../Schemas/user")
+const USER = require("../../../Schemas/user/user"); 
 const bcrypt = require('bcrypt')
 
 const saveUser = async (req, res) =>{

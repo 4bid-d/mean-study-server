@@ -1,39 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {UseFetch} from "../../Hooks/useFetch"
 import {
-  getLocalstorage,
+  getLocalstorage, setLocalstorage,
 } from "../../Hooks/useLocalstorage"
 import {useNavigate} from "react-router-dom"
 import {API_BODY} from "../../config/api"
-const axios = require('axios').default;
+import {UseValidateToken} from "../../Hooks/UseValidateToken"
 
 function Profile() {
-  
   const navigate = useNavigate()
-  const token = getLocalstorage("Token")
-  const [userdata , setUserdata  ] = useState()
-  let data = {}
-  if(token){
-      axios.get(`${API_BODY}user/${token}`)
-        .then(function (response) {
-          data = response.data
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
-        .then(function () {
-          // setUserdata(data)
-        });
-        
-  }else{
-  
-    navigate("/login")
-  
+  const token = UseValidateToken()
+  const [userdata , setUserdata] = useState({})
+  const logout = ()=>{
+    setLocalstorage("Token","")
+    alert("Logout successfully completed.")
+    Location.reload()
   }
   
+  useEffect(() => { 
+
+    if(!token){
+      navigate("/login")
+      return 
+    }
+      UseFetch("get",`user/${token}`)
+      .then((result)=>{
+        if(result){
+          console.log(result)
+          setUserdata(result)
+        }
+      })
+
+
+  }, [])
+  
   return (
-    <div>Profile</div>
+    <>
+    <div>{userdata ? `Welcome ${userdata.username} `: "Profile"}</div>
+    <button onClick={logout}>Logout </button>
+    </>
   )
 }
 

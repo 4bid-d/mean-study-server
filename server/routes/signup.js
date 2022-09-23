@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 const createJsonToken = require("../Middlewares/Jwt/createToken") 
 const FORM_MESSAGES  = require("../config/formValidationMessages")
-const saveUser =  require("../Middlewares/Mongodb/saveUser")
-const findUser  = require("../Middlewares/Mongodb/findUser") 
-const allUsers = require("../Middlewares/Mongodb/allUsers")
+const saveUser =  require("../Middlewares/Mongodb/user/saveUser")
+const findUser  = require("../Middlewares/Mongodb/user/findUser") 
+const allUsers = require("../Middlewares/Mongodb/user/allUsers")
 
 
 router.post('/',createJsonToken,findUser,allUsers, async function(req, res) {

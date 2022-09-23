@@ -1,4 +1,4 @@
-const USER = require("../../Schemas/user"); 
+const USER = require("../../../Schemas/user/user"); 
 
 async function allUsers(req,res,next) {
     let usernameArray = []

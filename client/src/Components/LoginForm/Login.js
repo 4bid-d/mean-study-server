@@ -10,7 +10,7 @@ function Login() {
   const password =  useRef()
   const username =  useRef()
   const email =  useRef()
-
+  const navigate = useNavigate()
   const sendLoginData = (e)=>{
     e.preventDefault()
     const currentUsername =  username.current.value
@@ -25,8 +25,11 @@ function Login() {
       }).then((result)=>{
         console.log(result)
          alert(result.message)
-         setLocalstorage("Token","")
-         setLocalstorage('Token', result.token)
+         if(result.token){
+           setLocalstorage("Token","")
+           setLocalstorage('Token', result.token)
+           navigate("/")
+          }
       })
       setLoading(false)
   }

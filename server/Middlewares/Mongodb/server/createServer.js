@@ -1,6 +1,6 @@
 const SERVER = require("../../../Schemas/server/server"); 
 
-function findUser(req, res, next) {
+function createServer(req, res, next) {
     
     try {
        
@@ -11,4 +11,4 @@ function findUser(req, res, next) {
     
 }
 
-module.exports = findUser
+module.exports = createServer 

@@ -26,7 +26,7 @@ router.post('/',createJsonToken,findUser,allUsers, async function(req, res) {
     } else {
       throw API_MESSAGES.USERNAME_API.UNABLE_TO_USERNAME
     }
-    if(!res.existingUser) {
+    if(!res.User) {
       await saveUser(req,res)
     }else throw FORM_MESSAGES.SIGNUP.ALREADY_IN
   } catch (message) {

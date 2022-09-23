@@ -1,7 +1,7 @@
 const USER = require("../../../Schemas/user/user"); 
 
 function findUser(req, res, next) {
-    res.existingUser = false 
+    res.User = false 
     try {
         USER.findOne(
             {
@@ -9,10 +9,10 @@ function findUser(req, res, next) {
             }
         ).then((result)=>{
             if(result){
-                res.existingUser = result
+                res.User = result
                 next()
             }else{
-                res.existingUser = false
+                res.User = false
                 next()
             }
         })

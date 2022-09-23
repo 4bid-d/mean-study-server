@@ -10,9 +10,9 @@ const bcrypt = require('bcrypt')
 router.post('/',createJsonToken,findUser,async function(req, res) {
   try {
     const DETAILS = req.body
-    if(res.existingUser) {
-        const comparePassword = await bcrypt.compare(DETAILS.password,res.existingUser.password)
-        if(DETAILS.username !==  res.existingUser.username ) throw  FORM_MESSAGES.LOGIN.INVALID_USERNAME 
+    if(res.User) {
+        const comparePassword = await bcrypt.compare(DETAILS.password,res.User.password)
+        if(DETAILS.username !==  res.User.username ) throw  FORM_MESSAGES.LOGIN.INVALID_USERNAME 
         if(!comparePassword) throw FORM_MESSAGES.LOGIN.INVALID_PASSWORD
         else {
             res.json({message:FORM_MESSAGES.LOGIN.SUCCESSFULLY_LOGINED,token : res.Token})

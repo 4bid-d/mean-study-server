@@ -1,6 +1,6 @@
 const USER_AND_SERVER = require("../../../Schemas/user/userAndServer"); 
 
-function findUser(req, res, next) {
+function addServerToUser(req, res, next) {
     try {
         
     } catch (message) {
@@ -9,4 +9,4 @@ function findUser(req, res, next) {
     
 }
 
-module.exports = findUser
+module.exports = addServerToUser

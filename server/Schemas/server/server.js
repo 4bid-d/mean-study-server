@@ -5,6 +5,10 @@ const serverSchema = new mongoose.Schema({
     type :String, 
     required:true
   },
+  serverId:{
+    type :String, 
+    required:true
+  },
   admin:{
     username:String
   }

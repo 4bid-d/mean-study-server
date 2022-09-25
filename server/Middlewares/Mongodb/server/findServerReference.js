@@ -1,6 +1,7 @@
 const SERVER_REFERENCE = require("../../../Schemas/user/serverReference"); 
 
 function findServerReference(req, res, next) {
+    
     if( !res.userDetail ) {
         res.existingReference = false 
         next()
@@ -11,19 +12,21 @@ function findServerReference(req, res, next) {
             email:res.userDetail.email
         }).then((result)=>{
             if(!result) {
+             
                 res.existingReference = false
-                next()          
+                throw "Cant find refference"   
             }
+            console.log("refference found")
             res.existingReference = result
-            console.log(res.existingReference)
             next()
         }).catch((err)=>{
            console.log(err)
+           next()
         })
-
-       
+      
     } catch (message) {
         console.log(message)
+        next()
     }
     
 }

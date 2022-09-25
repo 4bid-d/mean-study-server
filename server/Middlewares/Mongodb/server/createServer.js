@@ -1,7 +1,9 @@
 const SERVER = require("../../../Schemas/server/server"); 
-var mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
+
+
 function createServer(req, res, next) {
-    
+    const ID = uuidv4();
     if(!res.userDetail ||
        !req.body.name 
        ) {
@@ -11,14 +13,19 @@ function createServer(req, res, next) {
     try {
         const newInstance = new SERVER({
             name: req.body.name,
+            serverId : ID,
             admin : {
                 username: res.userDetail.username
             }
         })
         newInstance.save() ?  res.createdServer = true :  res.createdServer = false
+        console.log("server  created")
         res.createdServer = true
-        res.serverId = newInstance._id;
-        // console.log("saved server")
+        res.serverId = {
+            id : ID,
+            name: req.body.name 
+        }
+        // console.log("1" + res.serverId)
         next()
 
     } catch (message) {

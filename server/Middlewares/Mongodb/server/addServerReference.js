@@ -4,43 +4,65 @@ function addServerToUser(req, res, next) {
     if(!res.createdServer||
        !res.serverId ||
        !res.userDetail
-        ) {
+    ){
         res.registration = false 
         next()
     } 
     try {
        
         let serversArray = []
-        if(!res.existingReference) {
-            SERVER_REFERENCE.create({
-                username: res.userDetail.username ,
-                email: res.userDetail.email,
-                servers: [
+        // Setup stuff
+        const query = {
+            username: res.userDetail.username,
+            email: res.userDetail.email,
+        }  
+        let update = {}
+        if(res.existingReference){
+            res.existingReference.servers.forEach((serverObject)=>{
+                serversArray.push(serverObject)
+            })
+
+            update = {
+                servers:[
+                    ...serversArray,
                     res.serverId
                 ]
-           })
-           .then(()=>{
-               res.registration = true
-               next()
-           })  
+            }
+            res.registration = true
+            console.log("updated the document")
+            next()
         }
+  
 
-        console.log("CAlled")
-        res.existingReference.servers.forEach((serverIdObject)=>{
-            serversArray.push(serverIdObject)
-        })
-        serversArray.push(res.serverId)
-        SERVER_REFERENCE.updateMany({
-            email: res.userDetail.email,
-        },
-        {
-            servers: [
-                ...serversArray
-            ]
-        })
-        res.registration = true
-        next()
-
+        SERVER_REFERENCE.findOneAndUpdate(query, update,  (error, result)=> {
+            if (!error) {
+                res.registration = true
+                next()
+                if (!result) {
+                   let  NewRefference = new SERVER_REFERENCE({
+                    username: res.userDetail.username ,
+                    email: res.userDetail.email,
+                        servers: [
+                            res.serverId
+                        ]
+                    })
+                    NewRefference.save(function(error) {
+                        if (!error) {
+                            res.registration = true
+                            console.log("Save the document")
+                            next()
+                        } else {
+                            res.registration = false
+                            // throw "Cant Complete registration."
+                            next()
+                        }
+                    });
+                }
+            }
+        });
+        
+        
+        
     } catch (message) {
         console.log(message)
     }
@@ -48,3 +70,22 @@ function addServerToUser(req, res, next) {
 }
 
 module.exports = addServerToUser
+// console.log(res.existingReference)
+
+        // if(!res.existingReference) {
+        //     SERVER_REFERENCE.updateOne({
+        //         username: res.userDetail.username,
+        //         email: res.userDetail.email,
+        //     },{
+        //         username: res.userDetail.username ,
+        //         email: res.userDetail.email,
+        //         servers: [
+        //             res.serverId
+        //         ]
+        //    })
+        //    .then(()=>{
+        //        res.registration = true
+        //        next()
+        //    })  
+        // } 
+        

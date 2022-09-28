@@ -1,23 +1,25 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
+function verifyJsonToken (req,res,next){
 
-const verifyJsonToken = async(req,res,next)=>{
 
     if(!req.params.jsonToken) {
+        console.log("error2")
+        res.json({JsonWebTokenError: `Invalid token`})
         res.userDetail = false 
         next()
     }
     const TOKEN = req.params.jsonToken.toString() 
-    try {        
+    try {       
         const decodedUser = jwt.verify(TOKEN, process.env.SECRET_KEY);
         decodedUser ? res.userDetail = decodedUser : res.userDetail = false 
-        console.log("user found")
+        next()
     } catch (message) {
-       console.log("user not found")
-       res.json({JsonWebTokenError: `Invalid token`})
-       return
+        res.userDetail = false 
+        console.log("error1")
+        next()
     }
-    next()
+   
 }
 
 module.exports = verifyJsonToken

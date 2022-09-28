@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom"
 import { UseValidateToken } from "./UseValidateToken"
 // import {userDataContext} from "./../Store/userDataContext"
 import { UseFetch } from "../Hooks/useFetch"
-export const userDataContext = createContext( "abid" )  
+import { getLocalstorage } from './useLocalstorage'
+export const userDataContext = createContext()   
 
 export function UserProvider( { children } ) {
-  const token = UseValidateToken()
+  const token = getLocalstorage("Token")
   const [ Data , setData ] = useState( {} ) 
   const navigate = useNavigate()
   useEffect(() => { 
@@ -17,6 +18,7 @@ export function UserProvider( { children } ) {
     }
       UseFetch( "get" , `user/${token}` )
       .then(( result )=>{
+        if(result.JsonWebTokenError) navigate( "/login" )
         if( result ){
           result.token = token
           setData( result )
@@ -24,7 +26,7 @@ export function UserProvider( { children } ) {
       })
 
 
-  }, [])
+  }, [token])
 
   return (
     

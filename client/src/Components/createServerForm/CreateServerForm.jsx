@@ -7,6 +7,7 @@ import { VERFICATIONAL_ERROR_MESSAGE } from "../../config/jwtVerificationErr"
 function CreateServerForm() {
   const name = useRef()
   const user = useContext( userDataContext )
+  
   const createServer = (e)=>{
     e.preventDefault()
     if(!name.current.value) throw SERVER_CREATION_MESSAGES.NAME_IS_REQUIRED
@@ -15,7 +16,7 @@ function CreateServerForm() {
       name : name.current.value
     }).then((response)=>{
       console.log(response)
-      if(response.error) alert(response.error.message)
+      if(response.error) alert(response.error)
       if(response.message) alert(response.message)
       if(response.JsonWebTokenError) alert(VERFICATIONAL_ERROR_MESSAGE.JWT_USER_NOT_BELONG)
     })

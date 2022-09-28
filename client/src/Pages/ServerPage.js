@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom"
 function ServerPage() {
     let { serverId } = useParams();
   return (
-    <div>{serverId}</div>
+    <div>{serverId} server</div>
   )
 }
 

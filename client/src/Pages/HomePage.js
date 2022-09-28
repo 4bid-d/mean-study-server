@@ -1,5 +1,6 @@
 import React from 'react'
 import CreateServerForm from '../Components/createServerForm/CreateServerForm'
+import AllServers from '../Components/displayServers/AllServers'
 import Profile from '../Components/Profile/Profile'
 function HomePage() {
   
@@ -7,6 +8,7 @@ function HomePage() {
     <>
     <Profile/>
     <CreateServerForm/>
+    <AllServers/>
     </>
   )
 }

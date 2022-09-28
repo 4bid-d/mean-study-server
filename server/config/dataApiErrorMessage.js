@@ -3,4 +3,13 @@ const API_MESSAGES = {
         UNABLE_TO_USERNAME : "Unable to get usernames, please try again later. ",
     }
 }
-module.exports = API_MESSAGES
+const SERVER_REFERNCE = {
+    GET_REFERENCE :{
+        USER_NOT_FOUND: "User not found.",
+
+    }
+}
+module.exports  = {
+    API_MESSAGES,
+    SERVER_REFERNCE
+}

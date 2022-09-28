@@ -5,10 +5,10 @@ const { v4: uuidv4 } = require('uuid');
 function createServer(req, res, next) {
     const ID = uuidv4();
     if(!res.userDetail ||
-       !req.body.name 
+       !req.body.name  
        ) {
         res.createdServer = false
-        next()        
+        throw "Cant Create server Please mention name of th e server."  
     } 
     try {
         const newInstance = new SERVER({
@@ -25,7 +25,6 @@ function createServer(req, res, next) {
             id : ID,
             name: req.body.name 
         }
-        // console.log("1" + res.serverId)
         next()
 
     } catch (message) {

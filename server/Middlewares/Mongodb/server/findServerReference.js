@@ -10,13 +10,12 @@ function findServerReference(req, res, next) {
         SERVER_REFERENCE
         .findOne({
             email:res.userDetail.email
-        }).then((result)=>{
-            if(!result) {
-             
+        })
+        .then((result)=>{
+            if(!result) {           
                 res.existingReference = false
                 throw "Cant find refference"   
             }
-            console.log("refference found")
             res.existingReference = result
             next()
         }).catch((err)=>{

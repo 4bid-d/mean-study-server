@@ -1,10 +1,12 @@
-import { useRef, useState } from "react"
-import React from 'react'
+import React , { useRef, useState } from 'react'
 import Loading from "../Loading/Loading"
 import {useNavigate} from "react-router-dom"
 import {UseFetch} from "../../Hooks/useFetch"
 import {setLocalstorage} from "../../Hooks/useLocalstorage"
-
+import {
+  VALIDATION_MESSAGES,
+  
+}  from "../../config/formValidation"
 function Login() { 
   const [loading , setLoading] = useState(false)
   const password =  useRef()
@@ -23,6 +25,8 @@ function Login() {
         email : currentEmail,
         password : currentPassword,   
       }).then((result)=>{
+        if(!result) throw VALIDATION_MESSAGES.BASIC.SOMETHING_WRONG
+        console.log(result)
         console.log(result)
          alert(result.message)
          if(result.token){

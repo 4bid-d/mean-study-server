@@ -14,8 +14,8 @@ findServerReference,
 addServerToUser,
 function(req, res) {
   try {
-    // if(!res.userDetail) throw SERVER_VALIDATION_MESSAGES.SOMETHING_WRONG_WITH_LOGIN
-    // if(!res.createdServer || !res.registration) throw SERVER_VALIDATION_MESSAGES.SOMETHING_WRONG_WITH_SERVER
+    if(!res.userDetail) throw SERVER_VALIDATION_MESSAGES.SOMETHING_WRONG_WITH_LOGIN
+    if(!res.createdServer || !res.registration) throw SERVER_VALIDATION_MESSAGES.SOMETHING_WRONG_WITH_SERVER
     if(!res.userDetail) throw  SERVER_REFERNCE.GET_REFERENCE.USER_NOT_FOUND
     if(!res.createdServer) throw SERVER_VALIDATION_MESSAGES.SERVER_CREATION_FAILED
     if (!res.registration)  throw SERVER_VALIDATION_MESSAGES.SOMETHING_WRONG_WITH_SERVER
@@ -40,7 +40,7 @@ function(req, res) {
       return 
     }
   } catch (error) {
-    // res.json({error: error })
+    res.json({error: error })
   }
 });
 

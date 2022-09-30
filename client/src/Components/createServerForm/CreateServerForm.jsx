@@ -24,7 +24,7 @@ function CreateServerForm() {
   } 
   return (
     <>
-    <h4>Signup Form</h4>
+    <h4>Create Your own server.</h4>
       <form>
         <input type="text" placeholder="Server name"  ref={name} required/>
         <button type="submit" onClick={
@@ -32,8 +32,8 @@ function CreateServerForm() {
            try {            
              createServer(e)
            } catch (message) {
-            //  alert(message)
-            console.log(message)
+             alert(message)
+            // console.log(message)
            }
           }
         }>Create</button>

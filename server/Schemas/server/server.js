@@ -12,6 +12,11 @@ const serverSchema = new mongoose.Schema({
   admin:{
     type :String, 
     required:true
+  },
+  members:{
+    type:Array,
+    required:true,
+    default:[]
   }
 });
 

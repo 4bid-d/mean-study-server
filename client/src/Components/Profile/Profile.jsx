@@ -4,7 +4,6 @@ import { setLocalstorage } from "../../Hooks/useLocalstorage"
 function Profile() {
 
   const user = useContext( userDataContext )
-
   const logout = () => {
     setLocalstorage("Token" , "")
     alert("Logout successfully completed.")

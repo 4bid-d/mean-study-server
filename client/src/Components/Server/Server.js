@@ -14,6 +14,7 @@ function Server() {
         UseFetch("get",`server/${token}/${serverId}`)
         .then((result)=>{
             if(result.error) alert(result.error)
+            if(result.redirect) navigate(result.redirect)
             setServerInstance(result.data)
             console.log(serverInstance)
         })

@@ -14,7 +14,10 @@ function createServer(req, res, next) {
         const newInstance = new SERVER({
             name: req.body.name,
             serverId : ID,
-            admin : res.userDetail.username
+            admin : res.userDetail.username,
+            members:[
+                res.userDetail.username
+            ]
         })
         newInstance.save() ?  res.createdServer = true :  res.createdServer = false
         console.log("server  created")

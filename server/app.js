@@ -14,7 +14,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var serverRouter = require('./routes/server');
-
+var inviteRouter = require("./routes/Invitation/invite")
 var app = express();
 
 mongoose.connect('mongodb://localhost:27017/myapp');// view engine setup
@@ -30,6 +30,7 @@ app.use('/signup', cors(corsOptions), signupRouter);
 app.use('/login', cors(corsOptions), loginRouter);
 app.use('/user', cors(corsOptions), usersRouter);
 app.use('/server', cors(corsOptions), serverRouter);
+app.use('/invite', cors(corsOptions), inviteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

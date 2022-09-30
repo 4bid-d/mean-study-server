@@ -7,7 +7,7 @@ function HomePage() {
   
   return (
     <>
-    <Profile/>
+    <UserProvider children={<Profile/>} />
     <UserProvider children={<CreateServerForm/>} />
     <UserProvider children={<AllServers/>} />
     </>

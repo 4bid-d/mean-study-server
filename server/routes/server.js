@@ -6,7 +6,6 @@ const createServer = require('../Middlewares/Mongodb/server/createServer.js');
 const findServerReference = require('../Middlewares/Mongodb/server/findServerReference');
 const {SERVER_VALIDATION_MESSAGES} = require("../config/serverCreationErr")
 const {SERVER_REFERNCE} = require("../config/dataApiErrorMessage");
-const { Router } = require('express');
 const findServer = require('../Middlewares/Mongodb/server/findServerInstance');
 
 router.post('/:jsonToken/newServer',
@@ -50,10 +49,20 @@ router.get("/:jsonToken/:serverId" ,
 verifyJsonToken,
 findServer,
 (req,res)=>{
+
   try {
     if(!res.userDetail) throw SERVER_REFERNCE.GET_REFERENCE.USER_NOT_FOUND
     if(!res.Server) throw "Invalid server requested."
     else{
+    
+      const usernamefoundAsMember = res.Server.members.filter((username)=>{
+         return username === res.userDetail.username
+      })
+
+      if(!usernamefoundAsMember[0]) {
+        res.json( { redirect : `/invite/${res.Server.serverId}` } )
+        return 
+      }
       res.json( { data : res.Server } )
       return 
     }

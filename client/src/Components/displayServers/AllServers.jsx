@@ -14,7 +14,6 @@ function AllServers() {
       if (!token ) navigate("/login")
       UseFetch("get",`server/${token}/serverReference`)
       .then((response)=> {
-        console.log( response ) 
         if(response.JsonWebTokenError) {
               return
           }
@@ -24,22 +23,23 @@ function AllServers() {
             return 
           }
           if(response){
-            
-            setServers(response.data.servers)
-            console.log(allServers)        
+            setServers(response.data.servers)     
           }
           
         })
     }, [token])
     
-    console.log( allServers ? allServers: null)
 
   return (
     <>
-    <div>All Server</div>
+    <div>
+    <h3>
+      All Servers
+    </h3>
     {
-      allServers.map((obj)=> <h3><a href={`/server/${obj.id}`} >{obj.name}</a></h3> )
+      allServers ?  allServers.map((obj)=> <h3><a href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server created."
     }
+    </div>
     </>
   )
 }

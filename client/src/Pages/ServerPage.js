@@ -1,9 +1,12 @@
 import React from 'react'
-import {useParams} from "react-router-dom"
+import Server from '../Components/Server/Server'
+
 function ServerPage() {
-    let { serverId } = useParams();
+  
   return (
-    <div>{serverId} server</div>
+    <>
+    <Server/>
+    </>
   )
 }
 

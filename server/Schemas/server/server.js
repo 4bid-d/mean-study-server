@@ -10,7 +10,8 @@ const serverSchema = new mongoose.Schema({
     required:true
   },
   admin:{
-    username:String
+    type :String, 
+    required:true
   }
 });
 

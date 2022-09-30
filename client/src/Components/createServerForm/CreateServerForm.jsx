@@ -7,6 +7,7 @@ import { VERFICATIONAL_ERROR_MESSAGE } from "../../config/jwtVerificationErr"
 function CreateServerForm() {
   const name = useRef()
   const user = useContext( userDataContext )
+
   
   const createServer = (e)=>{
     e.preventDefault()
@@ -15,7 +16,6 @@ function CreateServerForm() {
     UseFetch( "post" , `server/${user.token}/newServer` , {
       name : name.current.value
     }).then((response)=>{
-      console.log(response)
       if(response.error) alert(response.error)
       if(response.message) alert(response.message)
       if(response.JsonWebTokenError) alert(VERFICATIONAL_ERROR_MESSAGE.JWT_USER_NOT_BELONG)
@@ -32,7 +32,8 @@ function CreateServerForm() {
            try {            
              createServer(e)
            } catch (message) {
-             alert(message)
+            //  alert(message)
+            console.log(message)
            }
           }
         }>Create</button>

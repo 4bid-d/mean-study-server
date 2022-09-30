@@ -12,7 +12,7 @@ export function UserProvider( { children } ) {
   useEffect(() => { 
    
     if( !token ){
-      // navigate( "/login" )
+      navigate( "/login" )
       return 
     }
     UseFetch( "get" , `user/${token}` )

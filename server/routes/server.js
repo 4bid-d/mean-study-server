@@ -5,7 +5,9 @@ const addServerToUser = require('../Middlewares/Mongodb/server/addServerReferenc
 const createServer = require('../Middlewares/Mongodb/server/createServer.js');
 const findServerReference = require('../Middlewares/Mongodb/server/findServerReference');
 const {SERVER_VALIDATION_MESSAGES} = require("../config/serverCreationErr")
-const {SERVER_REFERNCE} = require("../config/dataApiErrorMessage")
+const {SERVER_REFERNCE} = require("../config/dataApiErrorMessage");
+const { Router } = require('express');
+const findServer = require('../Middlewares/Mongodb/server/findServerInstance');
 
 router.post('/:jsonToken/newServer',
 verifyJsonToken,
@@ -44,4 +46,19 @@ function(req, res) {
   }
 });
 
+router.get("/:jsonToken/:serverId" ,
+verifyJsonToken,
+findServer,
+(req,res)=>{
+  try {
+    if(!res.userDetail) throw SERVER_REFERNCE.GET_REFERENCE.USER_NOT_FOUND
+    if(!res.Server) throw "Invalid server requested."
+    else{
+      res.json( { data : res.Server } )
+      return 
+    }
+  } catch (error) {
+    res.json({error: error })
+  }
+})
 module.exports = router;

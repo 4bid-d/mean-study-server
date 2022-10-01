@@ -3,6 +3,10 @@ const SERVER = require("../../../Schemas/server/server");
 function findServer(req, res, next){
 
     const id = req.params.serverId
+    if(!id) {
+        res.Server = false
+        next() 
+    }
     SERVER.findOne({
         serverId:id
     })

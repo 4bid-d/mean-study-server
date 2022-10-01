@@ -9,7 +9,7 @@ import {
   EMAIL_VALIDATION_REGEX,
   USERNAME_VALIDATION_REGEX
 }  from "../../config/formValidation"
-import {setLocalstorage} from "../../Hooks/useLocalstorage"
+import {getLocalstorage} from "../../Hooks/useLocalstorage"
 // const realtimeUsernameChecking = (username)=>{
   
 //     console.log("checking username.")
@@ -28,8 +28,9 @@ function Signup() {
   const username = useRef()
   const email = useRef()
   const navigate  = useNavigate()
+  const token = getLocalstorage("Token")
   if(loading) return <Loading/>
-  
+  if(token) navigate("/")
 
   const validateSignupForm = () =>{
     const currentPass = password.current.value 

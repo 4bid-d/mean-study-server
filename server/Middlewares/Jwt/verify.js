@@ -16,8 +16,8 @@ function verifyJsonToken (req,res,next){
         next()
     } catch (message) {
         res.userDetail = false 
-        console.log("error1")
-        next()
+        res.json({JsonWebTokenError: `Invalid token`})
+        // next()
     }
    
 }

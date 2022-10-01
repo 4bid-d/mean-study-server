@@ -2,14 +2,20 @@ import {
   API_BODY,
   METHODS
 } from "../config/api"
+import { UseValidateToken } from "./UseValidateToken"
 const throwErr = (message) =>{
     throw new Error(message)
 }
 async function getData (apiEndpoint) {
+  const token = UseValidateToken()
  
   try {
     let request = await fetch(`${API_BODY}${apiEndpoint ? apiEndpoint : ""}`,{
-      method: METHODS.GET,        
+      method: METHODS.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token ? token :null}` 
+      },        
     })
     let data = await request.json()
     return data

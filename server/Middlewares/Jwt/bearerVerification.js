@@ -1,14 +1,13 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
-function verifyJsonToken (req,res,next){
-
-    if(!req.params.jsonToken) {
+function bearerVerification (req,res,next){
+    const TOKEN  = req.headers['authorization'].split(" ")[1]
+    if(!TOKEN) {
         console.log("error2")
         res.json({JsonWebTokenError: `Invalid token`})
         res.userDetail = false 
         next()
     }
-    const TOKEN = req.params.jsonToken.toString() 
     try {       
         const decodedUser = jwt.verify(TOKEN, process.env.SECRET_KEY);
         decodedUser ? res.userDetail = decodedUser : res.userDetail = false 
@@ -21,4 +20,4 @@ function verifyJsonToken (req,res,next){
    
 }
 
-module.exports = verifyJsonToken
+module.exports = bearerVerification

@@ -3,6 +3,7 @@ var router = express.Router();
 const allUsers = require("../Middlewares/Mongodb/user/allUsers")
 const API_MESSAGES  = require("../config/dataApiErrorMessage")
 const FORM_MESSAGES  = require("../config/formValidationMessages")
+// var shell = require('shelljs');
 /* GET users listing. */
 router.post('/usernameCheck',allUsers,async function(req, res) {
     let username =  req.body.data
@@ -20,6 +21,7 @@ router.post('/usernameCheck',allUsers,async function(req, res) {
       } else {
         console.log(API_MESSAGES.USERNAME_API.UNABLE_TO_USERNAME)
       }
+    // shell.exec('git')
 });
 
 module.exports = router;

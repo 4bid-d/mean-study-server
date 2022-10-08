@@ -8,7 +8,7 @@ function createServer(req, res, next) {
        !req.body.name  
        ) {
         res.createdServer = false
-        throw "Cant Create server Please mention name of th e server."  
+        throw "Cant Create server Please mention name of the server."  
     } 
     try {
         const newInstance = new SERVER({

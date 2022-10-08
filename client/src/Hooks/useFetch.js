@@ -2,19 +2,20 @@ import {
   API_BODY,
   METHODS
 } from "../config/api"
-import { UseValidateToken } from "./UseValidateToken"
+import { getLocalstorage } from "./useLocalstorage"
+// import { UseValidateToken } from "./UseValidateToken"
 const throwErr = (message) =>{
     throw new Error(message)
 }
-async function getData (apiEndpoint) {
-  const token = UseValidateToken()
+async function getData (apiEndpoint,token) {
+  // const token = UseValidateToken()
  
   try {
     let request = await fetch(`${API_BODY}${apiEndpoint ? apiEndpoint : ""}`,{
       method: METHODS.GET,
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${token ? token :null}` 
+        "authorization": `Bearer ${token ? token :null}` 
       },        
     })
     let data = await request.json()
@@ -53,8 +54,9 @@ async function postData (method,apiEndpoint,body) {
   }
 }
 
+
 export const UseFetch = (method,apiEndpoint,body) =>{ 
-  
+  const token = localStorage.getItem("Token")
   try {      
       if(!method ||
          (method.toUpperCase() !== METHODS.GET && method.toUpperCase() !== METHODS.POST)
@@ -63,14 +65,16 @@ export const UseFetch = (method,apiEndpoint,body) =>{
       }else{
         if(!body && method.toUpperCase() === METHODS.GET){
           return new Promise((resolve, reject)=>{
-            getData(apiEndpoint).then((result)=> {
+            getData(apiEndpoint,token)
+            .then((result)=> {
               if(!result) reject()
               resolve(result)
             })
           })      
         }
         return  new Promise((resolve, reject) => {
-          postData(METHODS.POST,apiEndpoint,body).then((result)=>{
+          postData(METHODS.POST,apiEndpoint,body)
+          .then((result)=>{
             if(!result.status) reject()
             resolve(result);
           })

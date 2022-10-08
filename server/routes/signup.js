@@ -68,9 +68,6 @@ router.post('/',createJsonToken,findUser,allUsers, async function(req, res) {
     }
   )
 
-  function newFunction() {
-    return "SAVED USER";
-  }
   });
   
 

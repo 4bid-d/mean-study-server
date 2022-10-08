@@ -1,18 +1,20 @@
 const USER = require("../../../Schemas/user/user"); 
 
 async function allUsers(req,res,next) {
-    let usernameArray = []
+    console.log("alluser called")
+    let userArray = []
     try {
         USER.find()
         .then((result)=>{
             if(result){
                 result.forEach(
                     (object)=>{
-                        usernameArray.push(object)
+                        userArray.push(object)
                     }
                )
                 // responseObject.status = true  
-                res.users = usernameArray
+                res.users = userArray
+               
                 next()
             }else{
                 res.username = false           

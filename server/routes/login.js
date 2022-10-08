@@ -10,8 +10,7 @@ const bcrypt = require('bcrypt')
 router.post('/',createJsonToken,findUser,async function(req, res) {
   try {
     const DETAILS = req.body
-    console.log(res.Token)
-    console.log(res.User)
+
     if(res.User) {
        console.log("varraved")
         const comparePassword = await bcrypt.compare(DETAILS.password,res.User.password)

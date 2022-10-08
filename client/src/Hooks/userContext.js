@@ -15,7 +15,7 @@ export function UserProvider( { children } ) {
       navigate( "/login" )
       return 
     }
-    UseFetch( "get" , `user/${token}` )
+    UseFetch( "get" , `user/` )
     .then(( result )=>{
       
         // console.log(result)

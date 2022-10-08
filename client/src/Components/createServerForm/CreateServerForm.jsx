@@ -13,7 +13,7 @@ function CreateServerForm() {
     e.preventDefault()
     if(!name.current.value) throw SERVER_CREATION_MESSAGES.NAME_IS_REQUIRED
     if (!user.token ) throw SERVER_CREATION_MESSAGES.PLEASE_RELOAD
-    UseFetch( "post" , `server/${user.token}/newServer` , {
+    UseFetch( "post" , `server/newServer` , {
       name : name.current.value
     }).then((response)=>{
       if(response.error) alert(response.error)

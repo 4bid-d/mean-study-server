@@ -24,7 +24,7 @@ async function getData (apiEndpoint,token) {
     throw error
   }
 }
-async function postData (method,apiEndpoint,body) {
+async function postData (method,apiEndpoint,body,token) {
   
   try {
     let request = await fetch(`${API_BODY}${apiEndpoint ? apiEndpoint : ""}`,
@@ -34,8 +34,8 @@ async function postData (method,apiEndpoint,body) {
               cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
               credentials: 'same-origin', // include, *same-origin, omit
               headers: {
-              'Content-Type': 'application/json'
-      
+              'Content-Type': 'application/json',
+              "authorization": `Bearer ${token ? token :null}` 
               },
               redirect: 'follow', // manual, *follow, error
               referrerPolicy: 'no-referrer', 
@@ -73,7 +73,7 @@ export const UseFetch = (method,apiEndpoint,body) =>{
           })      
         }
         return  new Promise((resolve, reject) => {
-          postData(METHODS.POST,apiEndpoint,body)
+          postData(METHODS.POST,apiEndpoint,body,token)
           .then((result)=>{
             if(!result.status) reject()
             resolve(result);

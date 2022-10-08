@@ -37,7 +37,7 @@ function AllServers() {
       All Servers
     </h3>
     {
-      allServers ?  allServers.map((obj)=> <h3><a href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server created."
+      allServers ?  allServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server created."
     }
     </div>
     </>

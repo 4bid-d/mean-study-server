@@ -23,10 +23,10 @@ function Server() {
   return (
     <>
      <h2>
-        { serverInstance.name ? serverInstance.name :null}
+        { serverInstance ? serverInstance.name :null}
      </h2>
      <h3>
-         Admin : {serverInstance.admin ? serverInstance.admin :null}
+         Admin : {serverInstance ? serverInstance.admin :null}
      </h3>
     </>
   )

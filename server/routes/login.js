@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const allUsers = require("../Middlewares/Mongodb/user/allUsers")
-const verifyJsonToken =  require("../Middlewares/Jwt/verify")
+// const verifyJsonToken =  require("../Middlewares/Jwt/verify")
 const createJsonToken =  require("../Middlewares/Jwt/createToken")
 const findUser  = require("../Middlewares/Mongodb/user/findUser"); 
 const FORM_MESSAGES  = require("../config/formValidationMessages")

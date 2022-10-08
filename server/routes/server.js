@@ -7,9 +7,10 @@ const findServerReference = require('../Middlewares/Mongodb/server/findServerRef
 const {SERVER_VALIDATION_MESSAGES} = require("../config/serverCreationErr")
 const {SERVER_REFERNCE} = require("../config/dataApiErrorMessage");
 const findServer = require('../Middlewares/Mongodb/server/findServerInstance');
+const bearerVerification = require('../Middlewares/Jwt/bearerVerification');
 
-router.post('/:jsonToken/newServer',
-verifyJsonToken,
+router.post('/newServer',
+bearerVerification,
 createServer,
 findServerReference,
 addServerToUser,

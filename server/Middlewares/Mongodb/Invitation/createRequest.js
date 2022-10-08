@@ -14,7 +14,7 @@ class Request {
 function createOrUpdateInvitaion(req, res, next){
 
     console.log("cretion called")
-    if(!res.userDetail || !res.Server ){
+    if(!res.userDetail || !res.Server || res.userDetail.username == res.Server.admin){
         console.log("returned")
         res.saveRequest = false
         next()

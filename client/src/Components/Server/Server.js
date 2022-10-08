@@ -11,7 +11,7 @@ function Server() {
     const [serverInstance , setServerInstance] = useState({})
     useEffect(() => {
         if(!token) navigate("/login")
-        UseFetch("get",`server/${token}/${serverId}`)
+        UseFetch("get",`server/${serverId}`)
         .then((result)=>{
             if(result.error) alert(result.error)
             if(result.redirect) navigate(result.redirect)

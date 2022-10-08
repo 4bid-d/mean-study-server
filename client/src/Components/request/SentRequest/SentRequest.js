@@ -10,7 +10,7 @@ function Invitation() {
     const sendRequest= ()=>{
         if(!token) document.location.href = "/login"
         console.log(serverId+token)
-        UseFetch("get",`invite/${token}/${serverId}d`)
+        UseFetch("get",`invite/${serverId}`)
         .then((result)=>{
             console.log(result)
         })

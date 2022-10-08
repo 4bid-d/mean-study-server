@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const verifyJsonToken =  require("../Middlewares/Jwt/verify"); 
 const addServerToUser = require('../Middlewares/Mongodb/server/addServerReference');
 const createServer = require('../Middlewares/Mongodb/server/createServer.js');
 const findServerReference = require('../Middlewares/Mongodb/server/findServerReference');
@@ -29,15 +28,15 @@ function(req, res) {
   }
 });
 
-router.get('/:jsonToken/serverReference',
-verifyJsonToken,
+router.get('/serverReference',
+bearerVerification,
 findServerReference,
 function(req, res) {
   try {
     if(!res.userDetail) throw SERVER_REFERNCE.GET_REFERENCE.USER_NOT_FOUND
     if(!res.existingReference) throw "You dont have any servers created."
     else{
-      console.log(res.existingReference.servers)
+      // console.log(res.existingReference.servers)
       res.json( { data : res.existingReference } )
       return 
     }
@@ -46,8 +45,8 @@ function(req, res) {
   }
 });
 
-router.get("/:jsonToken/:serverId" ,
-verifyJsonToken,
+router.get("/:serverId" ,
+bearerVerification,
 findServer,
 (req,res)=>{
 

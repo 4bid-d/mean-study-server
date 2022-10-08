@@ -7,13 +7,12 @@ const findInvitaion = require('../../Middlewares/Mongodb/Invitation/findInvitati
 const findServer = require('../../Middlewares/Mongodb/server/findServerInstance');
 const allUsers = require('../../Middlewares/Mongodb/user/allUsers');
 
-router.get('/:jsonToken/:serverId',
-verifyJsonToken,
+router.get('/:serverId',
+bearerVerification,
 findServer,
 allUsers,
 createOrUpdateInvitaion,
 function(req, res) {
-  // createOrUpdateInvitaion(req,res) ?   console.log("success") :  console.log("reject")
   try {
     if(!res.Server) throw "server not found"
     if(!res.saveRequest) throw "Cant Sent Request."
@@ -25,10 +24,10 @@ function(req, res) {
   }
 });
 
-router.get('/all',
+router.get('/',
 bearerVerification,
 findInvitaion,
-async function(req, res) {
+function(req, res) {
   try {
       if(!res.requests) {
         res.json({error : true})

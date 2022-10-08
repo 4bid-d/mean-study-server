@@ -12,7 +12,7 @@ function ShowRequest() {
     </div>
      )
     useEffect(() => {
-        UseFetch("get","invite/all")
+        UseFetch("get","invite/")
         .then((result)=>{
             result.error ? console.log("You dont have any requests currently.") : setRequests(result.Requests)
         })

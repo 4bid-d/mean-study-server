@@ -12,7 +12,7 @@ function AllServers() {
     const navigate = useNavigate()
     useEffect(() => {
       if (!token ) navigate("/login")
-      UseFetch("get",`server/${token}/serverReference`)
+      UseFetch("get",`server/serverReference`)
       .then((response)=> {
         if(response.JsonWebTokenError) {
               return

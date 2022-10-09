@@ -1,7 +1,6 @@
 var express = require('express');
 const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
 var router = express.Router();
-const verifyJsonToken =  require("../../Middlewares/Jwt/verify"); 
 const createOrUpdateInvitaion = require('../../Middlewares/Mongodb/Invitation/createRequest');
 const findInvitaion = require('../../Middlewares/Mongodb/Invitation/findInvitation');
 const findServer = require('../../Middlewares/Mongodb/server/findServerInstance');

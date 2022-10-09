@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 function bearerVerification (req,res,next){
     const TOKEN  = req.headers['authorization']
-
     if(!TOKEN) {
         res.json({JsonWebTokenError: `Invalid token`})
         return

@@ -1,10 +1,37 @@
 var express = require('express');
-const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
+const querystring = require('querystring');
+const url = require('url');
 var router = express.Router();
+const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
 const createOrUpdateInvitaion = require('../../Middlewares/Mongodb/Invitation/createRequest');
 const findInvitaion = require('../../Middlewares/Mongodb/Invitation/findInvitation');
 const findServer = require('../../Middlewares/Mongodb/server/findServerInstance');
 const allUsers = require('../../Middlewares/Mongodb/user/allUsers');
+const acceptOrRejectIvitation = require('../../Middlewares/Mongodb/Invitation/acceptOrRejectIvitation');
+
+router.get('/',
+bearerVerification,
+findInvitaion,
+function(req, res) {
+  try {
+      if(!res.requests) {
+        res.json({error : true})
+      }else {
+        res.json({Requests : res.requests })
+      }
+  } catch (error) {
+    res.json({error: error})
+  }
+});
+
+router.get("/requestDecision/:encodedData",
+bearerVerification,
+findInvitaion,
+acceptOrRejectIvitation,
+(req,res)=>{
+  // console.log(decodeURIComponent(req.params.encodedData))
+
+})
 
 router.get('/:serverId',
 bearerVerification,
@@ -23,19 +50,8 @@ function(req, res) {
   }
 });
 
-router.get('/',
-bearerVerification,
-findInvitaion,
-function(req, res) {
-  try {
-      if(!res.requests) {
-        res.json({error : true})
-      }else {
-        res.json({Requests : res.requests })
-      }
-  } catch (error) {
-    res.json({error: error})
-  }
-});
+
+
+
 
 module.exports = router;

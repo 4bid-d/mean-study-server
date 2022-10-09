@@ -1,6 +1,6 @@
 const USER = require("../../../Schemas/user/user"); 
 
-function allUsers(req,res,next) {
+function allUsers(req,res,next) {   
 
     let userArray = []
     try {

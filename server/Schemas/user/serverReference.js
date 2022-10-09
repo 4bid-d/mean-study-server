@@ -13,6 +13,11 @@ const serverReferenceSchema = new mongoose.Schema({
     type:Array,
     required:true,
     default : []
+  },
+  joinedServers : {
+    type:Array,
+    required:true,
+    default : []
   }
 });
 

@@ -9,6 +9,9 @@ function Server() {
     const token = getLocalstorage("Token") 
     const navigate = useNavigate()
     const [serverInstance , setServerInstance] = useState({})
+    const [members , setMembers] = useState([])
+    const membersList = members ? members.map((member,key)=><div key={key}>{member}</div>) : null 
+    
     useEffect(() => {
         if(!token) navigate("/login")
         UseFetch("get",`server/${serverId}`)
@@ -16,6 +19,7 @@ function Server() {
             if(result.error) alert(result.error)
             if(result.redirect) navigate(result.redirect)
             setServerInstance(result.data)
+            setMembers(result.data.members)
             console.log(serverInstance)
         })
     }, [token])
@@ -28,6 +32,10 @@ function Server() {
      <h3>
          Admin : {serverInstance ? serverInstance.admin :null}
      </h3>
+     <div>
+     <h4>Members:</h4>
+     {serverInstance.members ? membersList : null}
+     </div>
     </>
   )
 }

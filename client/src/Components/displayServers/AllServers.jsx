@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom'
 function AllServers() {
     
     const token  = getLocalstorage("Token")
-    const [allServers , setServers] = useState([])
+    const [allCreatedServers , setCreatedServers] = useState([])
+    const [allJoinedServers , setJoinedServers] = useState([])
     const navigate = useNavigate()
     useEffect(() => {
       if (!token ) navigate("/login")
@@ -23,7 +24,9 @@ function AllServers() {
             return 
           }
           if(response){
-            setServers(response.data.servers)     
+            console.log(response.data)
+            setCreatedServers(response.data.servers)     
+            setJoinedServers(response.data.joinedServers)     
           }
           
         })
@@ -37,7 +40,13 @@ function AllServers() {
       All Servers
     </h3>
     {
-      allServers ?  allServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server created."
+      allCreatedServers ?  allCreatedServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server created."
+    }
+     <h3>
+      Joined servers
+    </h3>
+    {
+      allJoinedServers ?  allJoinedServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server You joined."
     }
     </div>
     </>

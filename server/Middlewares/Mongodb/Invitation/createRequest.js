@@ -13,6 +13,7 @@ class Request {
 
 function createOrUpdateInvitaion(req, res, next){
 
+    console.log(res.Server)
     if(!res.userDetail || !res.Server ||  res.userDetail.username == res.Server.admin){
         console.log("returned")
         res.saveRequest = false
@@ -50,10 +51,8 @@ function createOrUpdateInvitaion(req, res, next){
                         }
                     ]
                 })
-            // console.log(requestLetter)
                 requestLetter.save(()=>{
                     res.saveRequest = true
-                    // return true
                     next()
                 })
             }else{
@@ -67,6 +66,9 @@ function createOrUpdateInvitaion(req, res, next){
                     next() 
                 }else {
                     INVITAION_MODEL.updateOne({
+                        username:result.username
+                    },
+                    {
                         requests:[
                             ...result.requests,
                             {

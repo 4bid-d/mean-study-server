@@ -115,7 +115,7 @@ function acceptOrRejectIvitation(req, res, next){
                                     name:FOUNDED_INVITATION[0].server.name
                                 }
                             )
-                            res.success = "Succesfully addedd to your server"
+                            res.success = "Succesfully added to your server"
                             next()
                         })
                     }else{

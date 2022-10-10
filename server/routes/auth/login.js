@@ -1,13 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const allUsers = require("../Middlewares/Mongodb/user/allUsers")
+const allUsers = require("../../Middlewares/Mongodb/user/allUsers")
 // const verifyJsonToken =  require("../Middlewares/Jwt/verify")
-const createJsonToken =  require("../Middlewares/Jwt/createToken")
-const findUser  = require("../Middlewares/Mongodb/user/findUser"); 
-const FORM_MESSAGES  = require("../config/formValidationMessages")
+const createJsonToken =  require("../../Middlewares/Jwt/createToken")
+const findUser  = require("../../Middlewares/Mongodb/user/findUser"); 
+const FORM_MESSAGES  = require("../../config/formValidationMessages")
 const bcrypt = require('bcrypt')
 
-router.post('/',createJsonToken,findUser,async function(req, res) {
+router.post('/',
+createJsonToken,
+findUser,async function(req, res) {
   try {
     const DETAILS = req.body
 

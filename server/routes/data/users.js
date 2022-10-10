@@ -1,5 +1,5 @@
 var express = require('express');
-const bearerVerification = require('../Middlewares/Jwt/bearerVerification');
+const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
 var router = express.Router();
 // const verifyJsonToken =  require("../Middlewares/Jwt/verify")
 

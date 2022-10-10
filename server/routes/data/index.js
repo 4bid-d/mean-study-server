@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const allUsers = require("../Middlewares/Mongodb/user/allUsers")
-const API_MESSAGES  = require("../config/dataApiErrorMessage")
-const FORM_MESSAGES  = require("../config/formValidationMessages")
+const allUsers = require("../../Middlewares/Mongodb/user/allUsers")
+const API_MESSAGES  = require("../../config/dataApiErrorMessage")
+const FORM_MESSAGES  = require("../../config/formValidationMessages")
 // var shell = require('shelljs');
 /* GET users listing. */
 router.post('/usernameCheck',allUsers,async function(req, res) {

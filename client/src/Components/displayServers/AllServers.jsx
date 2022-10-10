@@ -35,20 +35,20 @@ function AllServers() {
 
   return (
     <>
-    <div>
-    <h3>
-      All Servers
-    </h3>
-    {
-      allCreatedServers ?  allCreatedServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server created."
-    }
-     <h3>
-      Joined servers
-    </h3>
-    {
-      allJoinedServers ?  allJoinedServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server You joined."
-    }
-    </div>
+      <div>
+        <h3>
+           All Servers
+        </h3>
+          {
+            allCreatedServers ?  allCreatedServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server created."
+          }
+        <h3>
+          Joined servers
+        </h3>
+          {
+            allJoinedServers ?  allJoinedServers.map((obj,key)=> <h3 key={key}><a  href={`/server/${obj.id}`} >{obj.name }</a></h3> ) : "No Server You joined."
+          }
+      </div>
     </>
   )
 }

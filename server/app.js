@@ -9,11 +9,11 @@ var corsOptions = {
   methods : "GET,HEAD,PUT,PATCH,POST,DELETE"
 }
 const mongoose = require('mongoose')
-var signupRouter = require('./routes/signup');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var serverRouter = require('./routes/server');
+var signupRouter = require('./routes/auth/signup');
+var indexRouter = require('./routes/data/index');
+var usersRouter = require('./routes/data/users');
+var loginRouter = require('./routes/auth/login');
+var serverRouter = require('./routes/server/server');
 var inviteRouter = require("./routes/Invitation/invite")
 var app = express();
 

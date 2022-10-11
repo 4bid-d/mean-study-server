@@ -1,4 +1,4 @@
-const INVITAION_MODEL = require("../../../../Schemas/Invitaion/invitaionSchema")
+const INVITAION_MODEL = require("../../../../../Schemas/Invitaion/invitaionSchema")
 
 function updateInvitation(ALL_REQUESTS,
     {username,inviteId,serverName,serverId},

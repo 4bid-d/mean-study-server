@@ -1,7 +1,9 @@
 const INVITAION_MODEL = require("../../../Schemas/Invitaion/invitaionSchema"); 
-const updateInvitation = require("./helpers/update")
+const updateInvitation = require("./helpers/createRequestHelper/update")
 const { v4: uuidv4 } = require('uuid');
-const createInvitation = require("./helpers/create");
+const createInvitation = require("./helpers/createRequestHelper/create");
+const findAdminDetails = require("./helpers/createRequestHelper/findAdminDetails");
+const findExistingRequest = require("./helpers/createRequestHelper/findExistingRequest");
 
 class Request {
     constructor(username,{name,id}) {
@@ -12,42 +14,18 @@ class Request {
     }
   }
 
-/**
- * Takes and returns the matching
- * admin from the given user array.
- */
-function findAdminDetails(Users, username){
-    return Users.find((object)=>{
-        return object.username === username
-    })
-}
-/* to find request do already exists
-   and return boolean.
-*/
-function findExistingRequest(requests,NEW_REQUEST){
-    const existingRequest = requests.find((object)=>{
-        return object.by == NEW_REQUEST.username && object.server.name ==  NEW_REQUEST.serverName
-    })   
-    return existingRequest ?? false  
-}
-
 function createOrUpdateInvitation(req, res, next){
-
-    console.log(res.Server)
     
     if(!res.userDetail ||
     !res.Server ||
     res.userDetail.username == res.Server.admin
     ){
-        console.log("returned")
         res.saveRequest = false
         next()
     }
     
-    /** 
-      All credentials and confirms
-      that admin is not sending the request.
-    **/
+    /** All credentials and confirms that admin is not sending the request.**/
+    
     if(res.userDetail &&
     res.Server &&
     res.userDetail.username !== res.Server.admin
@@ -65,7 +43,6 @@ function createOrUpdateInvitation(req, res, next){
         })
         .then((result)=>{
             if(!result){
-                console.log(NEW_REQUEST.serverId)
                 // Creating Invitation
                 createInvitation(NEW_REQUEST , adminDetails,(result)=>{
                     res.saveRequest = true

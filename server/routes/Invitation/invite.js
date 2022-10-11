@@ -3,7 +3,7 @@ const querystring = require('querystring');
 const url = require('url');
 var router = express.Router();
 const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
-const createOrUpdateInvitaion = require('../../Middlewares/Mongodb/Invitation/createRequest');
+const createOrUpdateInvitation = require('../../Middlewares/Mongodb/Invitation/createRequest');
 const findInvitaion = require('../../Middlewares/Mongodb/Invitation/findInvitation');
 const findServer = require('../../Middlewares/Mongodb/server/findServerInstance');
 const allUsers = require('../../Middlewares/Mongodb/user/allUsers');
@@ -37,7 +37,7 @@ router.get('/:serverId',
 bearerVerification,
 findServer,
 allUsers,
-createOrUpdateInvitaion,
+createOrUpdateInvitation,
 function(req, res) {
   try {
     if(!res.Server) throw "server not found"

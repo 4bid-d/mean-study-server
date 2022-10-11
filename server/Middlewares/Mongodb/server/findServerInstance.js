@@ -5,7 +5,7 @@ function findServer(req, res, next){
     const id = req.params.serverId
     if(!id) {
         res.Server = false
-        next() 
+        // next() 
     }
     SERVER
     .findOne({
@@ -14,7 +14,7 @@ function findServer(req, res, next){
     .then((result)=>{
         if(!result){
             res.Server = false
-            next()
+            // next()
         }
         res.Server = result
         next()

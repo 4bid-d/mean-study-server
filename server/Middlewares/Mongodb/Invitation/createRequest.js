@@ -1,5 +1,7 @@
 const INVITAION_MODEL = require("../../../Schemas/Invitaion/invitaionSchema"); 
+const updateInvitation = require("./helpers/update")
 const { v4: uuidv4 } = require('uuid');
+const createInvitation = require("./helpers/create");
 
 class Request {
     constructor(username,{name,id}) {
@@ -10,21 +12,48 @@ class Request {
     }
   }
 
+/**
+ * Takes and returns the matching
+ * admin from the given user array.
+ */
+function findAdminDetails(Users, username){
+    return Users.find((object)=>{
+        return object.username === username
+    })
+}
+/* to find request do already exists
+   and return boolean.
+*/
+function findExistingRequest(requests,NEW_REQUEST){
+    const existingRequest = requests.find((object)=>{
+        return object.by == NEW_REQUEST.username && object.server.name ==  NEW_REQUEST.serverName
+    })   
+    return existingRequest ?? false  
+}
 
-function createOrUpdateInvitaion(req, res, next){
+function createOrUpdateInvitation(req, res, next){
 
     console.log(res.Server)
-    if(!res.userDetail || !res.Server ||  res.userDetail.username == res.Server.admin){
+    
+    if(!res.userDetail ||
+    !res.Server ||
+    res.userDetail.username == res.Server.admin
+    ){
         console.log("returned")
         res.saveRequest = false
         next()
     }
     
-    if(res.userDetail && res.Server && res.userDetail.username !== res.Server.admin){
+    /** 
+      All credentials and confirms
+      that admin is not sending the request.
+    **/
+    if(res.userDetail &&
+    res.Server &&
+    res.userDetail.username !== res.Server.admin
+    ){
 
-        const adminDetails = res.users.filter((object)=>{
-            return object.username === res.Server.admin
-        })
+        const adminDetails = findAdminDetails(res.users,res.Server.admin)
         
         const NEW_REQUEST = new Request(res.userDetail.username,{
             name : res.Server.name,
@@ -37,52 +66,20 @@ function createOrUpdateInvitaion(req, res, next){
         .then((result)=>{
             if(!result){
                 console.log(NEW_REQUEST.serverId)
-                const requestLetter = new INVITAION_MODEL({
-                    username:res.Server.admin,
-                    email : adminDetails[0].email,
-                    requests:[
-                        {
-                            id : NEW_REQUEST.inviteId,
-                            by:NEW_REQUEST.username,
-                            server: {
-                                name : NEW_REQUEST.serverName,
-                                id : NEW_REQUEST.serverId
-                            }
-                        }
-                    ]
-                })
-                requestLetter.save(()=>{
+                // Creating Invitation
+                createInvitation(NEW_REQUEST , adminDetails,(result)=>{
                     res.saveRequest = true
                     next()
                 })
             }else{
 
-                const EXISTING_REQUEST = result.requests.filter((object)=>{
-                    return object.by == NEW_REQUEST.username && object.server.name ==  NEW_REQUEST.serverName
-                })   
+                const EXISTING_REQUEST = findExistingRequest(result.requests,NEW_REQUEST)
 
-                if(EXISTING_REQUEST[0]){
+                if(EXISTING_REQUEST){
                     res.saveRequest = false
                     next() 
-                }else {
-                    INVITAION_MODEL.updateOne({
-                        username:result.username
-                    },
-                    {
-                        requests:[
-                            ...result.requests,
-                            {
-                                id : NEW_REQUEST.inviteId,
-                                by:NEW_REQUEST.username,
-                                server: {
-                                    name : NEW_REQUEST.serverName,
-                                    id : NEW_REQUEST.serverId
-                                    
-                                }
-                            }
-                        ]
-                    })
-                    .then((result)=>{
+                }else { 
+                    updateInvitation(result,NEW_REQUEST,(result)=>{
                         res.saveRequest = true
                         next()
                     })
@@ -93,4 +90,4 @@ function createOrUpdateInvitaion(req, res, next){
     
     }
 }
-module.exports = createOrUpdateInvitaion 
+module.exports = createOrUpdateInvitation 

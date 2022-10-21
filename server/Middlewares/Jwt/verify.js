@@ -3,10 +3,11 @@ require('dotenv').config()
 function verifyJsonToken (req,res,next){
 
     if(!req.params.jsonToken) {
-        console.log("error2")
-        res.json({JsonWebTokenError: `Invalid token`})
-        res.userDetail = false 
-        next()
+        // console.log("error2")
+        let err = new Error("JsonWebTokenError: `Invalid token`")
+        // res.json({JsonWebTokenError: `Invalid token`})
+        // res.userDetail = false 
+        next(err)
     }
     const TOKEN = req.params.jsonToken.toString() 
     try {       

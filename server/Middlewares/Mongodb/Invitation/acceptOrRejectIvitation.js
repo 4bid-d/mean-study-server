@@ -5,7 +5,6 @@ const deleteInvitation = require("./helpers/acceptOrRejectHelper/deleteInvitatio
 function acceptOrRejectIvitation(req, res, next){
 
     try {
-        
         const USER = res.userDetail      
         const {inviteID , decision} = JSON.parse(decodeURIComponent(req.params.encodedData))
         const FOUNDED_INVITATION = res.requests.filter((object)=>{        
@@ -57,7 +56,7 @@ function acceptOrRejectIvitation(req, res, next){
                     }
                 })
             }else{
-                console.log("rejected")
+            console.log("rejected")
             }
         }else{
             console.log("cannot found inviataion")

@@ -70,22 +70,5 @@ function addServerToUser(req, res, next) {
 }
 
 module.exports = addServerToUser
-// console.log(res.existingReference)
 
-        // if(!res.existingReference) {
-        //     SERVER_REFERENCE.updateOne({
-        //         username: res.userDetail.username,
-        //         email: res.userDetail.email,
-        //     },{
-        //         username: res.userDetail.username ,
-        //         email: res.userDetail.email,
-        //         servers: [
-        //             res.serverId
-        //         ]
-        //    })
-        //    .then(()=>{
-        //        res.registration = true
-        //        next()
-        //    })  
-        // } 
         

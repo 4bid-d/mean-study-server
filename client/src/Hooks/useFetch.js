@@ -2,11 +2,15 @@ import {
   API_BODY,
   METHODS
 } from "../config/api"
+
 import { getLocalstorage } from "./useLocalstorage"
+
 // import { UseValidateToken } from "./UseValidateToken"
+
 const throwErr = (message) =>{
     throw new Error(message)
 }
+
 async function getData (apiEndpoint,token) {
   // const token = UseValidateToken()
  

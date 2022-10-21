@@ -4,29 +4,33 @@ const allUsers = require("../../Middlewares/Mongodb/user/allUsers")
 const createJsonToken =  require("../../Middlewares/Jwt/createToken")
 const findUser  = require("../../Middlewares/Mongodb/user/findUser"); 
 const FORM_MESSAGES  = require("../../config/formValidationMessages")
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const validateCredentials = require('./helpers/valdate');
 
 router.post('/',
+validateCredentials,
+findUser,
 createJsonToken,
-findUser,async function(req, res) {
+async function(req, res, next) {
   try {
     const DETAILS = req.body
-
-    if(res.User) {
+    const user = res.User  
+    const TOKEN = res.Token
+    if(user) {
        console.log("varraved")
-        const comparePassword = await bcrypt.compare(DETAILS.password,res.User.password)
-        if(DETAILS.username !==  res.User.username ) throw  FORM_MESSAGES.LOGIN.INVALID_USERNAME 
-        if(!comparePassword) throw FORM_MESSAGES.LOGIN.INVALID_PASSWORD
+        const comparePassword = await bcrypt.compare(DETAILS.password,user.password)
+        if(DETAILS.username !==  user.username ) throw new Error(FORM_MESSAGES.LOGIN.INVALID_USERNAME) 
+        if(!comparePassword) throw new Error(FORM_MESSAGES.LOGIN.INVALID_PASSWORD)
         else {
-            res.json({message:FORM_MESSAGES.LOGIN.SUCCESSFULLY_LOGINED,token : res.Token})
+            res.json({message:FORM_MESSAGES.LOGIN.SUCCESSFULLY_LOGINED,token : TOKEN ?? null})
         }
     }
     else {
-        throw FORM_MESSAGES.LOGIN.NO_USER_FOUND
+        throw new Error(FORM_MESSAGES.LOGIN.NO_USER_FOUND)
     }
 
   } catch (error) {
-    res.json({message : error})
+    next(error)
   }
 });
 

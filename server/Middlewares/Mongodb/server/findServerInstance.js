@@ -1,24 +1,25 @@
 const SERVER = require("../../../Schemas/server/server"); 
 
+
 function findServer(req, res, next){
 
-    const id = req.params.serverId
-    if(!id) {
-        res.Server = false
-        // next() 
-    }
-    SERVER
-    .findOne({
-        serverId:id
-    })
-    .then((result)=>{
-        if(!result){
-            res.Server = false
-            // next()
-        }
-        res.Server = result
-        next()
-    })
+        let id = req.params.serverId
+        SERVER
+        .findOne({
+            serverId:id
+        })
+        .then((result)=>{
+
+            if(result === null) throw  new Error("Invalid server requested.")
+
+            res.Server = result
+            next()
+            return
+        
+        })
+        .catch((error)=>{
+            next(error)   
+        })
     
 }
 module.exports = findServer 

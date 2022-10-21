@@ -2,15 +2,14 @@ const SERVER = require("../../../Schemas/server/server");
 const { v4: uuidv4 } = require('uuid');
 
 
-function createServer(req, res, next) {
+async function createServer(req, res, next) {
+
     const ID = uuidv4();
-    if(!res.userDetail ||
-       !req.body.name  
-       ) {
-        res.createdServer = false
-        throw "Cant Create server Please mention name of the server."  
-    } 
+
     try {
+        
+        if(!req.body.name) throw new Error("Cant Create server Please mention name of the server.")  
+
         const newInstance = new SERVER({
             name: req.body.name,
             serverId : ID,
@@ -18,20 +17,21 @@ function createServer(req, res, next) {
             members:[
                 res.userDetail.username
             ]
-        })
-        newInstance.save() ?  res.createdServer = true :  res.createdServer = false
-        console.log("server  created")
-        res.createdServer = true
-        res.serverId = {
-            id : ID,
-            name: req.body.name 
+        })  
+        // 
+        if(await newInstance.save()){
+            res.createdServer = true
+            res.serverId = {
+                    id : ID,
+                    name: req.body.name 
+            }
+            next()
+        }else{
+            throw new Error("Cant create server , Please try again later.")
         }
-        next()
 
-    } catch (message) {
-        console.log(message)
-        res.createdServer = false
-        next()
+    } catch (error) {
+        next(error)
     }
     
 }

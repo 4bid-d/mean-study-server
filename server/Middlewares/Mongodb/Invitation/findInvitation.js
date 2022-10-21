@@ -5,7 +5,7 @@ function findInvitaion(req, res, next){
     const user = res.userDetail
     INVITAION_MODEL
     .findOne({
-        username: res.userDetail.username
+        username: user.username
     })
     .then((result)=>{
         result ? res.requests = result.requests : res.requests = false  

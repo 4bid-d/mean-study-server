@@ -2,30 +2,27 @@ const SERVER_REFERENCE = require("../../../Schemas/user/serverReference");
 
 function findServerReference(req, res, next) {
     
-    if( !res.userDetail ) {
-        res.existingReference = false 
-        next()
-    } 
     try {
-        SERVER_REFERENCE
-        .findOne({
-            email:res.userDetail.email
-        })
-        .then((result)=>{
-            if(!result) {           
-                res.existingReference = false
-                throw "Cant find refference"   
-            }
-            res.existingReference = result
-            next()
-        }).catch((err)=>{
-           console.log(err)
-           next()
-        })
+
+            SERVER_REFERENCE
+            .findOne({
+                email:res.userDetail.email
+            })
+            .then((result)=>{
+                
+                // throw new Error("You dont have any server created")   
+                if(result  === null){
+                    res.existingReference = false
+                    next()
+                    return
+                }
+                res.existingReference = result
+                next()
+
+            })
       
-    } catch (message) {
-        console.log(message)
-        next()
+    } catch (error) {
+            next(error)
     }
     
 }

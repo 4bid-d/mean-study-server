@@ -1,6 +1,4 @@
 var express = require('express');
-const querystring = require('querystring');
-const url = require('url');
 var router = express.Router();
 const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
 const createOrUpdateInvitation = require('../../Middlewares/Mongodb/Invitation/createRequest');

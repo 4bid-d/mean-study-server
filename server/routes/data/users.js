@@ -6,7 +6,9 @@ router.get('/',bearerVerification,async function(req, res, next) {
   try {
     res.userDetail ? res.json(res.userDetail) : null
   } catch (error) {
-    res.json({JsonWebTokenError: `Invalid token`})
+
+    // res.json({JsonWebTokenError: `Invalid token`})
+    next(error)
   }
 });
 

@@ -1,70 +1,76 @@
 const SERVER_REFERENCE = require("../../../Schemas/user/serverReference"); 
+let log = console.log
+
+const findOrUpdateReference = (query , updation, onSuccess ,onFail )=>{
+    SERVER_REFERENCE.findOneAndUpdate(query, updation,  (error, result)=> {
+        if (!error) {
+            onSuccess()
+            if (!result) {
+                onFail()
+            }
+        }
+    });
+}
+ 
 
 function addServerToUser(req, res, next) {
-    if(!res.createdServer||
-       !res.serverId ||
-       !res.userDetail
-    ){
-        res.registration = false 
-        next()
-    } 
+
     try {
+
+        if(!res.serverId || !res.createdServer)
+        {
+            let err = new Error("cant create server").status = 301 
+            throw err
+        } 
        
-        let serversArray = []
+        const NEW_SERVER = res.serverId  ?? false
+        let serversArray,update 
+        const { username ,email } =  res.userDetail
+        let allServersArray  = res.existingReference.servers ?? false
+        
+
         // Setup stuff
         const query = {
-            username: res.userDetail.username,
-            email: res.userDetail.email,
+            username: username,
+            email: email,
         }  
-        let update = {}
-        if(res.existingReference){
-            res.existingReference.servers.forEach((serverObject)=>{
-                serversArray.push(serverObject)
-            })
 
+        if(allServersArray){
+            serversArray =  Array.from(allServersArray)
+            NEW_SERVER ? serversArray.push(NEW_SERVER) : null
             update = {
                 servers:[
                     ...serversArray,
-                    res.serverId
                 ]
             }
-            res.registration = true
-            console.log("updated the document")
-            next()
         }
   
+        findOrUpdateReference(query,update,()=>{
+            res.registration = true
+            next()
+        },
+        ()=>{
 
-        SERVER_REFERENCE.findOneAndUpdate(query, update,  (error, result)=> {
-            if (!error) {
-                res.registration = true
-                next()
-                if (!result) {
-                   let  NewRefference = new SERVER_REFERENCE({
-                    username: res.userDetail.username ,
-                    email: res.userDetail.email,
-                        servers: [
-                            res.serverId
-                        ]
-                    })
-                    NewRefference.save(function(error) {
-                        if (!error) {
-                            res.registration = true
-                            console.log("Save the document")
-                            next()
-                        } else {
-                            res.registration = false
-                            // throw "Cant Complete registration."
-                            next()
-                        }
-                    });
-                }
-            }
-        });
+            let  NewRefference = new SERVER_REFERENCE({
+                    username: username ,
+                    email: email,
+                    servers: [
+                        NEW_SERVER
+                    ]
+            })
+            NewRefference.save(function(error) {
+                    if (!error) {
+                        res.registration = true
+                        next()
+                    } else {
+                        res.registration = false
+                        throw new Error("Cant Complete registration.")
+                    }
+                });
+        })
         
-        
-        
-    } catch (message) {
-        console.log(message)
+    } catch (error) {
+        next(error)
     }
     
 }

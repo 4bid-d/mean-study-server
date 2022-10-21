@@ -1,21 +1,27 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 function bearerVerification (req,res,next){
-    const AUTHORISATION_BEARER  = req.headers['authorization']
-    const TOKEN = AUTHORISATION_BEARER.split(" ")[1] 
-    if(!AUTHORISATION_BEARER || !TOKEN) {
-        res.json({JsonWebTokenError: `Invalid token`})
-        return
-    }
+    let AUTHORISATION_BEARER ,TOKEN
     try {       
+
+        if(req.headers['authorization']){
+            AUTHORISATION_BEARER = req.headers['authorization']
+            TOKEN = AUTHORISATION_BEARER.split(" ")[1] 
+        }else {
+            // res.userDetail = false 
+            throw new Error("No token found, Please login and try again.")
+        }
         const decodedUser = jwt.verify(TOKEN, process.env.SECRET_KEY);
         if(decodedUser){
             res.userDetail = decodedUser 
             next()
-        } 
-    } catch (message) {
-        res.userDetail = false 
-        res.json({JsonWebTokenError: `Invalid token`})
+        }else{
+            throw new Error("Invalid token")
+        }
+
+    } catch (error) {
+        // res.userDetail = false 
+        next(error)
         return
     }
    

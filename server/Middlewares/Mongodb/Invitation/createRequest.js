@@ -2,8 +2,8 @@ const INVITAION_MODEL = require("../../../Schemas/Invitaion/invitaionSchema");
 const updateInvitation = require("./helpers/createRequestHelper/update")
 const { v4: uuidv4 } = require('uuid');
 const createInvitation = require("./helpers/createRequestHelper/create");
-const findAdminDetails = require("./helpers/createRequestHelper/findAdminDetails");
 const findExistingRequest = require("./helpers/createRequestHelper/findExistingRequest");
+const USER = require("../../../Schemas/user/user");
 
 class Request {
     constructor(username,{name,id}) {
@@ -16,32 +16,32 @@ class Request {
 
 function createOrUpdateInvitation(req, res, next){
     
-    if(!res.userDetail ||
-    !res.Server ||
-    res.userDetail.username == res.Server.admin
-    ){
-        res.saveRequest = false
-        next()
-    }
-    
-    /** All credentials and confirms that admin is not sending the request.**/
-    
-    if(res.userDetail &&
-    res.Server &&
-    res.userDetail.username !== res.Server.admin
-    ){
-
-        const adminDetails = findAdminDetails(res.users,res.Server.admin)
+    try {
         
-        const NEW_REQUEST = new Request(res.userDetail.username,{
-            name : res.Server.name,
-            id : res.Server.serverId
+        /** confirms All credentials and  that admin is not sending the request.**/
+        if(res.userDetail.username == res.Server.admin) throw new Error("You cant sent request to Your own server")
+        const {admin , name ,_id} = res.Server
+        const {username} = res.userDetail
+        let  adminDetails 
+        USER
+        .findOne({username:admin})
+        .then((result)=>{
+            adminDetails = result
+        })    
+        .catch((error)=>{
+            next(error)
+        })
+            
+        const NEW_REQUEST = new Request(username,{
+            name : name,
+            id : _id
         })
 
         INVITAION_MODEL.findOne({
-            username : res.Server.admin
+            username : admin
         })
         .then((result)=>{
+    
             if(!result){
                 // Creating Invitation
                 createInvitation(NEW_REQUEST , adminDetails,(result)=>{
@@ -49,13 +49,13 @@ function createOrUpdateInvitation(req, res, next){
                     next()
                 })
             }else{
-
+                //Checking that the same request is send before 
                 const EXISTING_REQUEST = findExistingRequest(result.requests,NEW_REQUEST)
 
                 if(EXISTING_REQUEST){
-                    res.saveRequest = false
-                    next() 
+                    throw new Error("Cant send request..")
                 }else { 
+                    //updating the request to request array
                     updateInvitation(result,NEW_REQUEST,(result)=>{
                         res.saveRequest = true
                         next()
@@ -63,8 +63,13 @@ function createOrUpdateInvitation(req, res, next){
                 }
             }
         
-        })
-    
+        }) 
+        .catch((error)=>{
+            next(error)
+        })       
+        
+    } catch (error) {
+        next(error)
     }
 }
 module.exports = createOrUpdateInvitation 

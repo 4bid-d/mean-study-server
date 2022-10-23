@@ -1,25 +1,32 @@
+const { ObjectId } = require("mongodb");
 const SERVER = require("../../../Schemas/server/server"); 
 
 
 function findServer(req, res, next){
 
-        let id = req.params.serverId
-        SERVER
-        .findOne({
-            serverId:id
-        })
-        .then((result)=>{
+        try {
+            const {serverId} = req.params
+            if(!ObjectId.isValid(serverId)) throw new TypeError("invalid server id")   
 
-            if(result === null) throw  new Error("Invalid server requested.")
+            SERVER
+            .findOne({
+                _id:serverId
+            })
+            .then((result)=>{
 
-            res.Server = result
-            next()
-            return
+                if(result === null) throw  new Error("Invalid server requested.")
+
+                res.Server = result
+                next()
+                return
+            
+            })
+            .catch((error)=>{
+                next(error)   
+            })
         
-        })
-        .catch((error)=>{
-            next(error)   
-        })
-    
+        } catch (error) {
+            next(error)
+        }
 }
 module.exports = findServer 

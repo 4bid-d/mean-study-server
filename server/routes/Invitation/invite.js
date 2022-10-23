@@ -10,15 +10,15 @@ const acceptOrRejectIvitation = require('../../Middlewares/Mongodb/Invitation/ac
 router.get('/',
 bearerVerification,
 findInvitaion,
-function(req, res) {
+function(req, res,next) {
   try {
       if(!res.requests) {
-        res.json({error : true})
+         throw new Error("No requests found").status = 301
       }else {
         res.json({Requests : res.requests })
       }
   } catch (error) {
-    res.json({error: error})
+    next(error)
   }
 });
 
@@ -36,15 +36,12 @@ bearerVerification,
 findServer,
 allUsers,
 createOrUpdateInvitation,
-function(req, res) {
+function(req, res,next) {
   try {
-    if(!res.Server) throw "server not found"
-    if(!res.saveRequest) throw "Cant Sent Request."
-    else{
       res.json({message:"request sent successfully."})
-    }
+  
   } catch (error) {
-    res.json({error: error})
+    next(error)
   }
 });
 

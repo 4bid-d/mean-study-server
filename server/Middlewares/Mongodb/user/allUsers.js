@@ -1,28 +1,19 @@
 const USER = require("../../../Schemas/user/user"); 
 
 function allUsers(req,res,next) {   
-
-    let userArray = []
     try {
         USER.find()
         .then((result)=>{
             if(result){
-                result
-                .forEach((object)=>{
-                        userArray.push(object)
-                    }
-               )
-                // responseObject.status = true  
-                res.users = userArray
-               
+                res.users = result               
                 next()
             }else{
                 res.username = false           
-                next()
+                throw new Error("No user found.")
             }
         })
-    } catch (message) {
-        console.log(message)
+    } catch (error) {
+        next(error)
     }
     
 }

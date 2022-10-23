@@ -9,16 +9,22 @@ const serverReferenceSchema = new mongoose.Schema({
     type :String, 
     required:true
   },
-  servers : {
-    type:Array,
-    required:true,
-    default : []
-  },
-  joinedServers : {
-    type:Array,
-    required:true,
-    default : []
-  }
+  servers : [
+    {
+      type:mongoose.Schema.Types.ObjectId,
+      required:true,
+      default : [],
+      ref:"servers"
+    }
+  ],
+  joinedServers : [
+    {
+      type:mongoose.Schema.Types.ObjectId,
+      required:true,
+      default : [],
+      ref:"servers"
+    }
+  ]
 });
 
 module.exports = mongoose.model("server_reference",serverReferenceSchema)

@@ -15,18 +15,16 @@ validateCredentials,
 findUser,
 createJsonToken,
 allUsers, async function(req, res,next) {
-  const DETAILS = req.body 
-  const PASSWORD = DETAILS.password
-  const EMAIL = DETAILS.email
-  const USERNAME = DETAILS.username
+  const {password ,email ,username} = req.body 
+
   try {
     
-        validationSignup(PASSWORD,EMAIL,USERNAME)
+        validationSignup(password,email,username)
 
         if(res.User) throw new Error(FORM_MESSAGES.SIGNUP.ALREADY_IN) 
         if(res.users) {
             for(let i =  0 ; i < res.users.length ; i++){
-                  if( res.users[i].username == DETAILS.username){
+                  if( res.users[i].username == username){
                     throw new Error(FORM_MESSAGES.SIGNUP.USERNAME_NOT_AVAILABLE)
                   } 
                   else{

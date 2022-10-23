@@ -23,7 +23,7 @@ function(req, res,next) {
         else{
           res
           .status(200)
-          .json({message : "Server creation completed"})
+          .json({message : "Server creation completed" ,server: res.createdServer})
         }
 
     } catch (error) {
@@ -55,31 +55,27 @@ bearerVerification,
 findServer,
 (req,res,next)=>{
 
-  try {
-  
-      let serverInstance = res.Server
-      let user = res.userDetail
-      
-      const usernamefoundAsMember = serverInstance.members.find((username)=>{
-        return username === user.username 
-      })
+    try {
+    
+        let {members ,_id} = res.Server
+        let {username} = res.userDetail
+        let is_memberOf = false
+        
+        for (member of members) {
+            if(member === username) {
+              is_memberOf = true
+              res.json( { data :  res.Server } ) 
+              return 
+            }
+        }
+        if(!is_memberOf){
+            res.json( { redirect : `/invite/${_id}` } )
+            return 
+        }
 
-      if(usernamefoundAsMember === undefined) {
-        res.json( { redirect : `/invite/${serverInstance.serverId}` } )
-        return 
-      }else{
-          res.json( { data : serverInstance } )
-          return  
-      }
-
-      // log(res.Server.admin)
-      // if(res.Server.admin !==  res.userDetail.username){
-      //   serverInstance.adminAccess = false
-      // }
-
-  } catch (error) {
-     next(error)
-  }
+    } catch (error) {
+      next(error)
+    }
 })
 
 // handlingcalls without server id's 

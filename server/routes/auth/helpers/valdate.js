@@ -2,11 +2,11 @@ const validateCredentials = (req,res,next)=>{
 
     try {
         
-        const DETAILS = req.body
+        const {password ,email ,username} = req.body 
         if(
-            !DETAILS.password||
-            !DETAILS.email||
-            !DETAILS.username
+            !password||
+            !email||
+            !username
         ){
             throw new Error("Please Provide all required credentials")
         }else{

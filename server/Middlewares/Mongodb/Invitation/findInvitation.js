@@ -2,18 +2,19 @@ const INVITAION_MODEL = require("../../../Schemas/Invitaion/invitaionSchema");
 
 function findInvitaion(req, res, next){
 
-    const user = res.userDetail
+    const {username} = res.userDetail
+    console.log(username)
     INVITAION_MODEL
     .findOne({
-        username: user.username
+        username: username
     })
     .then((result)=>{
-        result ? res.requests = result.requests : res.requests = false  
+        if(!result) throw new Error("Cannot find any invitaion.")
+        res.requests = result.requests   
         next()
     })
     .catch((error)=>{
-        res.requests = false
-        next()
+        next(error)
     })
 
 }

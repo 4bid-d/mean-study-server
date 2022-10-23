@@ -1,5 +1,4 @@
 const SERVER_REFERENCE = require("../../../Schemas/user/serverReference"); 
-let log = console.log
 
 const findOrUpdateReference = (query , updation, onSuccess ,onFail )=>{
     SERVER_REFERENCE.findOneAndUpdate(query, updation,  (error, result)=> {
@@ -8,6 +7,8 @@ const findOrUpdateReference = (query , updation, onSuccess ,onFail )=>{
             if (!result) {
                 onFail()
             }
+        }else{
+            throw new Error(error.message)
         }
     });
 }
@@ -17,17 +18,13 @@ function addServerToUser(req, res, next) {
 
     try {
 
-        if(!res.serverId || !res.createdServer)
-        {
+        if(!res.serverId || !res.createdServer){
             let err = new Error("cant create server").status = 301 
             throw err
         } 
        
         const NEW_SERVER = res.serverId  ?? false
-        let serversArray,update 
         const { username ,email } =  res.userDetail
-        let allServersArray  = res.existingReference.servers ?? false
-        
 
         // Setup stuff
         const query = {
@@ -35,40 +32,34 @@ function addServerToUser(req, res, next) {
             email: email,
         }  
 
-        if(allServersArray){
-            serversArray =  Array.from(allServersArray)
-            NEW_SERVER ? serversArray.push(NEW_SERVER) : null
-            update = {
-                servers:[
-                    ...serversArray,
-                ]
-            }
+        const update  = {$push : {servers : NEW_SERVER} }
+        const  whenSuccess = ()=>{
+                res.registration = true
+                next()
         }
-  
-        findOrUpdateReference(query,update,()=>{
-            res.registration = true
-            next()
-        },
-        ()=>{
+
+        const whenFail = ()=>{
 
             let  NewRefference = new SERVER_REFERENCE({
-                    username: username ,
-                    email: email,
-                    servers: [
-                        NEW_SERVER
-                    ]
+                username: username ,
+                email: email,
+                servers: [
+                    NEW_SERVER
+                ]
             })
+            
             NewRefference.save(function(error) {
-                    if (!error) {
-                        res.registration = true
-                        next()
+                if (!error) {
+                        whenSuccess()
                     } else {
                         res.registration = false
                         throw new Error("Cant Complete registration.")
                     }
                 });
-        })
-        
+            }
+            
+            findOrUpdateReference(query,update,whenSuccess,whenFail)
+            
     } catch (error) {
         next(error)
     }
@@ -76,5 +67,3 @@ function addServerToUser(req, res, next) {
 }
 
 module.exports = addServerToUser
-
-        

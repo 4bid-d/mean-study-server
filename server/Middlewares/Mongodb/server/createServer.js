@@ -20,11 +20,8 @@ async function createServer(req, res, next) {
         })  
         // 
         if(await newInstance.save()){
-            res.createdServer = true
-            res.serverId = {
-                    id : ID,
-                    name: req.body.name 
-            }
+            res.createdServer = newInstance
+            res.serverId = newInstance 
             next()
         }else{
             throw new Error("Cant create server , Please try again later.")

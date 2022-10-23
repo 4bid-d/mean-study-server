@@ -4,18 +4,21 @@ function findServerReference(req, res, next) {
     
     try {
 
-            SERVER_REFERENCE
+        SERVER_REFERENCE
             .findOne({
                 email:res.userDetail.email
             })
+            .populate({
+                path:"servers"
+            })
             .then((result)=>{
                 
-                // throw new Error("You dont have any server created")   
                 if(result  === null){
                     res.existingReference = false
                     next()
                     return
                 }
+                result
                 res.existingReference = result
                 next()
 

@@ -24,9 +24,10 @@ function Login() {
         email : currentEmail,
         password : currentPassword,   
       }).then((result)=>{
-        if(!result) throw VALIDATION_MESSAGES.BASIC.SOMETHING_WRONG
+        if(!result) throw new Error(VALIDATION_MESSAGES.BASIC.SOMETHING_WRONG)
         console.log(result)
         console.log(result)
+        if(result.error)  throw new Error(result.error)
          alert(result.message)
          if(result.token){
            setLocalstorage("Token","")
@@ -48,8 +49,8 @@ function Login() {
         (e)=>{
           try {
             sendLoginData(e) 
-          } catch (validationMassage) {
-            alert(validationMassage)
+          } catch (error) {
+            alert(error.message)
           }
         }}>Submit</button>
     </form>

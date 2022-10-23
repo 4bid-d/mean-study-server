@@ -11,12 +11,12 @@ function CreateServerForm() {
   
   const createServer = (e)=>{
     e.preventDefault()
-    if(!name.current.value) throw SERVER_CREATION_MESSAGES.NAME_IS_REQUIRED
-    if (!user.token ) throw SERVER_CREATION_MESSAGES.PLEASE_RELOAD
+    if(!name.current.value) throw new Error( SERVER_CREATION_MESSAGES.NAME_IS_REQUIRED)
+    if (!user.token ) throw new Error(SERVER_CREATION_MESSAGES.PLEASE_RELOAD)
     UseFetch( "post" , `server/newServer` , {
       name : name.current.value
     }).then((response)=>{
-      if(response.error) alert(response.error)
+      if(response.error) throw new Error(response.error)
       if(response.message) alert(response.message)
       if(response.JsonWebTokenError) alert(VERFICATIONAL_ERROR_MESSAGE.JWT_USER_NOT_BELONG)
     })
@@ -31,8 +31,8 @@ function CreateServerForm() {
           (e)=>{
            try {            
              createServer(e)
-           } catch (message) {
-             alert(message)
+           } catch (error) {
+             alert(error.message)
             // console.log(message)
            }
           }

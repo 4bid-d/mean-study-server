@@ -30,12 +30,13 @@ allUsers, async function(req, res,next) {
                     throw new Error(FORM_MESSAGES.SIGNUP.USERNAME_NOT_AVAILABLE)
                   } 
                   else{
-                  continue      
+                    continue      
                   }
             }
         } else {
             throw new Error(API_MESSAGES.USERNAME_API.UNABLE_TO_USERNAME)
         }
+
         if(!res.User) {
             await saveUser(req,res)
           
@@ -46,7 +47,9 @@ allUsers, async function(req, res,next) {
                 status : true
               }
             )
-        }else throw new Error(FORM_MESSAGES.SIGNUP.ALREADY_IN)
+        }else {
+          throw new Error(FORM_MESSAGES.SIGNUP.ALREADY_IN)
+        }
         
       } catch (error) {
         next(error)

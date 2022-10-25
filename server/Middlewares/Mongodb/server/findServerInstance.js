@@ -11,6 +11,9 @@ function findServer(req, res, next){
             SERVER
             .findOne({
                 _id:serverId
+            },{
+                serverId :0,
+                __v:0
             })
             .then((result)=>{
 

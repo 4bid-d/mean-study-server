@@ -39,7 +39,6 @@ createOrUpdateInvitation,
 function(req, res,next) {
   try {
       res.json({message:"request sent successfully."})
-  
   } catch (error) {
     next(error)
   }

@@ -41,9 +41,9 @@ function createOrUpdateInvitation(req, res, next){
             username : admin
         })
         .then((result)=>{
-    
+            console.log(result)
             if(!result){
-                // Creating Invitation
+                // Creating request and saving in database
                 createInvitation(NEW_REQUEST , adminDetails,(result)=>{
                     res.saveRequest = true
                     next()

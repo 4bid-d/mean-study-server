@@ -1,6 +1,6 @@
 const  FORM_MESSAGES = require("../../../config/formValidationMessages")
 
-function validationSignup(PASSWORD ,EMAIL,USERNAME){
+function validationSignup(PASSWORD, EMAIL,USERNAME){
 
     if(!PASSWORD) throw new Error(FORM_MESSAGES.SIGNUP.PASSWORD_IS_REQUIRED)
     if(!EMAIL) throw new Error(FORM_MESSAGES.SIGNUP.EMAIL_IS_REQUIRED)

@@ -13,13 +13,13 @@ findUser,
 createJsonToken,
 async function(req, res, next) {
   try {
-    const DETAILS = req.body
+    const {password , email ,username} = req.body
     const user = res.User  
     const TOKEN = res.Token
+    
     if(user) {
-       console.log("varraved")
-        const comparePassword = await bcrypt.compare(DETAILS.password,user.password)
-        if(DETAILS.username !==  user.username ) throw new Error(FORM_MESSAGES.LOGIN.INVALID_USERNAME) 
+        const comparePassword = await bcrypt.compare(password,user.password)
+        if(username !==  user.username ) throw new Error(FORM_MESSAGES.LOGIN.INVALID_USERNAME) 
         if(!comparePassword) throw new Error(FORM_MESSAGES.LOGIN.INVALID_PASSWORD)
         else {
             res.json({message:FORM_MESSAGES.LOGIN.SUCCESSFULLY_LOGINED,token : TOKEN ?? null})

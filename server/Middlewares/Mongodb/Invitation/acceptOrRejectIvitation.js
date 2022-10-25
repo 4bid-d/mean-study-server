@@ -13,12 +13,13 @@ function acceptOrRejectIvitation(req, res, next){
         
         if(FOUNDED_INVITATION[0]){
             const index = res.requests.indexOf(FOUNDED_INVITATION[0])
+            // Delete the request
             deleteInvitation(index,res.requests,USER.username)
             if(decision){
                 SERVER
                 .findOne(
                     {
-                        serverId : FOUNDED_INVITATION[0].server.id
+                        serverId : FOUNDED_INVITATION[0].id
                     }
                 )
                 .then((result)=>{
@@ -32,9 +33,7 @@ function acceptOrRejectIvitation(req, res, next){
                     if(!alreadyIn){   
                         SERVER
                         .updateOne(
-                            {
-                                serverId : FOUNDED_INVITATION[0].server.id
-                            },
+                            {serverId : FOUNDED_INVITATION[0].server.id},
                             {
                                 members:[
                                     ...result.members,
@@ -48,21 +47,21 @@ function acceptOrRejectIvitation(req, res, next){
                                     name:FOUNDED_INVITATION[0].server.name
                                 }
                             )
-                            res.success = "Succesfully added to your server"
+                            res.success = `Succesfully added ${FOUNDED_INVITATION[0].by}  to your server`
                             next()
                         })
                     }else{
-                        console.log("you are already in")
+                        throw new Error(`${FOUNDED_INVITATION[0].by} in already in Your server`)
                     }
                 })
             }else{
-            console.log("rejected")
+                console.log("rejected")
             }
         }else{
-            console.log("cannot found inviataion")
+            throw new Error("cannot found inviataion")
         }
     } catch (error) {
-            
+       next(error)   
     }
 
 }

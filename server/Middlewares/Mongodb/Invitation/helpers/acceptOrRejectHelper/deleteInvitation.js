@@ -1,26 +1,17 @@
 const INVITAION_MODEL = require("../../../../../Schemas/Invitaion/invitaionSchema"); 
-function deleteInvitation(index,array,username){
-    let newArray =[]
-        for(let i=0;i<array.length ; i++){
-            if(i == index){
-                continue
-            }else{
-                newArray.push(array[i])
-            }
-        }
+log =   console.log
+function deleteInvitation(obj,array,username){
 
     INVITAION_MODEL
     .updateOne(
         {
             username : username
         },
-        {
-            requests:[
-                ...newArray
-            ]
+        { 
+            $pull: { requests : obj  } 
         })
     .then((result)=>{
-        return
+        log(result)
     })
 }
 module.exports = deleteInvitation

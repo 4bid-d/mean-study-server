@@ -5,6 +5,7 @@ const API_MESSAGES  = require("../../config/dataApiErrorMessage")
 const FORM_MESSAGES  = require("../../config/formValidationMessages")
 // var shell = require('shelljs');
 /* GET users listing. */
+
 router.post('/usernameCheck',allUsers,function(req, res,next) {
     const username =  req.body.data
     let users  = res.users 

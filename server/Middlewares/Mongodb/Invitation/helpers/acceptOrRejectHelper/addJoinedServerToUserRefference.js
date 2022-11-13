@@ -1,30 +1,23 @@
 const SERVER_REFFERENCE = require("../../../../../Schemas/user/serverReference");
 
-function addJoinedServerToUserRefference(username,{serverId,name}){
-
-    SERVER_REFFERENCE
-    .findOne({
-        username
-    })
-    .then((result)=>{
+function addJoinedServerToUserRefference(username,serverObj){
 
         SERVER_REFFERENCE
         .updateOne({
-            username,
-        },
+                username,
+            },
         {
-            joinedServers:[
-                ...result.joinedServers,
-                {
-                    id: serverId,
-                    name
-                }
-            ]
+            $push: {
+                joinedServers : serverObj
+            } 
         })
         .then((result)=>{
-            return
+            console.log(result)
         })
-    })
-}
+        .catch((err)=>{
+            return err
+        })
+    }
+
 
 module.exports = addJoinedServerToUserRefference

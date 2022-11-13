@@ -8,9 +8,8 @@ function findServerReference(req, res, next) {
             .findOne({
                 email:res.userDetail.email
             })
-            .populate({
-                path:"servers"
-            })
+            .populate("servers")
+            .populate("joinedServers")
             .then((result)=>{
                 
                 if(result  === null){

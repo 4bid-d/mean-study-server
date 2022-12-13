@@ -1,6 +1,6 @@
 import React from "react"
-import Login from "../Components/LoginForm/Login"
-import MainNavbar from "../Components/navbar/navbar"
+import Login from "../Components/signup/LoginForm/Login"
+import MainNavbar from "../Components/Dashboard/navbar/navbar"
 function LoginPage() {
   return (
     <>

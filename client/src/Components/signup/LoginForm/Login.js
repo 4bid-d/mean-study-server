@@ -1,11 +1,11 @@
 import React , { useRef, useState } from 'react'
-import Loading from "../Loading/Loading"
+import Loading from "../../Loading/Loading"
 import {useNavigate} from "react-router-dom"
-import {UseFetch} from "../../Hooks/useFetch"
-import {setLocalstorage} from "../../Hooks/useLocalstorage"
+import {UseFetch} from "../../../Hooks/useFetch"
+import {setLocalstorage} from "../../../Hooks/useLocalstorage"
 import {
   VALIDATION_MESSAGES,
-}  from "../../config/formValidation"
+}  from "../../../config/formValidation"
 function Login() { 
   const [loading , setLoading] = useState(false)
   const password =  useRef()

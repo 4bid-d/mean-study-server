@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { userDataContext } from "../../Hooks/userContext"
-import { setLocalstorage } from "../../Hooks/useLocalstorage"
+import { userDataContext } from "../../../../Hooks/userContext"
+import { setLocalstorage } from "../../../../Hooks/useLocalstorage"
 function Profile() {
 
   const user = useContext( userDataContext )

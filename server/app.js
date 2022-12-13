@@ -15,6 +15,7 @@ var usersRouter = require('./routes/data/users');
 var loginRouter = require('./routes/auth/login');
 var serverRouter = require('./routes/server/server');
 var inviteRouter = require("./routes/Invitation/invite")
+var newsFeedsRouter = require("./routes/newsfeed/NewsFeed")
 var app = express();
 
 mongoose.connect('mongodb://localhost:27017/myapp');// view engine setup
@@ -31,6 +32,7 @@ app.use('/login', cors(corsOptions), loginRouter);
 app.use('/user', cors(corsOptions), usersRouter);
 app.use('/server', cors(corsOptions), serverRouter);
 app.use('/invite', cors(corsOptions), inviteRouter);
+app.use('/newsfeed', cors(corsOptions), newsFeedsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

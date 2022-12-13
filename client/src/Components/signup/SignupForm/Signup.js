@@ -1,15 +1,15 @@
 import React from 'react'
-import Loading from "../Loading/Loading"
+import Loading from "../../Loading/Loading"
 import { useState , useRef} from "react"
 import {useNavigate} from "react-router-dom"
-import {UseFetch} from "../../Hooks/useFetch"
+import {UseFetch} from "../../../Hooks/useFetch"
 import {
   VALIDATION_MESSAGES,
   PASSWORD_VALIDATION_REGEX,
   EMAIL_VALIDATION_REGEX,
   USERNAME_VALIDATION_REGEX
-}  from "../../config/formValidation"
-import {getLocalstorage} from "../../Hooks/useLocalstorage"
+}  from "../../../config/formValidation"
+import {getLocalstorage} from "../../../Hooks/useLocalstorage"
 // const realtimeUsernameChecking = (username)=>{
   
 //     console.log("checking username.")

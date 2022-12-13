@@ -3,6 +3,7 @@ import CreateServerForm from '../Components/createServerForm/CreateServerForm'
 import AllServers from '../Components/displayServers/AllServers'
 import Profile from '../Components/Profile/Profile'
 import ShowRequest from '../Components/request/ShowRequest/ShowRequest'
+import SideMenu from '../Components/sidebar/Sidebar'
 import { UserProvider } from "./../Hooks/userContext"
 function HomePage() {
   

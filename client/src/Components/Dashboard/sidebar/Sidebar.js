@@ -1,10 +1,11 @@
-import AllServers from "../sub-component/displayServers/AllServers";
+import AllServers from "../sub-component/dropdown/Dropdown";
 import "./sidebar.css"
-function SideMenu() {
+function SideMenu({array ,members}) {
+  console.log(array)
   return (
     <>
       <div className="sidebar">
-        <AllServers/>
+        <AllServers array={array} members={members}/>
       </div>
     </>
   );

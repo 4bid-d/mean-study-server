@@ -1,3 +1,4 @@
+import "./profile.css"
 import React, { useContext } from 'react'
 import { userDataContext } from "../../../../Hooks/userContext"
 import { setLocalstorage } from "../../../../Hooks/useLocalstorage"
@@ -13,8 +14,12 @@ function Profile() {
   
   return (
     <>
-    <div> { user ? `Welcome ${ user.username } `: "Profile" } </div>
-    <button onClick={ logout }> Logout </button>
+    <div className="profile-button"> { user ? `${ user.username } `: "Profile" } </div>
+    <div className="dropdown">
+      <div>fjgkdf</div>
+      <div>jfgsajgo</div>
+      {/* <button onClick={ logout }> Logout </button> */}
+    </div>
     </>
   )
 }

@@ -1,0 +1,19 @@
+.profile-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown{
+    position: relative;
+    color: black;
+    padding: 2px 2px 2px 2px;
+    border-bottom: 1px solid black;
+    background-color: white;
+    display: none;
+    flex-direction: column;
+}
+
+.profile-button:hover.dropdown{
+    display: flex;
+}

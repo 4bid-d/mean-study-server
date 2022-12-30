@@ -33,7 +33,9 @@ function Dashboard() {
         }
         if(response){
           setCreatedServers({head:"created servers",servers:response.data.servers})     
-          setJoinedServers({head:"joined servers",servers:response.data.joinedServers})     
+          setJoinedServers({head:"joined servers",servers:response.data.joinedServers})
+          console.log(response.data.servers)
+          console.log(response.data.joinedServers)
         }
         
       })

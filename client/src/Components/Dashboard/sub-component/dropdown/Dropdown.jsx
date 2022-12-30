@@ -2,12 +2,6 @@ import "./dropdown.css"
 import React, { useEffect, useState ,useContext } from 'react'
 
 function dropdown({array ,members,admin}) {
-  
-  const dropdownButton = (children)=>(
-    <div className="drop-down" >
-      {children}
-    </div>
-  )
 
   if(array) return (
     <>

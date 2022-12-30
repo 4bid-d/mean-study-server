@@ -17,7 +17,15 @@ const serverSchema = new mongoose.Schema({
     type:Array,
     required:true,
     default:[]
-  }
+  },
+  feeds : [
+    {
+      type:mongoose.Schema.Types.ObjectId,
+      required:true,
+      default : [],
+      ref:"news_feeds"
+    }
+  ],
 });
 
 module.exports = mongoose.model("servers",serverSchema)

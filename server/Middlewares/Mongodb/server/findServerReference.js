@@ -1,18 +1,17 @@
 const SERVER_REFERENCE = require("../../../Schemas/user/serverReference"); 
 
 function findServerReference(req, res, next) {
-    
     try {
 
         SERVER_REFERENCE
             .findOne({
                 email:res.userDetail.email
             })
-            .populate("servers")
-            .populate("joinedServers")
-            .then((result)=>{
+            .populate({path:"servers",select:"name"})
+            .populate({path:"joinedServers",select:"name"})
+            .exec((err,result)=>{
                 
-                if(result  === null){
+                if(err){
                     res.existingReference = false
                     next()
                     return

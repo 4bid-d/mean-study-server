@@ -8,13 +8,13 @@ function findServer(req, res, next){
             const {serverId} = req.params
             if(!ObjectId.isValid(serverId)) throw new TypeError("invalid server id")   
 
-            SERVER.findOne({
-                _id:serverId
-            },
-            {
+            SERVER.findOne(
+            { _id:serverId},
+            {  
                 serverId :0,
                 __v:0
             })
+            .populate("feeds")
             .then((result)=>{
 
                 if(result === null) throw  new Error("Invalid server requested.")

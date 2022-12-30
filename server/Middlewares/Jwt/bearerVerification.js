@@ -13,7 +13,7 @@ function bearerVerification (req,res,next){
         }
         const decodedUser = jwt.verify(TOKEN, process.env.SECRET_KEY);
         if(decodedUser){
-            res.userDetail = decodedUser 
+            res.userDetail = decodedUser
             next()
         }else{
             throw new Error("Invalid token")

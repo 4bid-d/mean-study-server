@@ -60,16 +60,6 @@ CheckUserIsMemberOf,
     try {
     
         let {_id} = res.Server
-        // let {username} = res.userDetail
-        // let is_memberOf = false
-        
-        // for (member of members) {
-        //     if(member === username) {
-        //       is_memberOf = true
-        //       res.json( { data :  res.Server } ) 
-        //       return 
-        //     }
-        // }
         if(!res.is_memberOf){
             res.json( { redirect : `/invite/${_id}` } )
             return 

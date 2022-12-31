@@ -1,12 +1,12 @@
-import MainNavbar from '../Components/Dashboard/navbar/navbar'
-import Server from '../Components/Server/Server'
+import MainNavbar from '../Components/general/navbar/navbar'
+import Server from '../Components/Server/server-dash/Server'
 import React, { useState,useEffect } from 'react'
 import {useNavigate, useParams} from "react-router-dom"
 import { UseFetch } from '../Hooks/useFetch';
 import { getLocalstorage } from '../Hooks/useLocalstorage';
-import SideMenu from '../Components/Dashboard/sidebar/Sidebar';
+import SideMenu from '../Components/general/sidebar/Sidebar';
 import { UserProvider } from "../Hooks/userContext"
-import Profile from '../Components/Dashboard/sub-component/Profile/Profile';
+import Profile from '../Components/general/sub-component/Profile/Profile';
 
 function ServerPage() {
 

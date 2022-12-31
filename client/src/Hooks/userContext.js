@@ -18,15 +18,12 @@ export function UserProvider( { children } ) {
     UseFetch( "get" , `user/` )
     .then(( result )=>{
       
-        // console.log(result)
         if(result.JsonWebTokenError) navigate( "/login" )
-        if( result ){
+        if(result){
           result.token = token
           setData( result )
         }
-      })
-
-
+    })
   }, [token])
 
   return (

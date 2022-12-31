@@ -3,8 +3,7 @@ import "./server.css"
 
 function Server({server}) {
   const members = server.members
-  const membersList = members ? members.map((member,key)=><div key={key}>{member}</div>) : null 
-  console.log(server)        
+  const membersList = members ? members.map((member,key)=><div key={key}>{member}</div>) : null    
   return (
     <>
       <div className='server-main'>

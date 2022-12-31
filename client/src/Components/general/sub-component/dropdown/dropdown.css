@@ -2,6 +2,7 @@ h3{
     border: 1px solid rgb(243, 236, 236);
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
 a{
     text-decoration: none;
@@ -9,8 +10,8 @@ a{
 }
 
 .dropdown-content {
-    display: none;
     background-color:white;
+    display: block;
     color: rgb(13, 10, 10);
     transition-delay: 2s;
     border-radius: 5px;
@@ -19,6 +20,6 @@ a{
     padding: 10px 8px 10px 8px;
 }
 
-.drop-down:hover .dropdown-content {
-    display: block;
-}
+.hide{
+    display: none;
+} 

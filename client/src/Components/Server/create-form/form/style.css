@@ -1,0 +1,66 @@
+.background{
+    background-color: rgba(120, 120, 120,.3);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-div{
+    position: relative;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100;
+    padding: 3em 3em 3em 3em;
+    width: auto;
+    border-radius:34px ;
+}
+
+.meta-data{
+    position: relative  ;
+    top: 0px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.meta-data h4{
+    display: inline;
+    margin: 0;
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.close-btn{
+    float: right;
+    min-width: 1em;
+    height:2em;
+}
+
+.close-btn img{
+    display: flex;
+    align-items: center;
+    width: 1em;
+    margin: .05em;
+}
+
+.hide{
+    display: none;
+}
+
+form button[type=submit],
+form input[type=text]{
+    width: 100%;
+    /* margin-top: 1em; */
+}

@@ -13,6 +13,7 @@ function bearerVerification (req,res,next){
         }
         const decodedUser = jwt.verify(TOKEN, process.env.SECRET_KEY);
         if(decodedUser){
+            delete decodedUser.password
             res.userDetail = decodedUser
             next()
         }else{

@@ -9,7 +9,7 @@ function Button({state,stateToggleFunction}) {
         onClick={()=>{
           stateToggleFunction(!state)
         }}>
-            <div>
+            <div className='button-data'>
               <span>New server</span>
               <img src='./images/plus.svg'/>
             </div>

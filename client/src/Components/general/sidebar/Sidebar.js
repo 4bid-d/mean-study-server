@@ -2,12 +2,10 @@ import Button from "../../Server/create-form/button/Button";
 import AllServers from "../sub-component/dropdown/Dropdown";
 import "./sidebar.css"
 function SideMenu({array ,members,button}) {
+
   function createFormbutton(obj){
-    return(
-      <Button
-        state={obj.state}
-        stateToggleFunction={obj.onclick}
-      />
+    return (
+      button
     )
   }
   

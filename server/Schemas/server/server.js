@@ -13,11 +13,27 @@ const serverSchema = new mongoose.Schema({
     type :String, 
     required:true
   },
-  members:{
-    type:Array,
-    required:true,
-    default:[]
+  adminKey:{
+    type:mongoose.Schema.Types.ObjectId,
+    default:mongoose.Types.ObjectId(), 
+    required:true
   },
+  members:[
+    {
+      memberName:{
+        type:String,
+        required:true
+      },
+      adminStatus:{
+        type:Boolean,
+        default:false
+      },
+      you:{
+        type:Boolean,
+        default:false
+      }
+    }
+  ],
   feeds : [
     {
       type:mongoose.Schema.Types.ObjectId,

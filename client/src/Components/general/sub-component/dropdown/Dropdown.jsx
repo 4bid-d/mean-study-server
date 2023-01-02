@@ -10,15 +10,21 @@ function Dropdown({title,array ,members}) {
   function loadDropDownList( obj, arr, key){
 
     function loadList(object,key){
+      console.log(object)
       return (
         <>
           <div key={key}>
             {
               (object) ? <a  href={`/server/${object._id ?? serverId}`} >
                 <h5>
-                  {(typeof object == "object") ?  object.name : object}
+                  { object.name ?? ( object.memberName && object.you ? "You" : object.memberName) }
                 </h5>
                 {(object.name) ? <img src="./images/open.svg"/> : ""} 
+                {
+                  (object.adminStatus) ? 
+                  <img title="Admin" src="../images/admin.svg"/> :
+                  (!object.name) ? <img title="Member" src="../images/member.svg"/>:""
+                } 
               </a>:""
             } 
           </div>
@@ -45,6 +51,7 @@ function Dropdown({title,array ,members}) {
         wantMoreImg.current.classList.toggle("down")
       },150)
   }
+  
   return (
     <> 
       <div className="drop-down" >

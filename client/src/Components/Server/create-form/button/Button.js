@@ -1,13 +1,13 @@
 import React from 'react'
 import "./style.css"
 
-function Button({state,stateToggleFunction}) {
+function Button({stateToggleFunction}) {
 
   return (
     <>
         <button className='new-server-button' 
         onClick={()=>{
-          stateToggleFunction(!state)
+          stateToggleFunction()
         }}>
             <div className='button-data'>
               <span>New server</span>

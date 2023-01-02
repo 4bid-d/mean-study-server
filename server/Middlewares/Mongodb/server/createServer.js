@@ -14,9 +14,10 @@ async function createServer(req, res, next) {
             name: req.body.name,
             serverId : ID,
             admin : res.userDetail.username,
-            members:[
-                res.userDetail.username
-            ]
+            members:[{
+              memberName:res.userDetail.username,
+              adminStatus:true
+            }]
         })  
         // 
         if(await newInstance.save()){

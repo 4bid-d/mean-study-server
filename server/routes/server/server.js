@@ -8,6 +8,7 @@ const {SERVER_REFERNCE} = require("../../config/dataApiErrorMessage");
 const findServer = require('../../Middlewares/Mongodb/server/findServerInstance');
 const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
 const CheckUserIsMemberOf = require('../data/member');
+const returnAdminKey = require('../../Middlewares/admin/controller');
 let log = console.log
 
 // creating a new server
@@ -55,16 +56,22 @@ router.get("/:serverId" ,
 bearerVerification,
 findServer,
 CheckUserIsMemberOf,
+returnAdminKey,
 (req,res,next)=>{
 
     try {
-    
+        console.log(res.adminCred)
         let {_id} = res.Server
         if(!res.is_memberOf){
             res.json( { redirect : `/invite/${_id}` } )
             return 
         }else{
-            res.json( { data :  res.Server } )     
+          let responseObj  = {}
+          responseObj.data = res.Server
+          if(res.adminCred){
+            responseObj.adminCred = { key : res.adminCred }
+          }
+          res.json( responseObj )     
         }
 
     } catch (error) {

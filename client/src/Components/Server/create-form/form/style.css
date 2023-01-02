@@ -3,9 +3,13 @@
     width: 100vw;
     height: 100vh;
     position: fixed;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
+}
+
+.background.active{
+    display: flex;
 }
 
 .form-div{
@@ -16,34 +20,57 @@
     align-items: center;
     flex-direction: column;
     z-index: 100;
-    padding: 3em 3em 3em 3em;
-    width: auto;
     border-radius:34px ;
+    transition: anim 150ms ease-in-out;
+    animation: 1s linear 1 reverse  anim;
+}
+
+.form-div.animate{
+    animation: 1s linear 1 forwards  anim;
+}
+
+
+@keyframes anim {
+    0%{
+        opacity: .1;
+        scale: .3;
+    }
+    100%{
+        opacity: 1;
+        scale: 1;
+    }
 }
 
 .meta-data{
-    position: relative  ;
+    position: relative ;
     top: 0px;
-    display: block;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 2em;
+    justify-content: space-between;
+    margin: 2em 2em 0em 2em; 
+    padding: 1em 4em 2em 2em; 
+    /* margin-bottom: 2em; */
 }
 
 .meta-data h4{
-    display: inline;
-    margin: 0;
+    padding: 3em 1em 1em 1em; 
+    position: relative;
+    right: 0px;
+    top: 0px;
+    margin: -1.5em 1em .5em .5em ;
 }
 
-form{
+.create-server-form{
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    margin: 1em 3em 3em 3em; 
 }
 
 .close-btn{
-    float: right;
+    position: absolute;
+    top: 0px;
+    right: 0px;
     min-width: 1em;
     height:2em;
 }
@@ -59,8 +86,8 @@ form{
     display: none;
 }
 
-form button[type=submit],
-form input[type=text]{
-    width: 100%;
-    /* margin-top: 1em; */
+.create-server-form button[type=submit]{
+}
+.create-server-form input[type=text]{
+
 }

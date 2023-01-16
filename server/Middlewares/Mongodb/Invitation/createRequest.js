@@ -15,13 +15,12 @@ class Request {
   }
 
 function createOrUpdateInvitation(req, res, next){
-    
     try {
         
         /** confirms All credentials and  that admin is not sending the request.**/
-        if(res.userDetail.username == res.Server.admin) throw new Error("You cant sent request to Your own server")
         const {admin , name ,_id} = res.Server
         const {username} = res.userDetail
+        if(username == admin) throw new Error("You cant sent request to Your own server")
         let  adminDetails 
         USER
         .findOne({username:admin})

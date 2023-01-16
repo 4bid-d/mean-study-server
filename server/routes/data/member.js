@@ -7,7 +7,7 @@ function CheckUserIsMemberOf(req,res,next){
             if(members[index].memberName === username) {
               members[index].you = true
               res.is_memberOf = true
-              console.log(members[index].you)
+              // console.log(members[index].you)
               next()
               return 
             }

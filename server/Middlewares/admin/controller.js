@@ -1,4 +1,4 @@
-function verifyAdminAccess(req, res, next){
+function returnAdminKey(req, res, next){
 
     const user = res.userDetail
     const server = res.Server
@@ -11,7 +11,7 @@ function verifyAdminAccess(req, res, next){
     }
     if(server.admin === user.username){
         res.adminCred = server.adminKey
-        server.adminKey  = null
+        server.adminKey  = server.adminKey
         next()
     }else{
         server.adminKey  = null
@@ -20,4 +20,4 @@ function verifyAdminAccess(req, res, next){
     }
 
 }
-module.exports = verifyAdminAccess
+module.exports = returnAdminKey

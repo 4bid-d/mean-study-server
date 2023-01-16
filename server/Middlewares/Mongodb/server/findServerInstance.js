@@ -16,7 +16,6 @@ function findServer(req, res, next){
             })
             .populate("feeds")
             .then((result)=>{
-                console.log(result)
                 if(result === null) throw  new Error("Invalid server requested.")
 
                 res.Server = result

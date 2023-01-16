@@ -7,9 +7,10 @@ import { getLocalstorage } from '../Hooks/useLocalstorage';
 import SideMenu from '../Components/general/sidebar/Sidebar';
 import { UserProvider } from "../Hooks/userContext"
 import Profile from '../Components/general/sub-component/Profile/Profile';
+import { AdminKeyProvider } from '../Hooks/useAdminKey';
 
 function ServerPage() {
-
+  
   const { serverId } = useParams();
   const token = getLocalstorage("Token") 
   const navigate = useNavigate()
@@ -22,16 +23,32 @@ function ServerPage() {
           if(result.error) alert(result.error)
           if(result.redirect) navigate(result.redirect)
           setServerInstance(result.data)
-      })
-  }, [token])
+        })
+      }, [token])
+
   return (
     <>
-    <MainNavbar 
-      head={serverInstance.name} 
-      profile={<UserProvider children={<Profile/>}/> 
-    }/>
-    <SideMenu members={serverInstance.members}/>
-    <Server server={serverInstance}/>
+      <AdminKeyProvider 
+       children={
+        <MainNavbar 
+          head={serverInstance.name} 
+          profile={<UserProvider children={<Profile/>}/> 
+        }/>
+      }
+        adminKey={serverInstance.adminKey ?? null}
+      />
+
+      <AdminKeyProvider children={
+        <SideMenu members={serverInstance.members}/>
+      }
+      adminKey={serverInstance.adminKey ?? null}
+      />
+
+      <AdminKeyProvider children={
+        <Server server={serverInstance}/>
+      }
+      adminKey={serverInstance.adminKey ?? null}
+      />
     </>
   )
 }

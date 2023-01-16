@@ -5,7 +5,7 @@ function Button({stateToggleFunction}) {
 
   return (
     <>
-        <button className='new-server-button' 
+        <button className='new-server-button'
         onClick={()=>{
           stateToggleFunction()
         }}>

@@ -60,16 +60,14 @@ returnAdminKey,
 (req,res,next)=>{
 
     try {
-        console.log(res.adminCred)
         let {_id} = res.Server
         if(!res.is_memberOf){
             res.json( { redirect : `/invite/${_id}` } )
             return 
         }else{
-          let responseObj  = {}
-          responseObj.data = res.Server
-          if(res.adminCred){
-            responseObj.adminCred = { key : res.adminCred }
+          
+          let responseObj  =  {
+            data :  res.Server 
           }
           res.json( responseObj )     
         }

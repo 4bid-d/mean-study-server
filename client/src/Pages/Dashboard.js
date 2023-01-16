@@ -13,6 +13,7 @@ import SideMenu from '../Components/general/sidebar/Sidebar'
 import { UserProvider } from "../Hooks/userContext"
 import MainNavbar from '../Components/general/navbar/navbar'
 import Button from '../Components/Server/create-form/button/Button'
+import Notifications from '../Components/general/sub-component/notifications/Notifications'
 
 function Dashboard() {
   const token  = getLocalstorage("Token")
@@ -59,7 +60,6 @@ function Dashboard() {
           <Button stateToggleFunction={setFormOn}/>
         }
       />
-
       <UserProvider
         children={
           <CreateServerForm 
@@ -67,7 +67,8 @@ function Dashboard() {
           />
         }
       />
-      
+      <Notifications />     
+      <ShowRequest/>
       {/* { 
         formstate ?
         :<></>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { UseFetch } from '../../../Hooks/useFetch'
-
+import "./style.css"
 function ShowRequest() {
 
     const [requests , setRequests] = useState([])
@@ -35,8 +35,10 @@ function ShowRequest() {
     
   return (
     <>
-    Requests:
-    {listOfRequests}
+    <div className='requests-div'>
+        Requests:
+        {listOfRequests}
+    </div>
     </>
   )
 }

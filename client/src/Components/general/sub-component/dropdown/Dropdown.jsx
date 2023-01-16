@@ -10,7 +10,6 @@ function Dropdown({title,array ,members}) {
   function loadDropDownList( obj, arr, key){
 
     function loadList(object,key){
-      console.log(object)
       return (
         <>
           <div key={key}>

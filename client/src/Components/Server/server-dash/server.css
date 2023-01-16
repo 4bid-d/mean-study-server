@@ -1,7 +1,9 @@
 .server-main{
-    position: static;
+    /* position: static; */
     display: flex;
-    top: 0;
+    top: 5rem;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    /* min-width: fit-; */
 }

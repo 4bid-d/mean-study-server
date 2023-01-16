@@ -6,6 +6,7 @@
     display: none;
     justify-content: center;
     align-items: center;
+    padding: 3em;
 }
 
 .background.active{
@@ -21,16 +22,20 @@
     flex-direction: column;
     z-index: 100;
     border-radius:34px ;
-    transition: anim 150ms ease-in-out;
-    animation: 1s linear 1 reverse  anim;
+    transition: popup 150ms ease-in-out;
+    animation: 250ms linear 1 reverse  popup;
+    padding: 1em;
+    margin: 1em;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .form-div.animate{
-    animation: 1s linear 1 forwards  anim;
+    animation: 250ms linear 1 forwards  popup;
 }
 
 
-@keyframes anim {
+@keyframes popup {
     0%{
         opacity: .1;
         scale: .3;
@@ -47,24 +52,33 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 2em 2em 0em 2em; 
-    padding: 1em 4em 2em 2em; 
-    /* margin-bottom: 2em; */
+    margin: 1em; 
+    padding: 1em;
+    padding-bottom:0px ;  
+    margin-bottom:0px ;  
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .meta-data h4{
-    padding: 3em 1em 1em 1em; 
+    margin: 0px;
+    padding: 1em 1em 1em 1em; 
     position: relative;
     right: 0px;
     top: 0px;
-    margin: -1.5em 1em .5em .5em ;
+    margin: 1em  ;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 
 .create-server-form{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1em 3em 3em 3em; 
+    margin: 1em;
+    padding: 1em; 
+    margin-top: 0px;
 }
 
 .close-btn{
@@ -73,13 +87,15 @@
     right: 0px;
     min-width: 1em;
     height:2em;
+    margin: .2em .2em .2em .2em;
+    padding: .2em .2em .2em .2em; 
 }
 
 .close-btn img{
     display: flex;
     align-items: center;
     width: 1em;
-    margin: .05em;
+    margin: .2em;
 }
 
 .hide{
@@ -87,7 +103,14 @@
 }
 
 .create-server-form button[type=submit]{
+    margin: .5em;
+    padding-left:.5em ;
+    padding-right:.5em ;
+    /* width: 100%; */
 }
 .create-server-form input[type=text]{
-
+    margin: .5em;
+    padding-left:.5em ;
+    /* padding-right:.5em ; */
+    /* width: 95%; */
 }

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { adminKeyContext } from '../../../Hooks/useAdminKey'
 import "./navbar.css" 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-function MainNavbar({head , profile}) {
+
+function MainNavbar({head , profile }) {
+  let adminSecret  = useContext(adminKeyContext)
+  console.log(adminSecret ? adminSecret.key :"not an admin" )
   return (
     <>
      <nav className="navbar">

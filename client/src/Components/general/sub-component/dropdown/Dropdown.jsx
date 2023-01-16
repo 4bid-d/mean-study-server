@@ -4,7 +4,9 @@ import "./dropdown.css"
 
 function Dropdown({title,array ,members}) {
   const { serverId } = useParams();
-  const elm = useRef()
+  const dropdownContent = useRef()
+  const wantMoreImg = useRef()
+  const metaDropown = useRef()
   function loadDropDownList( obj, arr, key){
 
     function loadList(object,key){
@@ -14,8 +16,14 @@ function Dropdown({title,array ,members}) {
             {
               (object) ? <a  href={`/server/${object._id ?? serverId}`} >
                 <h5>
-                  {(typeof object == "object") ?  object.name : object}
+                  { object.name ?? ( object.memberName && object.you ? "You" : object.memberName) }
                 </h5>
+                {(object.name) ? <img src="./images/open.svg"/> : ""} 
+                {
+                  (object.adminStatus) ? 
+                  <img title="Admin" src="../images/admin.svg"/> :
+                  (!object.name) ? <img title="Member" src="../images/member.svg"/>:""
+                } 
               </a>:""
             } 
           </div>
@@ -24,26 +32,35 @@ function Dropdown({title,array ,members}) {
     }
 
     if(obj){
-      console.log("arrayOfObject")
       return loadList(obj,key)
     }else{
-      console.log("array")
       return loadList(arr,key)
     }
   }
   
   function clickHandler(e){
       e.preventDefault()
-      elm.current.classList.toggle("hide")
+      metaDropown.current.classList.toggle("on")
+      setTimeout(()=>{
+        const divs  = [...dropdownContent.current.querySelectorAll("div")]
+        divs.forEach(div=>{
+          div.classList.toggle("slide")
+        })
+        dropdownContent.current.classList.toggle("active")
+        wantMoreImg.current.classList.toggle("down")
+      },150)
   }
+  
   return (
     <> 
-      <div>  
-          <div className="drop-down" >
-            <div>
-              <h3 onClick={clickHandler} >{title}</h3>
+      <div className="drop-down" >
+            <div className="metadata-dropdown" ref={metaDropown}
+             onClick={clickHandler}>
+              <h3>{title}</h3>
+              <img src="../images/more.svg" 
+                ref={wantMoreImg} />
             </div>
-            <div className="dropdown-content hide" ref={elm}>
+            <div className="dropdown-content" ref={dropdownContent}>
               {
                 array ?
                   array.map((obj,key)=>(
@@ -57,8 +74,7 @@ function Dropdown({title,array ,members}) {
               }
             </div>
           </div>
-      </div>
-    </>
+       </>
   )  
 }
 

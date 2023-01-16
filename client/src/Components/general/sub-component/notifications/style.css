@@ -1,0 +1,38 @@
+.nfs-button {
+    position: relative;
+    left: 90vw;
+}
+
+.nfs-image{
+
+}
+
+.ntf-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    position: relative;
+    width: min-content;
+    left: 95vh;
+}
+
+.ntf-container{
+    position: fixed;
+}
+
+.ntf-meta-data{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    /* margin: 3em; */
+    top: 0px;
+    left: 0px;
+    padding: 0px;
+}
+
+.meta-data .head{
+
+    top: 0px;
+}

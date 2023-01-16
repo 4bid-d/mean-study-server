@@ -2,21 +2,18 @@ function CheckUserIsMemberOf(req,res,next){
     try {
         let {members ,_id} = res.Server
         let {username} = res.userDetail
-        let is_memberOf = false
-        
-        for (member of members) {
-            if(member === username) {
-              is_memberOf = true
+        res.is_memberOf = false
+        for (index in members) {
+            if(members[index].memberName === username) {
+              members[index].you = true
               res.is_memberOf = true
+              // console.log(members[index].you)
               next()
               return 
             }
         }
-        if(!is_memberOf){
-            res.is_memberOf = false 
-            next()
-        }
-
+      
+        next()
     } catch (error) {
       next(error)
     }

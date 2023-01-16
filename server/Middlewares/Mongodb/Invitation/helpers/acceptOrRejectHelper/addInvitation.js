@@ -5,7 +5,7 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
     
     let alreadyIn = false
     for (const member of result.members ) {
-        if(member === FOUNDED_INVITATION.by){
+        if(member.memberName === FOUNDED_INVITATION.by){
             alreadyIn = true
         }
     }    
@@ -19,7 +19,10 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
         {_id : FOUNDED_INVITATION.server.id},
         {
             $push: {
-                members : FOUNDED_INVITATION.by
+                members : {
+                    memberName:FOUNDED_INVITATION.by,
+                    adminStatus: false
+                }
             } 
         })
 

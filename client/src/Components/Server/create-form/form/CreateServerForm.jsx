@@ -6,7 +6,7 @@ import { userDataContext } from "../../../../Hooks/userContext"
 import { SERVER_CREATION_MESSAGES } from "../../../../config/serverCreation"
 import { VERFICATIONAL_ERROR_MESSAGE } from "../../../../config/jwtVerificationErr"
 
-function CreateServerForm({state,setState}) {
+function CreateServerForm({toggleFormState}) {
   const name = useRef()
   const user = useContext( userDataContext )
   
@@ -24,29 +24,31 @@ function CreateServerForm({state,setState}) {
     })
 
   } 
+  // function animate(elm,interval){
+  //   elm.
+  // }
   return (
     <>
       <div className='background'>
         <div className='form-div' id='form-div'>
           <div className='meta-data'>
+            <h4>Create Your own server.</h4>
             <button className='close-btn' 
               onClick={()=>{
-                setState(!state)
+                toggleFormState()
               }}>
-              <img src='./images/close.svg'/>
+                <img src='./images/close.svg'/>
             </button>
-            <h4>Create Your own server.</h4>
           </div>
-          <form>
+          <form className="create-server-form">
             <input type="text" placeholder="Server name"  ref={name} required/>
             <button type="submit" onClick={
               (e)=>{
                 try {            
                   createServer(e)
-                  setState(!state)
+                  toggleFormState()
                 } catch (error) {
                   alert(error.message)
-                  // console.log(message)
                 }
               }
             }>Create</button>

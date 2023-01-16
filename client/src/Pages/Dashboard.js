@@ -12,13 +12,14 @@ import ShowRequest from '../Components/request/ShowRequest/ShowRequest'
 import SideMenu from '../Components/general/sidebar/Sidebar'
 import { UserProvider } from "../Hooks/userContext"
 import MainNavbar from '../Components/general/navbar/navbar'
+import Button from '../Components/Server/create-form/button/Button'
+import Notifications from '../Components/general/sub-component/notifications/Notifications'
 
 function Dashboard() {
   const token  = getLocalstorage("Token")
   const [allCreatedServers , setCreatedServers] = useState({})
   const [allJoinedServers , setJoinedServers] = useState({})
   const navigate = useNavigate()
-  const [formstate , setFormState] = useState(false)
 
   useEffect(() => {
     if (!token ) navigate("/login")
@@ -41,6 +42,13 @@ function Dashboard() {
       })
   }, [token])
 
+  function setFormOn(){
+    const createFormEntireDiv = document.querySelector(".background")
+    const formDiv = document.querySelector(".form-div")
+    createFormEntireDiv.classList.toggle("active")
+    formDiv.classList.add("animate")
+  }
+
   return (
     <>
       <MainNavbar 
@@ -49,25 +57,22 @@ function Dashboard() {
       <SideMenu 
         array={[allCreatedServers,allJoinedServers]}
         button={
-          {
-            state:formstate,
-            onclick:setFormState
-          }
+          <Button stateToggleFunction={setFormOn}/>
         }
       />
-      
-      { 
+      <UserProvider
+        children={
+          <CreateServerForm 
+            toggleFormState={setFormOn}
+          />
+        }
+      />
+      <Notifications />     
+      <ShowRequest/>
+      {/* { 
         formstate ?
-        <UserProvider
-          children={
-            <CreateServerForm 
-              state={formstate}
-              setState={setFormState}
-            />
-          }
-        />
         :<></>
-      }
+      } */}
       {/* <UserProvider children={<Profile/>} />
       <UserProvider children={<CreateServerForm/>} />
       <UserProvider children={<AllServers/>} />

@@ -1,4 +1,7 @@
+const { application } = require('express');
 var express = require('express');
+const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
+const findInvitaion = require('../../Middlewares/Mongodb/Invitation/findInvitation');
 var router = express.Router();
 const allUsers = require("../../Middlewares/Mongodb/user/allUsers")
 
@@ -24,5 +27,18 @@ router.post('/usernameCheck',allUsers,function(req, res,next) {
     }
     
 });
+
+router.get("/ntf",
+bearerVerification,
+findInvitaion,
+(req,res,next)=>{
+  try {
+    res.json({ntf : [...res.requests] })
+
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 module.exports = router;

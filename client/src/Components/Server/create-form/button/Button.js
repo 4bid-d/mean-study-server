@@ -1,15 +1,15 @@
 import React from 'react'
 import "./style.css"
 
-function Button({state,stateToggleFunction}) {
+function Button({stateToggleFunction}) {
 
   return (
     <>
-        <button className='new-server-button' 
+        <button className='new-server-button'
         onClick={()=>{
-          stateToggleFunction(!state)
+          stateToggleFunction()
         }}>
-            <div>
+            <div className='button-data'>
               <span>New server</span>
               <img src='./images/plus.svg'/>
             </div>

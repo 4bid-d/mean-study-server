@@ -2,7 +2,9 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css"
+
 import SentRequest from "./Components/request/SentRequest/SentRequest";
 import HomePage from "./Pages/Dashboard";
 import LoginPage from "./Pages/LoginPage";

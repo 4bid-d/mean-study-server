@@ -1,16 +1,38 @@
 .new-server-button{
-    border: 1px black solid;
+    border: 1px rgba(211, 211, 211, 0.4) solid;
     border-radius: 5em;
+    margin-top: 1em;
+    cursor: pointer;
+    background-color: rgba(119, 119, 119,.1);
 }
+
 .new-server-button div{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
+    padding:0.3em 1em 0.3em 1.5em;
 }
 
 .new-server-button div span{
-    margin: 1em;
     font-weight:bold ;
     font-size: 1em;
+    /* color: white; */
+    transition: 
+    padding 250ms ease-in-out,
+    scale 150ms ease-in-out;
+}
+
+.button-data img{
+    scale: .7;
+    transition: transform 250ms ease-in-out,
+    scale 150ms ease-in-out;
+}
+
+.new-server-button:hover .button-data img{
+    scale: .92;
+    transform: rotate(-90deg);
+}
+.new-server-button:hover .button-data span{
+    padding-left: 1em;
+    scale: 1.2;
 }

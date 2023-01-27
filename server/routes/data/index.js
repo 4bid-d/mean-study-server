@@ -1,6 +1,7 @@
 const { application } = require('express');
 var express = require('express');
-const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
+const BadRequestError = require('../../common/errors/bad-request-error');
+const bearerVerification = require('../../Middlewares/auth/bearerVerification');
 const findInvitaion = require('../../Middlewares/Mongodb/Invitation/findInvitation');
 var router = express.Router();
 const allUsers = require("../../Middlewares/Mongodb/user/allUsers")
@@ -19,7 +20,7 @@ router.post('/usernameCheck',allUsers,function(req, res,next) {
             }
           }
 
-          throw new Error("username not found.")
+          throw new BadRequestError("username not found.")
       }
 
     } catch (error) {

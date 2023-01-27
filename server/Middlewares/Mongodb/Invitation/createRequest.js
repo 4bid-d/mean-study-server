@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const createInvitation = require("./helpers/createRequestHelper/create");
 const findExistingRequest = require("./helpers/createRequestHelper/findExistingRequest");
 const USER = require("../../../Schemas/user/user");
+const BadRequestError = require("../../../common/errors/bad-request-error");
 
 class Request {
     constructor(username,{name,id}) {
@@ -20,7 +21,7 @@ function createOrUpdateInvitation(req, res, next){
         /** confirms All credentials and  that admin is not sending the request.**/
         const {admin , name ,_id} = res.Server
         const {username} = res.userDetail
-        if(username == admin) throw new Error("You cant sent request to Your own server")
+        if(username == admin) throw new BadRequestError("You cant sent request to Your own server")
         let  adminDetails 
         USER
         .findOne({username:admin})
@@ -52,7 +53,7 @@ function createOrUpdateInvitation(req, res, next){
                 const EXISTING_REQUEST = findExistingRequest(result.requests,NEW_REQUEST)
 
                 if(EXISTING_REQUEST){
-                    throw new Error("Cant send request..")
+                    throw new BadRequestError("Cant send request..")
                 }else { 
                     //updating the request to request array
                     updateInvitation(result,NEW_REQUEST,(result)=>{

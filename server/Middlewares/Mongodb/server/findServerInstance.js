@@ -1,4 +1,5 @@
 const { ObjectId } = require("mongodb");
+const BadRequestError = require("../../../common/errors/bad-request-error");
 const SERVER = require("../../../Schemas/server/server"); 
 
 
@@ -6,7 +7,7 @@ function findServer(req, res, next){
 
         try {
             const {serverId} = req.params
-            if(!ObjectId.isValid(serverId)) throw new TypeError("invalid server id")   
+            if(!ObjectId.isValid(serverId)) throw new BadRequestError("invalid server id")   
 
             SERVER.findOne(
             { _id:serverId},
@@ -16,7 +17,7 @@ function findServer(req, res, next){
             })
             .populate("feeds")
             .then((result)=>{
-                if(result === null) throw  new Error("Invalid server requested.")
+                if(result === null) throw  new BadRequestError("Invalid server requested.")
 
                 res.Server = result
                 next()

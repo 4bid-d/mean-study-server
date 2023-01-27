@@ -3,16 +3,16 @@ var router = express.Router();
 const addServerToUser = require('../../Middlewares/Mongodb/server/addServerReference');
 const createServer = require('../../Middlewares/Mongodb/server/createServer.js');
 const findServerReference = require('../../Middlewares/Mongodb/server/findServerReference');
-const {SERVER_VALIDATION_MESSAGES} = require("../../config/serverCreationErr")
-const {SERVER_REFERNCE} = require("../../config/dataApiErrorMessage");
 const findServer = require('../../Middlewares/Mongodb/server/findServerInstance');
-const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
+const bearerVerification = require('../../Middlewares/auth/bearerVerification');
 const CheckUserIsMemberOf = require('../data/member');
 const returnAdminKey = require('../../Middlewares/admin/controller');
-let log = console.log
+const Server = require('../../Schemas/server/server');
+const serverReference = require('../../Schemas/user/serverReference');
+const BadRequestError = require('../../common/errors/bad-request-error');
 
 // creating a new server
-router.post('/newServer',
+router.post('/',
 bearerVerification,
 createServer,
 findServerReference,
@@ -20,7 +20,7 @@ addServerToUser,
 function(req, res,next) {
     try {
       
-        if(!res.createdServer) throw new Error("Cant Create Server.")
+        if(!res.createdServer) throw new BadRequestError("Cant Create Server.")
         // if (!res.registration)  throw SERVER_VALIDATION_MESSAGES.SOMETHING_WRONG_WITH_SERVER
         else{
           res
@@ -32,23 +32,6 @@ function(req, res,next) {
         next(error)
     }
 
-});
-
-router.get('/serverReference',
-bearerVerification,
-findServerReference,
-function( req, res, next) {
-  try {
-
-    if(!res.existingReference) throw new Error("You dont have any servers created.")
-    else{
-      // console.log(res.existingReference.servers)
-      res.json( { data : res.existingReference } )
-      return 
-    }
-  } catch (error) {
-    next(error)
-  }
 });
 
 // server details
@@ -77,13 +60,58 @@ returnAdminKey,
     }
 })
 
+router.delete("/:serverId" ,
+bearerVerification,
+findServer,
+CheckUserIsMemberOf,
+returnAdminKey,
+(req,res,next)=>{
+  let { serverId } = req.params
+  function deleteServer(){
+    return new Promise((resolve , reject)=>{
+      Server.findOneAndDelete({_id : serverId })
+      .then(()=>{
+        serverReference.findOneAndUpdate({username : res.userDetail.username},
+          {$pull : {servers : serverId}})
+          .then(()=>{
+            resolve(true)
+          })
+          .catch(()=>{
+            reject(false)
+          })
+      })
+      .catch(()=>{
+        reject(false)
+      })
+    })
+  }
+    try {
+        if(!res.is_memberOf && !res.adminCred){
+          throw new BadRequestError("invalid access")     
+        }else{
+          
+          deleteServer()
+          .then(()=>{
+            res.json({success : true})     
+          })
+          .catch(()=>{
+            res.json({success : false})     
+          })
+        }
+
+    } catch (error) {
+      next(error)
+    }
+})
+
+
 // handlingcalls without server id's 
 router.get("/",(req,res,next)=>{
   try {
-    throw new Error("Cannot found the server specified or please specify a server.")
+    throw new BadRequestError("Cannot found the server specified or please specify a server.")
   } catch (error) {
     next(error)
   }
 })
 
-module.exports = router;
+module.exports = router 

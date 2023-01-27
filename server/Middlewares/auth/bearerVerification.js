@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const BadRequestError = require('../../common/errors/bad-request-error');
+const NotAuthorizedError = require('../../common/errors/not-authorized-error');
 require('dotenv').config()
 function bearerVerification (req,res,next){
     let AUTHORISATION_BEARER ,TOKEN
@@ -9,7 +11,7 @@ function bearerVerification (req,res,next){
             TOKEN = AUTHORISATION_BEARER.split(" ")[1] 
         }else {
             // res.userDetail = false 
-            throw new Error("No token found, Please login and try again.")
+            throw new BadRequestError("No token found, Please login and try again.")
         }
         const decodedUser = jwt.verify(TOKEN, process.env.SECRET_KEY);
         if(decodedUser){
@@ -17,7 +19,7 @@ function bearerVerification (req,res,next){
             res.userDetail = decodedUser
             next()
         }else{
-            throw new Error("Invalid token")
+            throw new NotAuthorizedError()
         }
 
     } catch (error) {

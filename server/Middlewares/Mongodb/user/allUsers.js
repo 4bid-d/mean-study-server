@@ -1,3 +1,4 @@
+const BadRequestError = require("../../../common/errors/bad-request-error");
 const USER = require("../../../Schemas/user/user"); 
 
 function allUsers(req,res,next) {   
@@ -9,7 +10,7 @@ function allUsers(req,res,next) {
                 next()
             }else{
                 res.username = false           
-                throw new Error("No user found.")
+                throw new BadRequestError("No user found.")
             }
         })
     } catch (error) {

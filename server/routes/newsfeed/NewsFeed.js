@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const bearerVerification = require('../../Middlewares/Jwt/bearerVerification.js');
+const bearerVerification = require('../../Middlewares/auth/bearerVerification.js');
 const createNewsFeed = require('../../Middlewares/Mongodb/newsfeeds/create.js');
 const findServer = require('../../Middlewares/Mongodb/server/findServerInstance.js');
 const CheckUserIsMemberOf = require('../data/member.js');

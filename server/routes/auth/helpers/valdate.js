@@ -1,3 +1,5 @@
+const BadRequestError = require("../../../common/errors/bad-request-error")
+
 const validateCredentials = (req,res,next)=>{
 
     try {
@@ -8,7 +10,7 @@ const validateCredentials = (req,res,next)=>{
             !email||
             !username
         ){
-            throw new Error("Please Provide all required credentials")
+            throw new BadRequestError("Please Provide all required credentials")
         }else{
             next()
         }

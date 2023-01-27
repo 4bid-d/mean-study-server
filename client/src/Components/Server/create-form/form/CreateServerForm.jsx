@@ -1,26 +1,29 @@
 import "./style.css"
 import React,{ useContext } from 'react'
 import { useRef } from 'react'
-import { UseFetch } from '../../../../Hooks/useFetch'
+import { FetchRequest } from '../../../../Hooks/useFetch'
 import { userDataContext } from "../../../../Hooks/userContext"
 import { SERVER_CREATION_MESSAGES } from "../../../../config/serverCreation"
 import { VERFICATIONAL_ERROR_MESSAGE } from "../../../../config/jwtVerificationErr"
 
-function CreateServerForm({toggleFormState}) {
+function CreateServerForm({toggleFormState,serverArray}) {
   const name = useRef()
   const user = useContext( userDataContext )
+  const createServerRequest = new FetchRequest()
   
   const createServer = (e)=>{
     console.log(user)
     e.preventDefault()
     if(!name.current.value) throw new Error( SERVER_CREATION_MESSAGES.NAME_IS_REQUIRED)
     if (!user.token ) throw new Error(SERVER_CREATION_MESSAGES.PLEASE_RELOAD)
-    UseFetch( "post" , `server/newServer` , {
+    createServerRequest.postData(`server` , {
       name : name.current.value
     }).then((response)=>{
+      console.log(response)
       if(response.error) throw new Error(response.error)
       if(response.message) alert(response.message)
       if(response.JsonWebTokenError) alert(VERFICATIONAL_ERROR_MESSAGE.JWT_USER_NOT_BELONG)
+      serverArray.push({name : response.server.name , _id :response.server._id })
     })
 
   } 

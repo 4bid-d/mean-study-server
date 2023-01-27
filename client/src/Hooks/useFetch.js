@@ -76,17 +76,22 @@ export class FetchRequest{
       get : "GET",
       post : "POST"
     }
+    this.model = {
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${this.token ? this.token :null}` 
+      }
+    }
   }
   fetchData(method,end,body){
+    this.model.method = method
+    if(!body && method == this.methods.post) {
+      throwErr("Body is required for POST method")
+    }else if(body){
+      this.model.body = JSON.stringify(body)
+    }
     return new Promise((resolve,reject)=>{
-      fetch(`${API_BODY}${end ? end : ""}`,{
-        method:method,
-        headers: {
-          'Content-Type': 'application/json',
-          "authorization": `Bearer ${this.token ? this.token :null}` 
-        },
-        body: JSON.stringify(body ? body : (method === this.methods.post) ?  throwErr("Body is required for POST method") : null )
-      }).then((response)=>{
+      fetch(`${API_BODY}${end ? end : ""}`,this.model).then((response)=>{
         resolve(response)
       }).catch((err)=>{
         reject(err)
@@ -106,16 +111,23 @@ export class FetchRequest{
       })
   }
   
-  postData (endpoint,body) { 
+  postData(endpoint,body) { 
     try {
+      return new Promise((resolve,reject)=>{
         this.fetchData(this.methods.post,endpoint,body)
-        .then((data)=>{
-          if(data) {
-            data.status = true
-            return data
+        .then((response)=>{
+          if(response) {
+            response
+            .json()
+            .then((data)=>{
+              resolve(data) 
+            })
           }
-          else return {status:false}
         })
+        .catch((err)=>{
+          reject(err)
+        })
+    })
     } catch (error) {
       throw error
     }

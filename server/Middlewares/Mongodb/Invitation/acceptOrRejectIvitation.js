@@ -1,3 +1,4 @@
+const BadRequestError = require("../../../common/errors/bad-request-error");
 const SERVER = require("../../../Schemas/server/server");
 const addInvitaion = require("./helpers/acceptOrRejectHelper/addInvitation");
 // const addJoinedServerToUserRefference = require("./helpers/acceptOrRejectHelper/addJoinedServerToUserRefference");
@@ -14,14 +15,14 @@ function acceptOrRejectIvitation(req, res, next){
         })
         
         if(!FOUNDED_INVITATION){
-            throw new Error("cannot found inviataion")
+            throw new BadRequestError("cannot found inviataion")
         }
         
         // Delete the request
         deleteInvitation(FOUNDED_INVITATION,res.requests,USER.username)
         
         if(!decision){
-            throw new Error("SuccessFully rejected the request.")
+            throw new BadRequestError("SuccessFully rejected the request.")
         }
         
         SERVER 

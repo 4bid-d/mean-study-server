@@ -1,3 +1,4 @@
+const BadRequestError = require("../../../../../common/errors/bad-request-error")
 const SERVER = require("../../../../../Schemas/server/server")
 const addJoinedServerToUserRefference = require("./addJoinedServerToUserRefference")
 
@@ -12,7 +13,7 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
     
     console.log(FOUNDED_INVITATION , result , alreadyIn)
     if(alreadyIn){   
-        throw new Error(`${FOUNDED_INVITATION.by} in already in Your server`)
+        throw new BadRequestError(`${FOUNDED_INVITATION.by} in already in Your server`)
     }
     SERVER
     .updateOne(

@@ -14,8 +14,8 @@ findServer,
 CheckUserIsMemberOf,
 createNewsFeed,
 function(req, res,next) {
-
-    const {savedDoc} = res.savedDoc
+    const {savedDoc} = res
+    console.log(savedDoc)
     try {
         if(savedDoc){
             res.json({message:"successfully uploaded"})
@@ -26,18 +26,18 @@ function(req, res,next) {
     
 });
 
-router.get("/:serverId/:requestId",
+router.get("/:serverId/:feedId",
 bearerVerification,
 findServer,
 CheckUserIsMemberOf,
 (req,res,next)=>{
     try {
         const {Server , is_memberOf } = res
-        const {requestId} = req.params
+        const {feedId} = req.params
         if(!Server) throw new  BadRequestError("no server found")
         if(!is_memberOf) throw new BadRequestError("You can not have access")
         FEEDS.findOne({
-            _id : requestId
+            _id : feedId
         })
         .then((doc)=>{
             if(doc === null) next(new NotFoundError()) 
@@ -51,18 +51,18 @@ CheckUserIsMemberOf,
     }
 })
 
-router.delete("/:serverId/:requestId",
+router.delete("/:serverId/:feedId",
 bearerVerification,
 findServer,
 CheckUserIsMemberOf,
 (req,res,next)=>{
     try {
         const {Server , is_memberOf } = res
-        const {requestId} = req.params
+        const {feedId} = req.params
         if(!Server) throw new  BadRequestError("no server found")
         if(!is_memberOf) throw new BadRequestError("You can not delete this feed")
         FEEDS.findOneAndDelete({
-            _id : requestId
+            _id : feedId
         })
         .then((doc)=>{
             if(doc === null) next(new NotFoundError()) 
@@ -76,28 +76,28 @@ CheckUserIsMemberOf,
     }
 })
 
-router.put("/:serverId/:requestId",
+router.put("/:serverId/:feedId",
 bearerVerification,
 findServer,
 CheckUserIsMemberOf,
 (req,res,next)=>{
     try {
         const {Server , is_memberOf, userDetail } = res
-        const {requestId} = req.params
+        const {feedId} = req.params
         const {content} = req.body
         if(!content) throw new BadRequestError("Please Provide all required credentials")
         if(!Server) throw new  BadRequestError("no server found")
         if(!is_memberOf) throw new BadRequestError("You can not delete this feed")
 
         FEEDS.findOne({
-            _id : requestId
+            _id : feedId
         })
         .then((doc)=>{
             if(doc === null) next(new NotFoundError()) 
             else{
                 if(userDetail.username === doc.createdBy){
                     FEEDS.findByIdAndUpdate({
-                        _id : requestId
+                        _id : feedId
                     },
                     {
                         content : content
@@ -120,4 +120,9 @@ CheckUserIsMemberOf,
        next(error)
     }
 })
+
+router.post("/:serverId/:feedId/comment",(req,res)=>{
+
+})
+
 module.exports = router;

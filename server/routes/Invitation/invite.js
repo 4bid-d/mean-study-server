@@ -23,7 +23,7 @@ function(req, res,next) {
   }
 });
 
-router.get("/requestDecision/:encodedData",
+router.get("/requestDecision/:inviteId/:decision",
 bearerVerification,
 findInvitaion,
 acceptOrRejectIvitation,
@@ -39,7 +39,7 @@ allUsers,
 createOrUpdateInvitation,
 function(req, res,next) {
   try {
-      res.json({message:"request sent successfully."})
+      res.json({message:"request sent successfully.",request : res.saveRequest})
   } catch (error) {
     next(error)
   }

@@ -11,7 +11,6 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
         }
     }    
     
-    console.log(FOUNDED_INVITATION , result , alreadyIn)
     if(alreadyIn){   
         throw new BadRequestError(`${FOUNDED_INVITATION.by} in already in Your server`)
     }

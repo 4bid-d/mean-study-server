@@ -8,10 +8,10 @@ function acceptOrRejectIvitation(req, res, next){
 
     try {
         const USER = res.userDetail      
-        const {inviteID , decision} = JSON.parse(decodeURIComponent(req.params.encodedData))
+        const {inviteId , decision} = req.params 
         
         const FOUNDED_INVITATION = res.requests.find((object)=>{        
-            return object.id === inviteID.toString()
+            return object.id === inviteId.toString()
         })
         
         if(!FOUNDED_INVITATION){

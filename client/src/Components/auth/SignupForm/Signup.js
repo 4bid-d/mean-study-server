@@ -81,7 +81,7 @@ const sendSignupData = (e)=>{
         console.log(result)
         if(!result) throw new Error( VALIDATION_MESSAGES.BASIC.SOMETHING_WRONG)
         if(result.error) throw new Error(result.error)
-        alert("SuccessFully signed up")
+        if(result.token) alert("SuccessFully signed up")
         // setLocalstorage("Token","")
         // setLocalstorage('Token', result.token)
         // if(result.Token) navigate("/login")

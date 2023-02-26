@@ -8,12 +8,11 @@ function acceptOrRejectIvitation(req, res, next){
 
     try {
         const USER = res.userDetail      
-        const {inviteId , decision} = req.params 
-        
+        const {inviteId } = req.params 
+        var isDecisionIsTrue = (String(req.query["decision"]).toLowerCase() === 'true');
         const FOUNDED_INVITATION = res.requests.find((object)=>{        
             return object.id === inviteId.toString()
         })
-        
         if(!FOUNDED_INVITATION){
             throw new BadRequestError("cannot found inviataion")
         }
@@ -21,8 +20,9 @@ function acceptOrRejectIvitation(req, res, next){
         // Delete the request
         deleteInvitation(FOUNDED_INVITATION,res.requests,USER.username)
         
-        if(!decision){
-            throw new BadRequestError("SuccessFully rejected the request.")
+        if(!isDecisionIsTrue){
+            res.json("SuccessFully rejected the request.")
+            return
         }
         
         SERVER 
@@ -31,6 +31,7 @@ function acceptOrRejectIvitation(req, res, next){
         })
         .then((result)=>{
             addInvitaion(FOUNDED_INVITATION,result,next)
+            res.json("Successfully added ")
         })
         .catch((error)=>{
             next(error)
@@ -41,4 +42,7 @@ function acceptOrRejectIvitation(req, res, next){
     }
 
 }
+
+
+
 module.exports = acceptOrRejectIvitation

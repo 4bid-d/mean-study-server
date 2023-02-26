@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
+require('dotenv').config()
 var corsOptions = {
   origin: 'http://localhost:3000',
   methods : "GET,HEAD,PUT,PATCH,POST,DELETE"
@@ -20,7 +21,7 @@ const errorHandler = require('./common/Middlewares/errorHandler');
 const NotFoundError = require('./common/errors/not-found-error');
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/myapp');// view engine setup
+mongoose.connect(`mongodb+srv://abidpp1212:${process.env.MONGO}@cluster0.coote.mongodb.net/?retryWrites=true&w=majority`);// view engine setup
 
 app.use(logger('dev'));
 app.use(express.json());

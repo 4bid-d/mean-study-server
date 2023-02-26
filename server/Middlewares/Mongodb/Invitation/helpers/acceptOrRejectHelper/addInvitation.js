@@ -1,6 +1,7 @@
+const SERVER_REFFERENCE = require("../../../../../Schemas/user/serverReference");
 const BadRequestError = require("../../../../../common/errors/bad-request-error")
 const SERVER = require("../../../../../Schemas/server/server")
-const addJoinedServerToUserRefference = require("./addJoinedServerToUserRefference")
+// const addJoinedServerToUserRefference = require("./addJoinedServerToUserRefference")
 
 function addInvitaion(FOUNDED_INVITATION, result,next){
     
@@ -28,16 +29,21 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
 
     .then((result)=>{
         if(result){
-            addJoinedServerToUserRefference(FOUNDED_INVITATION.by,
-                {
-                    _id:FOUNDED_INVITATION.server.id ,
-                    name:FOUNDED_INVITATION.server.name
-                }
-            )
-            res.success = `Succesfully added ${FOUNDED_INVITATION.by}  to your server`
-            return next
+                SERVER_REFFERENCE
+                .updateOne(
+                    {username : FOUNDED_INVITATION.by,},
+                    {$push: {
+                            joinedServers : FOUNDED_INVITATION.server.id 
+                        } 
+                    }).then((result)=>{
+                        res.success = `Succesfully added ${FOUNDED_INVITATION.by}  to your server`
+                        return 
+                    // console.log(result)
+                    }).catch((err)=>{
+                    return err
+                })
         }else{
-            return next
+            return 
         }
     })
     .catch((err)=>{

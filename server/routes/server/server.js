@@ -67,39 +67,23 @@ CheckUserIsMemberOf,
 returnAdminKey,
 (req,res,next)=>{
   let { serverId } = req.params
-  function deleteServer(){
-    return new Promise((resolve , reject)=>{
-      Server.findOneAndDelete({_id : serverId })
-      .then(()=>{
-        serverReference.findOneAndUpdate({username : res.userDetail.username},
-          {$pull : {servers : serverId}})
-          .then(()=>{
-            resolve(true)
-          })
-          .catch(()=>{
-            reject(false)
-          })
-      })
-      .catch(()=>{
-        reject(false)
-      })
-    })
-  }
     try {
-        if(!res.is_memberOf && !res.adminCred){
+        if(!res.is_memberOf || !res.adminCred){
           throw new BadRequestError("invalid access")     
         }else{
-          
-          deleteServer()
+          Server.findOneAndDelete({_id : serverId })
           .then(()=>{
-            res.json({success : true})     
+            serverReference.findOneAndUpdate({username : res.userDetail.username},
+              {$pull : {servers : serverId}})
+              .then(()=>{
+                res.json({success : true})     
+              })
+              .catch(()=>{
+                res.json({success : false})     
+              })
           })
-          .catch(()=>{
-            res.json({success : false})     
-          })
-        }
-
-    } catch (error) {
+    }
+   } catch (error) {
       next(error)
     }
 })

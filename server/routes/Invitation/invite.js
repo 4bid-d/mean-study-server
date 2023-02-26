@@ -23,7 +23,7 @@ function(req, res,next) {
   }
 });
 
-router.get("/requestDecision/:inviteId/:decision",
+router.get("/request/:inviteId",
 bearerVerification,
 findInvitaion,
 acceptOrRejectIvitation,

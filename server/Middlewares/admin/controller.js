@@ -9,6 +9,7 @@ function returnAdminKey(req, res, next){
         server.adminKey  = null
         next() 
     }
+    console.log(server.adminKey)
     if(server.admin === user.username){
         res.adminCred = server.adminKey
         server.adminKey  = server.adminKey

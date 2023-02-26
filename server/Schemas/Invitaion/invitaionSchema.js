@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
 const invitationSchema = new mongoose.Schema({
@@ -9,11 +10,20 @@ const invitationSchema = new mongoose.Schema({
     type :String, 
     required:true
   },
-  requests:{
-    type:Array,
-    required:true,
-    default:[]
-  }
+  requests:[
+    {
+      by:String,
+      id:String,
+      server:{
+        name:{
+            type : String
+        },
+        id : {
+          type : mongoose.Schema.Types.ObjectId
+        }
+      },
+    }
+  ]
 });
 
 module.exports = mongoose.model("Invitation",invitationSchema)

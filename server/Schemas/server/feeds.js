@@ -14,6 +14,15 @@ const newsFeedSchema = new mongoose.Schema({
   image:{
     type:String
   },
+
+  comments : [
+      {
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        default : [],
+        ref:"comments"
+      }
+  ]
 });
 
 module.exports = mongoose.model("news_feeds",newsFeedSchema)

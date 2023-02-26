@@ -2,15 +2,7 @@ const INVITAION_MODEL = require("../../../Schemas/Invitaion/invitaionSchema");
 const updateInvitation = require("./helpers/createRequestHelper/update")
 const { v4: uuidv4 } = require('uuid');
 const USER = require("../../../Schemas/user/user");
-const BadRequestError = require("../../../common/errors/bad-request-error");
-
-function findExistingRequest(requests,username , serverId){
-    const existingRequest = requests.find((object)=>{
-        return object.by ==  username &&  serverId == object.server.id
-    })   
-    console.log(existingRequest)
-    return existingRequest ?? false  
-}
+const BadRequestError = require("../../../common/errors/bad-request-error")
 
 
 function createOrUpdateInvitation(req, res, next){
@@ -21,10 +13,10 @@ function createOrUpdateInvitation(req, res, next){
         const serverId  =  res.Server._id
         const serverName = res.Server.name
         const {username} = res.userDetail
+        
         if(username == admin) throw new BadRequestError("You cant sent request to Your own server")
         const inviteId =  uuidv4()
             
-
         INVITAION_MODEL.findOne({
             username : admin
         })
@@ -56,8 +48,14 @@ function createOrUpdateInvitation(req, res, next){
                 })
             }else{
                 //Checking that the same request is send before 
-                const EXISTING_REQUEST = findExistingRequest(existingDocument.requests,username,serverId)
-
+                function findExistingRequest(){
+                    const existingRequest = existingDocument.requests.find((object)=>{
+                        return object.by ==  username &&  object.server.id.equals(serverId) 
+                    })   
+                    return existingRequest ?? false  
+                }
+                const EXISTING_REQUEST = findExistingRequest()
+                console.log(EXISTING_REQUEST)
                 if(EXISTING_REQUEST){
                     throw new BadRequestError("Cant send request..")
                 }else { 

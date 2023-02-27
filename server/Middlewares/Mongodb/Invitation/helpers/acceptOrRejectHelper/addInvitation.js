@@ -7,7 +7,7 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
     
     let alreadyIn = false
     for (const member of result.members ) {
-        if(member.memberName === FOUNDED_INVITATION.by){
+        if(member.memberName === FOsUNDED_INVITATION.by){
             alreadyIn = true
         }
     }    

@@ -1,5 +1,6 @@
 const SERVER = require("../../../Schemas/server/server"); 
 const { v4: uuidv4 } = require('uuid');
+const BadRequestError = require("../../../common/errors/bad-request-error");
 
 
 async function createServer(req, res, next) {
@@ -8,7 +9,7 @@ async function createServer(req, res, next) {
 
     try {
         
-        if(!req.body.name) throw new Error("Cant Create server Please mention name of the server.")  
+        if(!req.body.name) throw new BadRequestError("Cant Create server Please mention name of the server.")  
 
         const newInstance = new SERVER({
             name: req.body.name,
@@ -25,7 +26,7 @@ async function createServer(req, res, next) {
             res.serverId = newInstance 
             next()
         }else{
-            throw new Error("Cant create server , Please try again later.")
+            throw new BadRequestError("Cant create server , Please try again later.")
         }
 
     } catch (error) {

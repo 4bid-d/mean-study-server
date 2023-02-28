@@ -1,5 +1,5 @@
 import React, { useEffect, useState ,useContext,useRef } from 'react'
-import { UseFetch } from '../Hooks/useFetch'
+import { FetchRequest } from '../Hooks/useFetch'
 import { userDataContext } from '../Hooks/userContext'
 import {SERVER_CREATION_MESSAGES} from "../config/serverCreation"
 import { getLocalstorage } from '../Hooks/useLocalstorage'
@@ -20,23 +20,22 @@ function Dashboard() {
   const [allCreatedServers , setCreatedServers] = useState({})
   const [allJoinedServers , setJoinedServers] = useState({})
   const navigate = useNavigate()
-
+  const newRequest = new FetchRequest()
   useEffect(() => {
     if (!token ) navigate("/login")
-    UseFetch("get",`server/serverReference`)
+    newRequest.getData("server-ref")
     .then((response)=> {
       if(response.JsonWebTokenError) {
             return
         }
         if(response.error) {
-          alert(response.error)
+          console.log(response.error)
           return 
         }
         if(response){
+          console.log(response)
           setCreatedServers({head:"created servers",servers:response.data.servers})     
           setJoinedServers({head:"joined servers",servers:response.data.joinedServers})
-          console.log(response.data.servers)
-          console.log(response.data.joinedServers)
         }
         
       })
@@ -64,6 +63,7 @@ function Dashboard() {
         children={
           <CreateServerForm 
             toggleFormState={setFormOn}
+            serverArray={allCreatedServers.servers}
           />
         }
       />

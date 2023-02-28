@@ -1,7 +1,7 @@
 import React , { useRef, useState } from 'react'
 import Loading from "../../Loading/Loading"
 import {useNavigate} from "react-router-dom"
-import {UseFetch} from "../../../Hooks/useFetch"
+import {FetchRequest, UseFetch} from "../../../Hooks/useFetch"
 import {setLocalstorage} from "../../../Hooks/useLocalstorage"
 import {
   VALIDATION_MESSAGES,
@@ -17,9 +17,10 @@ function Login() {
     const currentUsername =  username.current.value
     const currentPassword =  password.current.value
     const currentEmail =  email.current.value
+    const newLoginRq = new FetchRequest()
     setLoading(true)
     console.log("sent to server")
-      UseFetch("post","login",{
+      newLoginRq.postData("login",{
         username : currentUsername,
         email : currentEmail,
         password : currentPassword,   

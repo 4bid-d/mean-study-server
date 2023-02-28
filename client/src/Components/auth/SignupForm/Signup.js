@@ -2,7 +2,7 @@ import React from 'react'
 import Loading from "../../Loading/Loading"
 import { useState , useRef} from "react"
 import {useNavigate} from "react-router-dom"
-import {UseFetch} from "../../../Hooks/useFetch"
+import {FetchRequest, UseFetch} from "../../../Hooks/useFetch"
 import {
   VALIDATION_MESSAGES,
   PASSWORD_VALIDATION_REGEX,
@@ -72,18 +72,21 @@ const sendSignupData = (e)=>{
     e.preventDefault()
     if(validateSignupForm()) {
       setLoading(true)
-      console.log("sent to server")
-      UseFetch("post","signup",{
+      const newRequest = new FetchRequest()
+      newRequest.postData("signup",{
         username : username.current.value,
         email : email.current.value,
         password : password.current.value,   
       }).then((result)=>{
-        if(!result) throw new Error( VALIDATION_MESSAGES.BASIC.SOMETHING_WRONG)
         console.log(result)
-        alert(result.message)
+        if(!result) throw new Error( VALIDATION_MESSAGES.BASIC.SOMETHING_WRONG)
+        if(result.error) throw new Error(result.error)
+        if(result.token) alert("SuccessFully signed up")
         // setLocalstorage("Token","")
         // setLocalstorage('Token', result.token)
         // if(result.Token) navigate("/login")
+      }).catch((err)=>{
+        alert(err)
       })
       setLoading(false)
     }

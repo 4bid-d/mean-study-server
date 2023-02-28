@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { UseFetch } from '../../../Hooks/useFetch'
+import { FetchRequest} from '../../../Hooks/useFetch'
 import "./style.css"
 function ShowRequest() {
 
     const [requests , setRequests] = useState([])
+    const newRequest  = new FetchRequest()
     const sendDecision = (decision,inviteID)=>{
         let urlEncodeData = encodeURIComponent(
         JSON.stringify({
@@ -12,7 +13,7 @@ function ShowRequest() {
         }))
          
         let url = `invite/requestDecision/${urlEncodeData}`
-        UseFetch("get",url)
+        newRequest.getData(url)
         .then((result)=>{
             return result
         })
@@ -27,7 +28,7 @@ function ShowRequest() {
     </div>
      )
     useEffect(() => {
-        UseFetch("get","invite/")
+        newRequest.getData("invite/")
         .then((result)=>{
             result.error ? console.log("You dont have any requests currently.") : setRequests(result.Requests)
         })

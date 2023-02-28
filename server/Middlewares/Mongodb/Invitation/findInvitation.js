@@ -1,21 +1,22 @@
-const INVITAION_MODEL = require("../../../Schemas/Invitaion/invitaionSchema"); 
+const BadRequestError = require("../../../common/errors/bad-request-error");
+const NotFoundError = require("../../../common/errors/not-found-error");
+const REQUEST_MODEL = require("../../../Schemas/Requests/RequestsSchema"); 
 log = console.log
-function findInvitaion(req, res, next){
+function findRequests(req, res, next){
 
     const {username} = res.userDetail
-    INVITAION_MODEL
+    REQUEST_MODEL
     .findOne({
         username: username
-        
     })
-    .then((result)=>{
-        if(!result) throw new Error("Cannot find any invitaion.")
+    .then((result)=>{ 
+        if(!result) throw new BadRequestError("Cannot find any invitaion.")
         res.requests = result.requests   
         next()
     })
     .catch((error)=>{
-        next(error)
+        next(new NotFoundError())
     })
 
 }
-module.exports = findInvitaion
+module.exports = findRequests

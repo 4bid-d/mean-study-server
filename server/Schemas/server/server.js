@@ -18,6 +18,9 @@ const serverSchema = new mongoose.Schema({
     default:mongoose.Types.ObjectId(), 
     required:true
   },
+  link:{
+    type:mongoose.Schema.Types.ObjectId
+  },
   members:[
     {
       memberName:{

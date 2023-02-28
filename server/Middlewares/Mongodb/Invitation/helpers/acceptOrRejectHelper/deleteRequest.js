@@ -1,8 +1,8 @@
-const INVITAION_MODEL = require("../../../../../Schemas/Invitaion/invitaionSchema"); 
+const REQUEST_MODEL = require("../../../../../Schemas/Requests/RequestsSchema"); 
 log =   console.log
-function deleteInvitation(obj,array,username){
+function deleteRequest(obj,array,username){
 
-    INVITAION_MODEL
+    REQUEST_MODEL
     .updateOne(
         {
             username : username
@@ -14,4 +14,4 @@ function deleteInvitation(obj,array,username){
         log(result)
     })
 }
-module.exports = deleteInvitation
+module.exports = deleteRequest

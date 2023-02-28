@@ -3,31 +3,10 @@ import {
   METHODS
 } from "../config/api"
 
-import { getLocalstorage } from "./useLocalstorage"
-
-// import { UseValidateToken } from "./UseValidateToken"
-
 const throwErr = (message) =>{
     throw new Error(message)
 }
 
-async function getData (apiEndpoint,token) {
-  // const token = UseValidateToken()
- 
-  try {
-    let request = await fetch(`${API_BODY}${apiEndpoint ? apiEndpoint : ""}`,{
-      method: METHODS.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        "authorization": `Bearer ${token ? token :null}` 
-      },        
-    })
-    let data = await request.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
 async function postData (method,apiEndpoint,body,token) {
   
   try {
@@ -57,8 +36,6 @@ async function postData (method,apiEndpoint,body,token) {
     throw error
   }
 }
-
-
 export const UseFetch = (method,apiEndpoint,body) =>{ 
   const token = localStorage.getItem("Token")
   try {      
@@ -69,11 +46,11 @@ export const UseFetch = (method,apiEndpoint,body) =>{
       }else{
         if(!body && method.toUpperCase() === METHODS.GET){
           return new Promise((resolve, reject)=>{
-            getData(apiEndpoint,token)
-            .then((result)=> {
-              if(!result) reject()
-              resolve(result)
-            })
+            // getData(apiEndpoint,token)
+            // .then((result)=> {
+            //   if(!result) reject()
+            //   resolve(result)
+            // })
           })      
         }
         return  new Promise((resolve, reject) => {
@@ -89,4 +66,70 @@ export const UseFetch = (method,apiEndpoint,body) =>{
       throw new Error(`${error}.`)      
       }   
       
+}
+
+export class FetchRequest{
+  constructor(){
+    // this.endPoint = endPoint ?? ""
+    this.token = localStorage.getItem("Token") ?? ""
+    this.methods = {
+      get : "GET",
+      post : "POST"
+    }
+    this.model = {
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${this.token ? this.token :null}` 
+      }
+    }
+  }
+  fetchData(method,end,body){
+    this.model.method = method
+    if(!body && method == this.methods.post) {
+      throwErr("Body is required for POST method")
+    }else if(body){
+      this.model.body = JSON.stringify(body)
+    }
+    return new Promise((resolve,reject)=>{
+      fetch(`${API_BODY}${end ? end : ""}`,this.model).then((response)=>{
+        resolve(response)
+      }).catch((err)=>{
+        reject(err)
+      })
+    })
+  }
+  getData(endPoint){ 
+      return new Promise((resolve,reject)=>{
+        this.fetchData(this.methods.get,endPoint)
+        .then((response)=>{
+            response.json().then((data)=>{
+            resolve(data)
+          })
+        }).catch((err)=>{
+          reject(err)
+        })
+      })
+  }
+  
+  postData(endpoint,body) { 
+    try {
+      return new Promise((resolve,reject)=>{
+        this.fetchData(this.methods.post,endpoint,body)
+        .then((response)=>{
+          if(response) {
+            response
+            .json()
+            .then((data)=>{
+              resolve(data) 
+            })
+          }
+        })
+        .catch((err)=>{
+          reject(err)
+        })
+    })
+    } catch (error) {
+      throw error
+    }
+  }
 }

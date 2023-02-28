@@ -1,16 +1,16 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { UseFetch } from '../../../Hooks/useFetch'
+import { FetchRequest} from '../../../Hooks/useFetch'
 import { getLocalstorage } from '../../../Hooks/useLocalstorage'
 
 function Invitation() {
 
     const {serverId} = useParams()
     const token =  getLocalstorage("Token")
+    const newRequest = new FetchRequest()
     const sendRequest= ()=>{
         if(!token) document.location.href = "/login"
-        console.log(serverId+token)
-        UseFetch("get",`invite/${serverId}`)
+        newRequest.getData(`invite/${serverId}`)
         .then((result)=>{
             console.log(result)
         })

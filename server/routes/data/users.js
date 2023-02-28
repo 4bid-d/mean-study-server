@@ -1,5 +1,5 @@
 var express = require('express');
-const bearerVerification = require('../../Middlewares/Jwt/bearerVerification');
+const bearerVerification = require('../../Middlewares/auth/bearerVerification');
 var router = express.Router();
 
 router.get('/',

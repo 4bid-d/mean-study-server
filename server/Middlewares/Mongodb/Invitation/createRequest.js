@@ -1,11 +1,11 @@
-const INVITAION_MODEL = require("../../../Schemas/Invitaion/invitaionSchema"); 
+const REQUEST_MODEL = require("../../../Schemas/Requests/RequestsSchema"); 
 const updateInvitation = require("./helpers/createRequestHelper/update")
 const { v4: uuidv4 } = require('uuid');
 const USER = require("../../../Schemas/user/user");
 const BadRequestError = require("../../../common/errors/bad-request-error")
 
 
-function createOrUpdateInvitation(req, res, next){
+function createOrUpdateRequest(req, res, next){
     try {
         
         /** confirms All credentials and  that admin is not sending the request.**/
@@ -17,14 +17,14 @@ function createOrUpdateInvitation(req, res, next){
         if(username == admin) throw new BadRequestError("You cant sent request to Your own server")
         const inviteId =  uuidv4()
             
-        INVITAION_MODEL.findOne({
+        REQUEST_MODEL.findOne({
             username : admin
         })
         .then((existingDocument)=>{
             if(!existingDocument){
                 USER.findOne({username:admin})
                 .then((adminDetails)=>{
-                    const requestLetter = new INVITAION_MODEL({
+                    const requestLetter = new REQUEST_MODEL({
                         username:adminDetails.username,
                         email : adminDetails.email,
                         requests:[
@@ -55,12 +55,12 @@ function createOrUpdateInvitation(req, res, next){
                     return existingRequest ?? false  
                 }
                 const EXISTING_REQUEST = findExistingRequest()
-                console.log(EXISTING_REQUEST)
+                // console.log(EXISTING_REQUEST)
                 if(EXISTING_REQUEST){
                     throw new BadRequestError("Cant send request..")
                 }else { 
                     //updating the request to request array
-                    INVITAION_MODEL.updateOne({
+                    REQUEST_MODEL.updateOne({
                         username:existingDocument.username
                     },
                     {
@@ -90,4 +90,4 @@ function createOrUpdateInvitation(req, res, next){
         next(error)
     }
 }
-module.exports = createOrUpdateInvitation 
+module.exports = createOrUpdateRequest 

@@ -1,27 +1,26 @@
 const SERVER_REFFERENCE = require("../../../../../Schemas/user/serverReference");
 const BadRequestError = require("../../../../../common/errors/bad-request-error")
 const SERVER = require("../../../../../Schemas/server/server")
-// const addJoinedServerToUserRefference = require("./addJoinedServerToUserRefference")
 
-function addInvitaion(FOUNDED_INVITATION, result,next){
+function addUserAsMember(Object, result,next){
     
     let alreadyIn = false
     for (const member of result.members ) {
-        if(member.memberName === FOsUNDED_INVITATION.by){
+        if(member.memberName === Object.user){
             alreadyIn = true
         }
     }    
     
     if(alreadyIn){   
-        throw new BadRequestError(`${FOUNDED_INVITATION.by} in already in Your server`)
+        next(new BadRequestError(`${Object.user} in already in Your server`))
     }
     SERVER
     .updateOne(
-        {_id : FOUNDED_INVITATION.server.id},
+        {_id : Object.serverId},
         {
             $push: {
                 members : {
-                    memberName:FOUNDED_INVITATION.by,
+                    memberName:Object.user,
                     adminStatus: false
                 }
             } 
@@ -31,13 +30,13 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
         if(result){
                 SERVER_REFFERENCE
                 .updateOne(
-                    {username : FOUNDED_INVITATION.by,},
+                    {username : Object.user,},
                     {$push: {
-                            joinedServers : FOUNDED_INVITATION.server.id 
+                            joinedServers : Object.serverId 
                         } 
                     }).then((result)=>{
-                        res.success = `Succesfully added ${FOUNDED_INVITATION.by}  to your server`
-                        return 
+                        res.success = `Succesfully added ${Object.user}  to your server`
+                        next()
                     // console.log(result)
                     }).catch((err)=>{
                     return err
@@ -53,4 +52,4 @@ function addInvitaion(FOUNDED_INVITATION, result,next){
                     
 }
 
-module.exports = addInvitaion
+module.exports = addUserAsMember

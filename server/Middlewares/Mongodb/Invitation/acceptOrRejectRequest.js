@@ -1,24 +1,24 @@
 const BadRequestError = require("../../../common/errors/bad-request-error");
 const SERVER = require("../../../Schemas/server/server");
-const addInvitaion = require("./helpers/acceptOrRejectHelper/addInvitation");
+const addUserAsMember = require("./helpers/acceptOrRejectHelper/addUserAsMember");
 // const addJoinedServerToUserRefference = require("./helpers/acceptOrRejectHelper/addJoinedServerToUserRefference");
-const deleteInvitation = require("./helpers/acceptOrRejectHelper/deleteInvitation");
+const deleteRequest = require("./helpers/acceptOrRejectHelper/deleteRequest");
 
-function acceptOrRejectIvitation(req, res, next){
+function acceptOrRejectRequest(req, res, next){
 
     try {
         const USER = res.userDetail      
-        const {inviteId } = req.params 
+        const {requestId } = req.params 
         var isDecisionIsTrue = (String(req.query["decision"]).toLowerCase() === 'true');
-        const FOUNDED_INVITATION = res.requests.find((object)=>{        
-            return object.id === inviteId.toString()
+        const FOUNDED_REQUEST = res.requests.find((object)=>{        
+            return object.id === requestId.toString()
         })
-        if(!FOUNDED_INVITATION){
+        if(!FOUNDED_REQUEST){
             throw new BadRequestError("cannot found inviataion")
         }
         
         // Delete the request
-        deleteInvitation(FOUNDED_INVITATION,res.requests,USER.username)
+        deleteRequest(FOUNDED_REQUEST,res.requests,USER.username)
         
         if(!isDecisionIsTrue){
             res.json("SuccessFully rejected the request.")
@@ -27,10 +27,13 @@ function acceptOrRejectIvitation(req, res, next){
         
         SERVER 
         .findOne({
-            _id : FOUNDED_INVITATION.server.id
+            _id : FOUNDED_REQUEST.server.id
         })
         .then((result)=>{
-            addInvitaion(FOUNDED_INVITATION,result,next)
+            addUserAsMember({
+                user : FOUNDED_REQUEST.by,
+                serverId :  FOUNDED_REQUEST.server.id
+            },result,next)
             res.json("Successfully added ")
         })
         .catch((error)=>{
@@ -45,4 +48,4 @@ function acceptOrRejectIvitation(req, res, next){
 
 
 
-module.exports = acceptOrRejectIvitation
+module.exports = acceptOrRejectRequest

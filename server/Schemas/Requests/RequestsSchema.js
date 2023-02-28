@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
-const invitationSchema = new mongoose.Schema({
+const RequestsSchema = new mongoose.Schema({
   username:{
     type :String, 
     required:true
@@ -26,4 +26,4 @@ const invitationSchema = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model("Invitation",invitationSchema)
+module.exports = mongoose.model("Requests",RequestsSchema)

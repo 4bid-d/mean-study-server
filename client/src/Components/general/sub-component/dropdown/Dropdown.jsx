@@ -14,17 +14,21 @@ function Dropdown({title,array ,members}) {
         <>
           <div key={key}>
             {
-              (object) ? <a  href={`/server/${object._id ?? serverId}`} >
-                <h5>
+              (object) ? 
+              <>
+              <a  href={`/server/${object._id ?? serverId}`} >
+                <h6>
                   { object.name ?? ( object.memberName && object.you ? "You" : object.memberName) }
-                </h5>
-                {(object.name) ? <img src="./images/open.svg"/> : ""} 
+                </h6>
+                {(object.name) ? <i class="fa-solid fa-arrow-right" style={{color:"#ffff"}}></i> : ""} 
                 {
                   (object.adminStatus) ? 
                   <img title="Admin" src="../images/admin.svg"/> :
                   (!object.name) ? <img title="Member" src="../images/member.svg"/>:""
                 } 
-              </a>:""
+                </a>
+              </>
+              :""
             } 
           </div>
         </>

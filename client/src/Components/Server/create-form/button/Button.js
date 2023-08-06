@@ -10,8 +10,9 @@ function Button({stateToggleFunction}) {
           stateToggleFunction()
         }}>
             <div className='button-data'>
-              <span>New server</span>
-              <img src='./images/plus.svg'/>
+              {/* <span>New server</span> */}
+              {/* <img src='./images/plus.svg'/> */}
+              <i className="fa-solid fa-plus" style={{color:"white"}}></i>
             </div>
         </button>
     </>

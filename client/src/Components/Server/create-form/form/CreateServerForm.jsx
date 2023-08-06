@@ -27,9 +27,6 @@ function CreateServerForm({toggleFormState,serverArray}) {
     })
 
   } 
-  // function animate(elm,interval){
-  //   elm.
-  // }
   return (
     <>
       <div className='background'>

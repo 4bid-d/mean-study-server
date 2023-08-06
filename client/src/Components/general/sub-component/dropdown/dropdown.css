@@ -2,9 +2,9 @@
     padding: 0px;
     margin: 0px;
     padding: 0.6em 1em 0.6em 1.5em ;  
-    transition: jump 250ms cubic-bezier(0.4, 0, 1, 1) ;
+    transition: jump 150ms cubic-bezier(0.4, 0, 1, 1) ;
 }
-.dropdown-content div h5{
+.dropdown-content div h6{
     padding: 0;
     margin: 0;
 }
@@ -15,15 +15,17 @@ a{
 
 .dropdown-content {
     display: none;
-    color: rgb(13, 10, 10);
+    color: var(--col-font-white);
     border-bottom-left-radius: 1em;
     border-bottom-right-radius:1em ;   
+    background-color: var(--col-lighter);
     transition: height 250ms ease-in,
     block 150ms ease-in-out;
 }
 
-.dropdown-content div h5{
-    padding: 1em 1em 1em 2em ;
+.dropdown-content div h6{
+    padding: 1rem 1rem 1rem 1rem ;
+    color: var(--col-font-white);
 }
 
 .metadata-dropdown.on h3{
@@ -31,7 +33,7 @@ a{
 }
 
 .dropdown-content div:hover{
-    background-color: rgba(119, 119, 119,.1);
+    /* background-color: rgba(119, 119, 119,.1); */
 }
 
 .dropdown-content div a{
@@ -40,8 +42,8 @@ a{
     justify-content: space-between;
 }
 
-.dropdown-content div a img{
-    scale: .4;
+.dropdown-content div a i{
+    margin-right: 1rem;
 }
 
 .dropdown-content.active{
@@ -51,12 +53,11 @@ a{
 
 .dropdown-content div{
     transition: drop 350ms ease-in-out,
-    left-swipe 400ms ease-in-out, 
     opacity 150ms ease-in-out,
     padding 150ms ease-in-out;
 }
 
-.dropdown-content.active .slide{
+.dropdown-content.active.slide{
     animation: drop 1s 1;
 }  
 
@@ -112,13 +113,15 @@ a{
     justify-content: space-between;
     cursor: pointer;   
     margin: 1em 0px 0em 0px ;
+    background-color: var(--col-Dark);
+    color: var(--col-font-white);
     transition: 
         background-color 150ms ease-in-out,
         border-radius 150ms ease-in-out
 }
 
 .metadata-dropdown:hover{
-    background-color: rgba(119, 119, 119,.1);
+    /* background-color: var(--col-); */
 }
 
 .metadata-dropdown:focus{

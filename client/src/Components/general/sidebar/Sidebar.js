@@ -27,14 +27,19 @@ function SideMenu({array ,members,button}) {
 
   return (
     <>
-      <div className="sidebar">
-        {array ? serversDropDown(array) : ""} 
-        {members ? membersDropDown(members) : ""} 
-        {
-          button ? 
+      <div className="sidebar-wrapper" >
+        <div className="sidebar">
+          {array ? serversDropDown(array) : ""} 
+          {members ? membersDropDown(members) : ""} 
+          {
+            button ? 
             createFormbutton(button)
-          : ""
-        }
+            : ""
+          }
+        </div>
+        <div className="toggle-sidebar">
+        {/* <i class="fa-solid fa-angles-left" style={{color: "#ffff"}}></i> */}
+        </div>
       </div>
     </>
   );

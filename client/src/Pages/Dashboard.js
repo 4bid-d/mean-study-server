@@ -16,13 +16,18 @@ import Button from '../Components/Server/create-form/button/Button'
 import Notifications from '../Components/general/sub-component/notifications/Notifications'
 
 function Dashboard() {
-  const token  = getLocalstorage("Token")
+  let token
   const [allCreatedServers , setCreatedServers] = useState({})
   const [allJoinedServers , setJoinedServers] = useState({})
   const navigate = useNavigate()
   const newRequest = new FetchRequest()
   useEffect(() => {
-    if (!token ) navigate("/login")
+    token  = getLocalstorage("Token")
+    if (!token ) {
+      navigate("/login")
+      console.log(token)
+      return
+    }
     newRequest.getData("server-ref")
     .then((response)=> {
       if(response.JsonWebTokenError) {
@@ -67,8 +72,8 @@ function Dashboard() {
           />
         }
       />
-      <Notifications />     
-      <ShowRequest/>
+      {/* <Notifications />      */}
+      {/* <ShowRequest/> */}
       {/* { 
         formstate ?
         :<></>

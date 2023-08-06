@@ -1,3 +1,4 @@
+import "./login.css"
 import React , { useRef, useState } from 'react'
 import Loading from "../../Loading/Loading"
 import {useNavigate} from "react-router-dom"
@@ -26,8 +27,6 @@ function Login() {
         password : currentPassword,   
       }).then((result)=>{
         if(!result) throw new Error(VALIDATION_MESSAGES.BASIC.SOMETHING_WRONG)
-        console.log(result)
-        console.log(result)
         if(result.error)  throw new Error(result.error)
          alert(result.message)
          if(result.token){
@@ -35,26 +34,28 @@ function Login() {
            setLocalstorage('Token', result.token)
            navigate("/")
           }
+          setLoading(false)
       })
-      setLoading(false)
   }
   if(loading) return <Loading/>
   return (
     <>
-    <h4>Login Form</h4>
-    <form >
-      <input type="text" ref={username} placeholder="User name" />
-      <input type="email" ref={email} placeholder="Email" />
-      <input type="password" ref={password} placeholder="Password" />
-      <button type="submit" onClick={
-        (e)=>{
-          try {
-            sendLoginData(e) 
-          } catch (error) {
-            alert(error.message)
-          }
-        }}>Submit</button>
-    </form>
+      <div className="login-form-div">
+          <h4>Login Form</h4>
+        <form >
+          <input type="text" ref={username} placeholder="User name" />
+          <input type="email" ref={email} placeholder="Email" />
+          <input type="password" ref={password} placeholder="Password" />
+          <button type="submit" onClick={
+            (e)=>{
+              try {
+                sendLoginData(e) 
+              } catch (error) {
+                alert(error.message)
+              }
+            }}>Submit</button>
+        </form>
+      </div>
     </>
 
   )

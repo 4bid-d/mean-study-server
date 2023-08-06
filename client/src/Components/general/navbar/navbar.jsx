@@ -7,20 +7,23 @@ function MainNavbar({head , profile }) {
   console.log(adminSecret ? adminSecret.key :"not an admin" )
   return (
     <>
-     <nav className="navbar">
-            <div className="brand-title">{head ? head : "Server_space"}</div>
-            <a href="#" className="toggle-button">
-                <span className="bar"></span>
-                <span className="bar"></span>
-                <span className="bar"></span>
-            </a>
-            <div className="navbar-links">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    {profile ? profile : <li><a href="/login">Login</a></li>}
-                </ul>
+     <nav className="navbar row">
+            <div className="nav-title col-lg-2 col-md-4 col-sm-12 ">
+              {/* <a href="#" className="toggle-button ">
+                  <span className="bar"></span>
+                  <span className="bar"></span>
+                  <span className="bar"></span>
+              </a> */}
+            
+              <div className='navbar-brand text-white'>
+                {head ? head : "Server_space"}
+              </div>
             </div>
-        </nav>
+            <div className="navbar-links col-lg-3 col-md-3">
+                <a href="/">Home</a>
+                {profile ? profile : <a href="/login">Login</a>}
+            </div>
+      </nav>
     </>
   )
 }

@@ -22,7 +22,8 @@ const NotFoundError = require('./common/errors/not-found-error');
 const bearerVerification = require('./Middlewares/auth/bearerVerification');
 var app = express();
 
-mongoose.connect(`mongodb+srv://abidpp1212:${process.env.MONGO}@cluster0.coote.mongodb.net/?retryWrites=true&w=majority`);// view engine setup
+// mongoose.connect(`mongodb+srv://abidpp1212:${process.env.MONGO}@cluster0.coote.mongodb.net/?retryWrites=true&w=majority`);//  view engine setup
+mongoose.connect('mongodb://localhost:27017/myapp',()=>console.log('connected'))
 
 app.use(logger('dev'));
 app.use(express.json());

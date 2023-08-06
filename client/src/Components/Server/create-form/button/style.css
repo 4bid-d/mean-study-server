@@ -1,9 +1,13 @@
 .new-server-button{
-    border: 1px rgba(211, 211, 211, 0.4) solid;
+    border: 1px var(--col-Darker) solid;
     border-radius: 5em;
     margin-top: 1em;
     cursor: pointer;
-    background-color: rgba(119, 119, 119,.1);
+    background-color: var(--col-Darker);
+    color: white;
+    padding: .3rem;
+    display: flex;
+    justify-content: center;
 }
 
 .new-server-button div{
@@ -18,21 +22,25 @@
     font-size: 1em;
     /* color: white; */
     transition: 
-    padding 250ms ease-in-out,
-    scale 150ms ease-in-out;
+    /* padding 250ms ease-in-out, */
+    /* scale 150ms ease-in-out; */
 }
 
-.button-data img{
-    scale: .7;
+.button-data i{
+    scale: 1.4;
     transition: transform 250ms ease-in-out,
     scale 150ms ease-in-out;
+    margin: .3rem;
 }
 
-.new-server-button:hover .button-data img{
-    scale: .92;
-    transform: rotate(-90deg);
+.new-server-button:hover {
+    background-color: rgb(30, 33, 36,.8);
+}
+.new-server-button:hover .button-data i{
+    /* scale: 1.7; */
+    /* transform: rotate(-90deg); */
 }
 .new-server-button:hover .button-data span{
-    padding-left: 1em;
-    scale: 1.2;
+    /* padding-left: 1em; */
+    /* scale: 1.12; */
 }

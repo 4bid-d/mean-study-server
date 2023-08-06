@@ -3,14 +3,26 @@
     position: fixed;
     flex-direction: column;
     height: 100vh;
-    width: 260px;
-    background-color: rgb(255, 255, 255);
+    width: 22vw;
+    background-color: var(--col-light);
     padding: 15px;
     overflow-y: visible;
     transition: background-color 550ms ease-in-out;
+    color: var(--col-light);
+    margin: 0px;
+}
+.sidebar-wrapper{
+    position: relative;
+    height: 100vh;
+    width: 23.2vw;
 }
 
-.sidebar:hover{
-    background-color: rgba(211, 211, 211, 0.4);
+.toggle-sidebar{
+    position: absolute;
+    right: 0px;
+    top: 45vh;
+    padding-left:.3rem ;
+    background-color: var(--col-Darker);
+    margin: 0px;
 
 }

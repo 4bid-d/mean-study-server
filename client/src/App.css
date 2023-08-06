@@ -1,3 +1,29 @@
+:root {
+    
+    /* --col-Darker : #3D246C;
+    --col-Dark : #5C4B99;
+    --col-light : #9F91CC;
+    --col-light-1 : rgba(159, 145, 204,.5);
+    --col-lighter : #FFDBC3; */
+    --col-Darker : #1e2124;
+    --col-Dark :#282b30;
+    --col-light :#36393e;
+    --col-light-1 : rgba(54, 57, 62,.4);
+    --col-dark2:#424549;	
+    --col-lighter :#7289da	;
+    --col-font-white : white;
+
+}
+.row>*{
+    padding-right: 0px;
+    padding-left: 0px;
+    /* width: 0px; */
+}
+@font-face {
+    font-family: 'SofiaPro';
+    src: url('../public/fonts/SofiaProRegular\ \(1\).woff') format('woff');
+}
+
 *{
     box-sizing: border-box;
     /* font-family: Roberto; */
@@ -8,4 +34,5 @@
 body{
     margin: 0;
     padding: 0;
+    font-family: SofiaPro;
 }

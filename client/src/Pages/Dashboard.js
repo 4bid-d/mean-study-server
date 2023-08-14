@@ -63,15 +63,25 @@ function Dashboard() {
         button={
           <Button stateToggleFunction={setFormOn}/>
         }
+        form ={
+          <UserProvider
+            children={
+              <CreateServerForm 
+                toggleFormState={setFormOn}
+                serverArray={allCreatedServers.servers}
+              />
+            }
+          /> 
+        }
       />
-      <UserProvider
+      {/* <UserProvider
         children={
           <CreateServerForm 
             toggleFormState={setFormOn}
             serverArray={allCreatedServers.servers}
           />
         }
-      />
+      /> */}
       {/* <Notifications />      */}
       {/* <ShowRequest/> */}
       {/* { 

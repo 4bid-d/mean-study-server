@@ -8,7 +8,7 @@ import SideMenu from '../Components/general/sidebar/Sidebar';
 import { UserProvider } from "../Hooks/userContext"
 import Profile from '../Components/general/sub-component/Profile/Profile';
 import { AdminKeyProvider } from '../Hooks/useAdminKey';
-
+import {sideBarToggler} from "../utils/toggle"
 function ServerPage() {
   
   const { serverId } = useParams();
@@ -16,6 +16,7 @@ function ServerPage() {
   const navigate = useNavigate()
   const [serverInstance , setServerInstance] = useState({})
   const newRequest = new FetchRequest()
+  const toogle = sideBarToggler()
   useEffect(() => {
       if(!token) navigate("/login")
       newRequest.getData(`server/${serverId}`)
@@ -25,16 +26,17 @@ function ServerPage() {
           setServerInstance(result.data)
         })
       }, [token])
-
+     
+    
   return (
     <>
       <AdminKeyProvider 
        children={
         <MainNavbar 
           head={serverInstance.name} 
-          profile={<UserProvider children={<Profile/>}/> 
-        }/>
-      }
+          profile={<UserProvider children={<Profile/>}
+          /> 
+        }/>}
         adminKey={serverInstance.adminKey ?? null}
       />
 

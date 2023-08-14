@@ -4,7 +4,7 @@ import MainNavbar from "../Components/general/navbar/navbar"
 function LoginPage() {
   return (
     <>
-    <MainNavbar/>
+    {/* <MainNavbar/> */}
     <Login/>
     </>
     )

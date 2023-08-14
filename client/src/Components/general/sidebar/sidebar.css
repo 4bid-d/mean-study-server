@@ -11,17 +11,21 @@
     color: var(--col-light);
     margin: 0px;
 }
+.off{
+    display: none;
+}
 .sidebar-wrapper{
     position: relative;
     height: 100vh;
     width: 23.2vw;
+    transition: display 250ms ease-in;
 }
 
 .toggle-sidebar{
     position: absolute;
     right: 0px;
     top: 45vh;
-    padding-left:.3rem ;
+    /* padding-left:.3rem ; */
     background-color: var(--col-Darker);
     margin: 0px;
 

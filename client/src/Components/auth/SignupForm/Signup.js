@@ -1,8 +1,10 @@
 import React from 'react'
+import "./signup.css"
 import Loading from "../../Loading/Loading"
 import { useState , useRef} from "react"
 import {useNavigate} from "react-router-dom"
 import {FetchRequest, UseFetch} from "../../../Hooks/useFetch"
+
 import {
   VALIDATION_MESSAGES,
   PASSWORD_VALIDATION_REGEX,
@@ -10,6 +12,8 @@ import {
   USERNAME_VALIDATION_REGEX
 }  from "../../../config/formValidation"
 import {getLocalstorage} from "../../../Hooks/useLocalstorage"
+import { useEffect } from "react"
+
 // const realtimeUsernameChecking = (username)=>{
   
 //     console.log("checking username.")
@@ -27,8 +31,13 @@ function Signup() {
   const password = useRef()
   const username = useRef()
   const email = useRef()
-  // const navigate  = useNavigate()
-  const token = getLocalstorage("Token")
+  const navigate = useNavigate()
+  let token 
+  useEffect(()=>{
+    token = getLocalstorage("Token")
+    if(token ) navigate("/")
+    console.log(token)
+  })
   if(loading) return <Loading/>
   // if(token) navigate("/")
 
@@ -102,30 +111,35 @@ const sendSignupData = (e)=>{
   return (
     // ()=>realtimeUsernameChecking(username.current.value)
     <>
-    <h4>Signup Form</h4>
-    <form >
-      <input type="text" placeholder="Username"  ref={username} required/>
-      <input type="email"  placeholder="Example@g mail.com" ref={email} required/>
-      <input type="password" placeholder="Password" ref={password} required />
-      <button type="submit" 
-      onClick={
-        (e)=>{
-          try {
-            sendSignupData(e)
-          } catch (validationMassage) {
-            alert(validationMassage)
-          }
-        }
-      }>Submit</button>
-    </form>
-    <button onClick={()=> "/login"}>
-      Login
-    </button>
+    <div className="form-wrapper">
+          <div className="signup-form-div container">
+              <div className="head-wrapper">
+              <h4>Signup Form</h4>
+              </div>
+            <form >
+              <div className="user-email">
+                <input className=" input-username" type="text" ref={username} placeholder="Username"required />
+                <input  className="input-email" type="email" ref={email} placeholder="Email" required/>
+              </div>
+              <div>
+                <input className="input-password"  type="password" ref={password} placeholder="Password" required />
+              </div>
+              <button className='button-signup' 
+               type="submit" 
+                onClick={
+                  (e)=>{
+                    try {
+                      sendSignupData(e)
+                    } catch (validationMassage) {
+                      alert(validationMassage)
+                    }
+                  }
+                }>Submit</button>
+            </form>
+          </div>
+        </div>
     </>
-
-
-)
-}
+)}
 
 export default Signup
 

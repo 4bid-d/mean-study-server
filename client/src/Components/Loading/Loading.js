@@ -1,8 +1,10 @@
 import React from 'react'
-
+import "./loading.css"
 function Loading() {
   return (
-    <h4>Loading...</h4>
+    <div className='d-flex justify-content-center align-items-center'>
+      <div class="loader"> </div>
+    </div>
   )
 }
 

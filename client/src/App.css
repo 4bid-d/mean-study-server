@@ -35,4 +35,8 @@ body{
     margin: 0;
     padding: 0;
     font-family: SofiaPro;
+    background-color: var(--col-Dark);
+}
+body > img,body > span{
+    user-select: none;
 }

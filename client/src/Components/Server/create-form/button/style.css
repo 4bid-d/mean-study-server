@@ -22,8 +22,8 @@
     font-size: 1em;
     /* color: white; */
     transition: 
-    /* padding 250ms ease-in-out, */
-    /* scale 150ms ease-in-out; */
+    padding 250ms ease-in-out,
+    scale 150ms ease-in-out;
 }
 
 .button-data i{

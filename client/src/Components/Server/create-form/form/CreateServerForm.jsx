@@ -10,7 +10,9 @@ function CreateServerForm({toggleFormState,serverArray}) {
   const name = useRef()
   const user = useContext( userDataContext )
   const createServerRequest = new FetchRequest()
-  
+  const reload = ()=>{
+    window.location.reload()
+  }
   const createServer = (e)=>{
     console.log(user)
     e.preventDefault()
@@ -32,7 +34,7 @@ function CreateServerForm({toggleFormState,serverArray}) {
       <div className='background'>
         <div className='form-div' id='form-div'>
           <div className='meta-data'>
-            <h4>Create Your own server.</h4>
+            <h6>Create Your own server.</h6>
             <button className='close-btn' 
               onClick={()=>{
                 toggleFormState()
@@ -47,6 +49,7 @@ function CreateServerForm({toggleFormState,serverArray}) {
                 try {            
                   createServer(e)
                   toggleFormState()
+                  reload()
                 } catch (error) {
                   alert(error.message)
                 }

@@ -1,0 +1,45 @@
+.form-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto ;
+}
+
+.signup-form-div{
+    margin: 5rem;
+    padding: 3rem;
+    width: 50%;
+}
+.head-wrapper > h4{
+    margin: 2rem;
+    color: white;
+}
+
+form>div >input
+{
+    display: block;
+    width: 20rem;
+    appearance: none;
+    border: 1px solid var(--col-Darker);
+    padding: .4rem;
+    border-radius: .3rem;
+    color: white;
+    background-color: var(--col-light);
+    width: 100%;
+    /* margin-top: .5rem; */
+}
+form > .user-email > input{
+    width: 50%;
+    display: inline-block;
+}
+.button-signup{
+    width: 100%;
+    color: white;
+    appearance: none;
+    border: none;
+    padding: .4rem;
+    border-radius: .4rem;
+    background-color: var(--col-lighter);
+    margin-top: .3rem;
+
+}

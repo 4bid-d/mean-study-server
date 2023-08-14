@@ -3,14 +3,18 @@
     /* justify-content: space-between; */
     align-items: center ;
     position: fixed;
-    left: 22vw;
+    left: 0px;
     right: 0px;
     background-color: var(--col-Darker);
     color: var(--col-font-white );
     min-height: 10vh;
     padding: 1rem;
     margin: 0px;
+    transition: width 550ms ease-in;
     /* margin-bottom: 1000px; */
+}
+.navbar.short{
+    left:22vw;
 }
 .nav-title{
     display: flex;
@@ -45,7 +49,7 @@
 
 .navbar-links a,.profile-button{
     text-decoration: none;
-    color: var(--col-font-white );
+    color: var(--col-font-whites);
     padding: 1rem;
 }
 
@@ -53,6 +57,11 @@
     background-color: var(--col-light);
 }
 
+.material-symbols-outlined{
+    margin: 1rem;
+    margin-top: 1.2rem;
+    cursor: pointer;
+}
 @media(max-width : 1220px){
     .nav-title{
         justify-content: flex-start;
